@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150212213955) do
+ActiveRecord::Schema.define(version: 20150212215135) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,6 +42,21 @@ ActiveRecord::Schema.define(version: 20150212213955) do
   add_index "courses", ["department", "course_number"], name: "index_courses_on_department_and_course_number", using: :btree
   add_index "courses", ["department"], name: "index_courses_on_department", using: :btree
 
+  create_table "meetings", force: :cascade do |t|
+    t.integer  "course_instance_id"
+    t.integer  "professor_id"
+    t.string   "schedule"
+    t.string   "room"
+    t.string   "professor"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
+  add_index "meetings", ["course_instance_id"], name: "index_meetings_on_course_instance_id", using: :btree
+  add_index "meetings", ["professor_id"], name: "index_meetings_on_professor_id", using: :btree
+
   create_table "prerequisites", id: false, force: :cascade do |t|
     t.integer "prerequisite_id",  null: false
     t.integer "postrequisite_id", null: false
@@ -63,4 +78,6 @@ ActiveRecord::Schema.define(version: 20150212213955) do
   add_foreign_key "course_instances", "courses"
   add_foreign_key "course_instances", "professors"
   add_foreign_key "course_instances", "semesters"
+  add_foreign_key "meetings", "course_instances"
+  add_foreign_key "meetings", "professors"
 end
