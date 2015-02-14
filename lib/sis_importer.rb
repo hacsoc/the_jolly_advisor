@@ -38,10 +38,9 @@ module SISImporter
       # if the record doesn't exist yet, so calling #save is redundant
       course.update_attributes(description: course_attributes[:description], title: course_attributes[:title])
       #TODO: course.course_offering = do something
-      #TODO: We need some code for multiple sections
       #TODO: We need some stuff for professor of class (Hard because there can be multiple)
       process_course_instance(class_xml,
-                              CourseInstance.where(semester: semester, course: course).first_or_initialize,
+                              CourseInstance.where(semester: semester, course: course, section: course_attributes[:section]).first_or_initialize,
                               course_attributes)
     end
 
@@ -84,7 +83,8 @@ module SISImporter
         title:       class_xml.xpath('CourseTitleLong').text,
         description: class_xml.xpath('Description').text,
         units:       class_xml.xpath('UnitsMin').text, #TODO: Should this be min or max, or something else?
-        dates:       fetch_start_end_dates(class_xml.xpath('Dates').text)
+        dates:       fetch_start_end_dates(class_xml.xpath('Dates').text),
+        section:     class_xml.xpath('Section').text
       }
     end
 
