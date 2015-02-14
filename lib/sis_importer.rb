@@ -48,6 +48,8 @@ module SISImporter
       course_instance.update_attributes(start_date: course_attributes[:dates][0], end_date: course_attributes[:dates][1])
 
       fetch_meetings(class_xml).each { |meeting_xml| process_meeting(meeting_xml, course_instance, fetch_meeting_attributes(meeting_xml)) }
+
+      course_instance.update_attributes(professor: course_instance.meetings.first.try(:professor) || Professor.TBA)
     end
 
     def process_professor(prof_name)
