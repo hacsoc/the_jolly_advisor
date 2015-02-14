@@ -23,15 +23,15 @@ module SISImporter
 
     # term_info is an array of two values, the first being the semester and
     # the second being the year.
-    def process_term term_xml, term_info
+    def process_term(term_xml, term_info)
       process_semester(term_xml, Semester.where(semester: term_info[0], year: term_info[1]).first_or_create)
     end
     
-    def process_semester term_xml, semester
+    def process_semester(term_xml, semester)
       fetch_classes(term_xml).each { |class_xml| process_course(class_xml, semester, fetch_course_attributes(class_xml)) }
     end
 
-    def process_course class_xml, semester, course_attributes
+    def process_course(class_xml, semester, course_attributes)
       # Cache the course for database perf
       course = Course.where(department: course_attributes[:subject], course_number: course_attributes[:number]).first_or_initialize 
       # Rails is smart and inserts a new row when you call #update_attributes
@@ -44,17 +44,17 @@ module SISImporter
                               course_attributes)
     end
 
-    def process_course_instance class_xml, course_instance, course_attributes
+    def process_course_instance(class_xml, course_instance, course_attributes)
       course_instance.update_attributes(start_date: course_attributes[:dates][0], end_date: course_attributes[:dates][1])
 
       fetch_meetings(class_xml).each { |meeting_xml| process_meeting(meeting_xml, course_instance, fetch_meeting_attributes(meeting_xml)) }
     end
 
-    def process_professor prof_name
+    def process_professor(prof_name)
       Professor.where(name: prof_name).first_or_create
     end
 
-    def process_meeting class_xml, course_instance, meeting_attributes
+    def process_meeting(class_xml, course_instance, meeting_attributes)
       Meeting.where(schedule: meeting_attributes[:schedule], room: meeting_attributes[:room],
                     professor: meeting_attributes[:prof], course_instance: course_instance,
                     start_date: meeting_attributes[:dates][0], end_date: meeting_attributes[:dates][1]).first_or_create
@@ -64,19 +64,19 @@ module SISImporter
       Nokogiri::XML(open("http://case.edu/projects/erpextract/soc.xml")).xpath('//Terms/Term')
     end
     
-    def fetch_classes term_xml
+    def fetch_classes(term_xml)
       term_xml.xpath('Classes/Class') 
     end
 
-    def fetch_meetings class_xml
+    def fetch_meetings(class_xml)
       class_xml.xpath('Meetings/Meeting')
     end
 
-    def fetch_term_info term_xml
+    def fetch_term_info(term_xml)
       term_xml.xpath('Descr').text.split
     end
 
-    def fetch_course_attributes class_xml
+    def fetch_course_attributes(class_xml)
       {
         subject:     class_xml.xpath('Subject').text,
         number:      class_xml.xpath('CatalogNbr').text,
@@ -88,7 +88,7 @@ module SISImporter
       }
     end
 
-    def fetch_meeting_attributes meeting_xml
+    def fetch_meeting_attributes(meeting_xml)
       {
         schedule: meeting_xml.xpath('DaysTimes').text, #TODO: json?
         room: meeting_xml.xpath('Room').text,
@@ -97,7 +97,7 @@ module SISImporter
       }
     end
     
-    def fetch_start_end_dates dates
+    def fetch_start_end_dates(dates)
       dates.split(/\s-\s/).map{ |d| Date.strptime(d, '%m/%d/%Y') }
     end
   end
