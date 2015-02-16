@@ -45,7 +45,9 @@ module SISImporter
     end
 
     def process_course_instance(class_xml, course_instance, course_attributes)
-      course_instance.update_attributes(start_date: course_attributes[:dates][0], end_date: course_attributes[:dates][1])
+      course_instance.update_attributes(start_date: course_attributes[:dates][0],
+                                        end_date: course_attributes[:dates][1],
+                                        component_code: course_attributes[:component_code])
 
       fetch_meetings(class_xml).each { |meeting_xml| process_meeting(meeting_xml, course_instance, fetch_meeting_attributes(meeting_xml)) }
 
@@ -80,13 +82,14 @@ module SISImporter
 
     def fetch_course_attributes(class_xml)
       {
-        subject:     class_xml.xpath('Subject').text,
-        number:      class_xml.xpath('CatalogNbr').text,
-        title:       class_xml.xpath('CourseTitleLong').text,
-        description: class_xml.xpath('Description').text,
-        units:       class_xml.xpath('UnitsMin').text, #TODO: Should this be min or max, or something else?
-        dates:       fetch_start_end_dates(class_xml.xpath('Dates').text),
-        section:     class_xml.xpath('Section').text
+        subject:        class_xml.xpath('Subject').text,
+        number:         class_xml.xpath('CatalogNbr').text,
+        title:          class_xml.xpath('CourseTitleLong').text,
+        description:    class_xml.xpath('Description').text,
+        units:          class_xml.xpath('UnitsMin').text, #TODO: Should this be min or max, or something else?
+        dates:          fetch_start_end_dates(class_xml.xpath('Dates').text),
+        section:        class_xml.xpath('Section').text,
+        component_code: class_xml.xpath('ComponentCode').text
       }
     end
 
