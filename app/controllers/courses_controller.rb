@@ -10,6 +10,7 @@ class CoursesController < ApplicationController
   # GET /courses/1
   # GET /courses/1.json
   def show
+    @instances_by_semester = @course.course_instances.includes(:semester).group_by(&:semester)
   end
 
   # GET /courses/new
@@ -65,7 +66,7 @@ class CoursesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_course
       department, course_number = params[:id].match(/([a-zA-Z]+)(\d+)/).captures.map(&:upcase)
-      @course = Course.find_by(department: department, course_number: course_number)
+      @course = Course.find_by(department: department, course_number: course_number) or not_found
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
