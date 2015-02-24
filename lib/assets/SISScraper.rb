@@ -16,19 +16,17 @@ class SISScraper
     get_all_depts.each do |dept|
       get_all_semesters.each do |semester|
         sem = semester.strip
-        unless (sem == 'Fall 2015' || sem == 'Summer 2015')
-          search_for_classes(dept, sem)
-          ok_more_than_20_results
-          if results?
-            if downloadable?
-              download_course_info(dept, sem)
-            else
-              Kernel.puts("#{dept}#{sem} needs manual input due to too few classes.")
-            end
-            start_a_new_search
+        search_for_classes(dept, sem)
+        ok_more_than_20_results
+        if results?
+          if downloadable?
+            download_course_info(dept, sem)
           else
-            Kernel.puts("#{dept}#{sem} had no classes.")
+            puts "#{dept}#{sem} needs manual input due to too few classes."
           end
+          start_a_new_search
+        else
+          puts "#{dept}#{sem} had no classes."
         end
       end
     end
@@ -39,7 +37,6 @@ class SISScraper
   def go_to_sis
     @browser = Watir::Browser.new
     @browser.goto "sis.case.edu"
-    Kernel.puts "Went to SIS"
   end
 
   def sign_in_to_sis(user, pword)
@@ -85,7 +82,7 @@ class SISScraper
     set_semester(semester)
     include_all_days_of_week
     search
-    Kernel.puts("Searching #{dept} for #{semester} semester")
+    puts "Searching #{dept} for #{semester} semester"
     wait_while_sis_processing
   end
 
@@ -136,10 +133,10 @@ class SISScraper
   end
 
   def download_course_info(dept,semester)
-    Kernel.puts("Trying to Download course info")
     #Download courses
     iframe.img(:title => 'Download').when_present.click
-    sleep(2)
+    sleep(2) #Arbitrary sleep sacrifice to satisfy SIS's finicky behavior
+
     #Rename the file to [DEPT]_[SEMESTER]
     new_file_name = "#{DOWNLOAD_DIR}#{dept}_#{semester}.xls".strip
     default_file_name = "#{DOWNLOAD_DIR}ps.xls"
