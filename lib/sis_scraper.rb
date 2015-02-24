@@ -1,7 +1,8 @@
+require 'sis_scraper.rb'
+
 class SISScraper
   ALPHA = ('A'..'Z').to_a
 
-  #TODO: This can be moved to configs later
   DOWNLOAD_DIR = '../../../Downloads/'
 
   def initialize()
@@ -61,8 +62,7 @@ class SISScraper
   def get_all_depts
     iframe.a(:text: "select subject").when_present.click
     wait_while_sis_processing
-    depts = []
-    ALPHA.each do |letter|
+    depts = ALPHA.each do |letter|
       iframe.span(:text: letter).a.when_present.click
       sleep(4)
       depts += iframe.spans(:class: 'PSEDITBOX_DISPONLY').collect{|dept| dept.text if dept.text.length == 4}.keep_if{|dept| !dept.nil?}
