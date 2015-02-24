@@ -3,7 +3,7 @@
 <h1>Listing Courses</h1>
 
 <%= form_tag courses_path, method: :get do %>
-  <%= text_field_tag :query, params[:query], id: 'course-autocomplete', placeholder: 'Search query...' %>
+  <%= text_field_tag :query, params[:query], id: 'course-autocomplete', placeholder: 'Course search' %>
   <%= submit_tag "Search", name: nil %>
 <% end %>
 
@@ -11,15 +11,15 @@
   <thead>
     <tr>
       <th>Course</th>
-      <th>Description</th>
+      <th>Title</th>
     </tr>
   </thead>
 
   <tbody>
     <% @courses.each do |course| %>
       <tr>
-        <td nowrap><%= course.to_s %></td>
-        <td><%= course.description %></td>
+        <td nowrap><%= link_to course, course %></td>
+        <td><%= link_to course.title, course %></td>
       </tr>
     <% end %>
   </tbody>
