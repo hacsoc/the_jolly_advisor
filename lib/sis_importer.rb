@@ -100,7 +100,7 @@ module SISImporter
       if full_title.start_with? 'Special Topics'
         {
           title:    'Special Topics',
-          subtitle: full_title.match(/Special Topics: (.*)/).try(:captures).try(:first)
+          subtitle: full_title[/Special Topics: (.*)/, 1]
         }
       else
         {
