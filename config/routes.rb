@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
-  resources :courses
+  resources :courses do
+    collection do
+      get :autocomplete
+    end
+  end
   root 'courses#index'
 
   # The priority is based upon order of creation: first created -> highest priority.

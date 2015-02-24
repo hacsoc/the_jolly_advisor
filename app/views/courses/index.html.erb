@@ -2,32 +2,24 @@
 
 <h1>Listing Courses</h1>
 
+<%= text_field_tag :query, nil, id: 'course-autocomplete', placeholder: 'Search query...' %>
+
 <table>
   <thead>
     <tr>
-      <th>Department</th>
-      <th>Course number</th>
+      <th>Course</th>
       <th>Description</th>
-      <th>Course offering</th>
-      <th colspan="3"></th>
     </tr>
   </thead>
 
   <tbody>
     <% @courses.each do |course| %>
       <tr>
-        <td><%= course.department %></td>
-        <td><%= course.course_number %></td>
+        <td nowrap><%= course.to_s %></td>
         <td><%= course.description %></td>
-        <td><%= course.course_offering %></td>
-        <td><%= link_to 'Show', course %></td>
-        <td><%= link_to 'Edit', edit_course_path(course) %></td>
-        <td><%= link_to 'Destroy', course, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
-
-<br>
-
-<%= link_to 'New Course', new_course_path %>
+<%= paginate @courses %>
+<%= page_entries_info @courses %>

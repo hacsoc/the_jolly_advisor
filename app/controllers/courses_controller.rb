@@ -4,7 +4,7 @@ class CoursesController < ApplicationController
   # GET /courses
   # GET /courses.json
   def index
-    @courses = Course.all
+    @courses = Course.page
   end
 
   # GET /courses/1
@@ -59,6 +59,13 @@ class CoursesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to courses_url, notice: 'Course was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def autocomplete
+    @courses = Course.search(params[:term])
+    respond_to do |format|
+      format.json { render json: @courses.map(&:long_string) }
     end
   end
 
