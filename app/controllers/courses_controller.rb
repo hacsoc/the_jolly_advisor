@@ -4,7 +4,7 @@ class CoursesController < ApplicationController
   # GET /courses
   # GET /courses.json
   def index
-    @courses = Course.page
+    @courses = Course.search(params[:query]).page
   end
 
   # GET /courses/1
@@ -65,7 +65,7 @@ class CoursesController < ApplicationController
   def autocomplete
     @courses = Course.search(params[:term])
     respond_to do |format|
-      format.json { render json: @courses.map(&:long_string) }
+      format.json { render json: @courses.map{ |c| { label: c.long_string, value: c.to_param } } }
     end
   end
 

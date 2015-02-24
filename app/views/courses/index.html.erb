@@ -2,7 +2,10 @@
 
 <h1>Listing Courses</h1>
 
-<%= text_field_tag :query, nil, id: 'course-autocomplete', placeholder: 'Search query...' %>
+<%= form_tag courses_path, method: :get do %>
+  <%= text_field_tag :query, params[:query], id: 'course-autocomplete', placeholder: 'Search query...' %>
+  <%= submit_tag "Search", name: nil %>
+<% end %>
 
 <table>
   <thead>
