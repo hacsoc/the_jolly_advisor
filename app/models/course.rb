@@ -4,4 +4,8 @@ class Course < ActiveRecord::Base
   def to_param
     "#{department}#{course_number}"
   end
+
+  def to_s
+    "#{department} #{course_number}"
+  end
 end
