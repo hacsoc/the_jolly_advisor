@@ -1,7 +1,5 @@
-require 'watir-webdriver'
-
 class SISScraper
-  ALPHA = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
+  ALPHA = ('A'..'Z').to_a
 
   #TODO: This can be moved to configs later
   DOWNLOAD_DIR = '../../../Downloads/'
@@ -51,12 +49,10 @@ class SISScraper
     @browser.text_fields.last.wait_until_present
     @browser.text_fields.last.set pword
     @browser.button(:text => 'Sign In').click
-    Kernel.puts "Logged into SIS"
   end
 
   def navigate_to_search_from_landing_page
     @browser.a(:text => 'Search').when_present.click
-    Kernel.puts "Let's search some classes"
   end
 
   def iframe
@@ -76,7 +72,7 @@ class SISScraper
     end
     iframe.a(:text => 'Close').click
     wait_while_sis_processing
-    return depts - ['ABLE']
+    return depts
   end
 
   def get_all_semesters
@@ -124,7 +120,6 @@ class SISScraper
   def ok_more_than_20_results
     wait_while_sis_processing
     if iframe.span(:id => 'DERIVED_SSE_DSP_SSR_MSG_TEXT').present?
-      Kernel.puts("Hitting ok for more than 20 results.")
       iframe.button(:text=>"OK").when_present.click
       iframe.button(:text => "OK").wait_while_present
       wait_while_sis_processing
@@ -145,28 +140,20 @@ class SISScraper
     #Download courses
     iframe.img(:title => 'Download').when_present.click
     sleep(2)
-    Kernel.puts("Downloaded course info")
     #Rename the file to [DEPT]_[SEMESTER]
     new_file_name = "#{DOWNLOAD_DIR}#{dept}_#{semester}.xls".strip
     default_file_name = "#{DOWNLOAD_DIR}ps.xls"
-    if File.exists?(default_file_name)
-      File.rename(default_file_name, new_file_name)
-      Kernel.puts("Renamed Course Info.")
-    else
-      Kernel.puts("Did not rename course info")
-    end
+    File.rename(default_file_name, new_file_name) if File.exists?(default_file_name)
   end
 
   def start_a_new_search
     iframe.a(:text => 'Start a New Search').when_present.click
     wait_while_sis_processing
-    Kernel.puts("Starting a new search")
   end
 
   def clear_search_criteria
     iframe.a(:text => 'Clear').when_present.click
     wait_while_sis_processing
-    Kernel.puts("Cleared search criteria")
   end
 
   def results?
