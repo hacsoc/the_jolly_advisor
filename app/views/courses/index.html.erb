@@ -3,7 +3,12 @@
 <h1>Listing Courses</h1>
 
 <%= form_tag courses_path, method: :get do %>
-  <%= text_field_tag :query, params[:query], id: 'course-autocomplete', placeholder: 'Course search' %>
+  <%= label_tag(:search) %>
+  <%= text_field_tag :search, params[:search], id: 'course-autocomplete', placeholder: 'Course search' %>
+  <%= label_tag(:semester) %>
+  <%= select_tag :semester, options_from_collection_for_select(@semesters, :id, :to_s, params[:semester].to_i), include_blank: "All" %>
+  <%= label_tag(:professor) %>
+  <%= text_field_tag :professor, params[:professor] %>
   <%= submit_tag "Search", name: nil %>
 <% end %>
 
