@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  case_id: MyString
+  name: MyString
+  type: 
+  class_year: 1
+
+two:
+  case_id: MyString
+  name: MyString
+  type: 
+  class_year: 1

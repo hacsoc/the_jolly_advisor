@@ -1,10 +1,21 @@
 Rails.application.routes.draw do
+  root 'courses#index'
+
+  resources :users, except: [:create, :new, :destroy] do
+    collection do
+      get :login
+      get :logout
+    end
+  end
+
   resources :courses do
     collection do
       get :autocomplete
     end
   end
-  root 'courses#index'
+
+  get 'scheduler' => 'scheduler#index'
+  get 'wishlist' => 'wishlist#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
