@@ -15,6 +15,7 @@ Please take notes of the following sections if you're contributing to the Jolly 
 ### Rails Magic:
 For people who have rusty rails.
 
+- Require the library `require sis_importer`
 - To open up the Rails console `rails c`
 - Import SIS Data: `SISImporter.import_sis`
 
