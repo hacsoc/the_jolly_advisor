@@ -2,21 +2,29 @@
 
 <h1>Listing Courses</h1>
 
-<%= text_field_tag :query, nil, id: 'course-autocomplete', placeholder: 'Search query...' %>
+<%= form_tag courses_path, method: :get do %>
+  <%= label_tag(:search) %>
+  <%= text_field_tag :search, params[:search], id: 'course-autocomplete', placeholder: 'Course search' %>
+  <%= label_tag(:semester) %>
+  <%= select_tag :semester, options_from_collection_for_select(@semesters, :id, :to_s, params[:semester].to_i), include_blank: "All" %>
+  <%= label_tag(:professor) %>
+  <%= text_field_tag :professor, params[:professor] %>
+  <%= submit_tag "Search", name: nil %>
+<% end %>
 
 <table>
   <thead>
     <tr>
       <th>Course</th>
-      <th>Description</th>
+      <th>Title</th>
     </tr>
   </thead>
 
   <tbody>
     <% @courses.each do |course| %>
       <tr>
-        <td nowrap><%= course.to_s %></td>
-        <td><%= course.description %></td>
+        <td nowrap><%= link_to course, course %></td>
+        <td><%= link_to course.title, course %></td>
       </tr>
     <% end %>
   </tbody>
