@@ -12,6 +12,15 @@ Please take notes of the following sections if you're contributing to the Jolly 
 - Create pull request from Github UI
 - Wait to get a +1 from another team member before merging
 
+### Rails Magic:
+For people who have rusty rails.
+
+- Require the library `require sis_importer`
+- To open up the Rails console `rails c`
+- Import SIS Data: `SISImporter.import_sis`
+
 ### Other notes:
 
 - Use Github issues to note bugs and feature requests
+
+

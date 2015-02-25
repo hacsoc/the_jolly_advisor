@@ -11,3 +11,8 @@
 /log/*
 !/log/.keep
 /tmp
+
+#Ignore ideas for anyone using IDEs
+/.idea
+
+.DS_STORE
