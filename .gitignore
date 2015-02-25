@@ -12,7 +12,5 @@
 !/log/.keep
 /tmp
 
-#Ignore ideas for anyone using IDEs
-/.idea
-
+.idea/
 .DS_STORE
