@@ -29,10 +29,12 @@
       
       <h3>Previous Semesters</h3>
       
-      <h5><a href="#"><i class="http://www.ratemyprofessors.com/ShowRatings.jsp?tid=16817"></i> S '14 Vincenzo Liberatore</a></h5>
-      <h5><a href="#"><i class="http://www.ratemyprofessors.com/ShowRatings.jsp?tid=1104419"></i> F '13 Mehmet Koyuturk</a></h5>
-      <h5><a href="#"><i class="http://www.ratemyprofessors.com/ShowRatings.jsp?tid=16817"></i> S '13 Vincenzo Liberatore</a></h5>
-      <h5><a href="#"><i class="http://www.ratemyprofessors.com/ShowRatings.jsp?tid=1104419"></i> F '13 Mehmet Koyuturk</a></h5>
+      <% @instances_by_semester.each do |semester, instances| %>
+        <p><b><%= semester %></b>:</p>
+        <% instances.each do |instance| %>
+          Section <%= instance.section %> taught by <%= instance.professor.name %><br />
+        <% end %>
+      <% end %>
       
      </div> 
      </div><!--/panel-->
