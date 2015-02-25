@@ -1,6 +1,13 @@
 Rails.application.routes.draw do
   root 'courses#index'
 
+  resources :users, except: [:create, :new, :destroy] do
+    collection do
+      get :login
+      get :logout
+    end
+  end
+
   resources :courses do
     collection do
       get :autocomplete

@@ -31,6 +31,8 @@ gem 'therubyracer'
 gem 'less-rails'
 gem 'twitter-bootstrap-rails'
 
+gem 'rubycas-client', git: 'git://github.com/rubycas/rubycas-client.git'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
