@@ -2,7 +2,7 @@
 
 ## Development
 
-Please take notes of the following sections if you're contributing to the Jolly Advisor.
+Please take note of the following sections if you're contributing to the Jolly Advisor.
 
 ### Git Workflow:
 - Clone from git: `git clone https://github.com/Aaronneyer/the_jolly_advisor.git`
