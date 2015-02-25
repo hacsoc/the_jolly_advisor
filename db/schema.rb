@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150224010444) do
+ActiveRecord::Schema.define(version: 20150224021833) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,8 +60,9 @@ ActiveRecord::Schema.define(version: 20150224010444) do
   add_index "meetings", ["professor_id"], name: "index_meetings_on_professor_id", using: :btree
 
   create_table "prerequisites", id: false, force: :cascade do |t|
-    t.integer "prerequisite_id",  null: false
-    t.integer "postrequisite_id", null: false
+    t.integer "postrequisite_id",                 null: false
+    t.integer "prerequisite_ids", default: [],                 array: true
+    t.boolean "co_req",           default: false
   end
 
   create_table "professors", force: :cascade do |t|
