@@ -4,12 +4,24 @@ class CoursesController < ApplicationController
   # GET /courses
   # GET /courses.json
   def index
-    @courses = Course.all
+    @semesters = Semester.all
+    @courses = Course.page.uniq
+    if params[:search].present?
+      @courses = @courses.search(params[:search])
+    end
+    if params[:semester].present?
+      @courses = @courses.joins(:course_instances).where(course_instances: { semester_id: params[:semester].to_i })
+    end
+    if params[:professor].present?
+      professor = Professor.arel_table
+      @courses = @courses.joins(course_instances: :professor).where(professor[:name].matches("%#{params[:professor]}%"))
+    end
   end
 
   # GET /courses/1
   # GET /courses/1.json
   def show
+    @instances_by_semester = @course.course_instances.includes(:semester).group_by(&:semester)
   end
 
   # GET /courses/new
@@ -61,10 +73,18 @@ class CoursesController < ApplicationController
     end
   end
 
+  def autocomplete
+    @courses = Course.search(params[:term])
+    respond_to do |format|
+      format.json { render json: @courses.map{ |c| { label: c.long_string, value: c.to_param } } }
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_course
-      @course = Course.find(params[:id])
+      department, course_number = params[:id].match(/([a-zA-Z]+)(\d+)/).captures.map(&:upcase)
+      @course = Course.find_by(department: department, course_number: course_number) or not_found
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

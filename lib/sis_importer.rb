@@ -40,7 +40,10 @@ module SISImporter
       #TODO: course.course_offering = do something
       #TODO: We need some stuff for professor of class (Hard because there can be multiple)
       process_course_instance(class_xml,
-                              CourseInstance.where(semester: semester, course: course, section: course_attributes[:section]).first_or_initialize,
+                              CourseInstance.where(semester: semester,
+                                                   course: course,
+                                                   section: course_attributes[:section],
+                                                   subtitle: course_attributes[:subtitle]).first_or_initialize,
                               course_attributes)
     end
 
@@ -84,13 +87,27 @@ module SISImporter
       {
         subject:        class_xml.xpath('Subject').text,
         number:         class_xml.xpath('CatalogNbr').text,
-        title:          class_xml.xpath('CourseTitleLong').text,
         description:    class_xml.xpath('Description').text,
         units:          class_xml.xpath('UnitsMin').text, #TODO: Should this be min or max, or something else?
         dates:          fetch_start_end_dates(class_xml.xpath('Dates').text),
         section:        class_xml.xpath('Section').text,
         component_code: class_xml.xpath('ComponentCode').text
-      }
+      }.merge(fetch_title_and_subtitle(class_xml.xpath('CourseTitleLong').text))
+    end
+
+    def fetch_title_and_subtitle(full_title)
+      # Special handling for Special Topics courses
+      if full_title.start_with? 'Special Topics'
+        {
+          title:    'Special Topics',
+          subtitle: full_title[/Special Topics: (.*)/, 1]
+        }
+      else
+        {
+          title:    full_title,
+          subtitle: nil
+        }
+      end
     end
 
     def fetch_meeting_attributes(meeting_xml)

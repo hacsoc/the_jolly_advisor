@@ -1,24 +1,12 @@
-<p id="notice"><%= notice %></p>
+<%= @course.department %> <%= @course.course_number %>: <%= @course.title %>
 
-<p>
-  <strong>Department:</strong>
-  <%= @course.department %>
-</p>
+<p><%= @course.description %></p>
 
-<p>
-  <strong>Course number:</strong>
-  <%= @course.course_number %>
-</p>
+<p>Prereqs: TODO</p>
 
-<p>
-  <strong>Description:</strong>
-  <%= @course.description %>
-</p>
-
-<p>
-  <strong>Course offering:</strong>
-  <%= @course.course_offering %>
-</p>
-
-<%= link_to 'Edit', edit_course_path(@course) %> |
-<%= link_to 'Back', courses_path %>
+<% @instances_by_semester.each do |semester, instances| %>
+  <p><b><%= semester %></b>:</p>
+  <% instances.each do |instance| %>
+    Section <%= instance.section %> taught by <%= instance.professor.name %><br />
+  <% end %>
+<% end %>
