@@ -4,7 +4,18 @@ class CoursesController < ApplicationController
   # GET /courses
   # GET /courses.json
   def index
-    @courses = Course.all
+    @semesters = Semester.all
+    @courses = Course.page.uniq
+    if params[:search].present?
+      @courses = @courses.search(params[:search])
+    end
+    if params[:semester].present?
+      @courses = @courses.joins(:course_instances).where(course_instances: { semester_id: params[:semester].to_i })
+    end
+    if params[:professor].present?
+      professor = Professor.arel_table
+      @courses = @courses.joins(course_instances: :professor).where(professor[:name].matches("%#{params[:professor]}%"))
+    end
   end
 
   # GET /courses/1
@@ -59,6 +70,13 @@ class CoursesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to courses_url, notice: 'Course was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def autocomplete
+    @courses = Course.search(params[:term])
+    respond_to do |format|
+      format.json { render json: @courses.map{ |c| { label: c.long_string, value: c.to_param } } }
     end
   end
 
