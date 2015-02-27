@@ -1,16 +1,27 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <title>TheJollyAdvisor</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
-
-<%= "Current User: #{current_user}" %>
-
-<%= yield %>
-
-</body>
+<html lang=en>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<meta charset="utf-8">
+		<title><%= full_title(yield(:title)) %> | The Jolly Advisor</title>
+		<meta name="generator" content="Bootply" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	  
+		<%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+		<%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+		<%= csrf_meta_tags %>
+	</head>
+	
+	<body>
+		<!-- navbar -->
+    <%= render 'layouts/navbar' %>
+    <!-- /navbar -->
+		
+    <div class="container">
+      <%= yield %>
+    </div>
+    
+    <%= render 'layouts/footer' %>
+	</body>
+	
 </html>

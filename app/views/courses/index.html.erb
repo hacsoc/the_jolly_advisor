@@ -1,33 +1,57 @@
 <p id="notice"><%= notice %></p>
+<!--Course Search Page-->
 
-<h1>Listing Courses</h1>
+<div class="no-gutter row">
+  <!-- left side column -->
+  <div class="col-md-2">
+    <div class="panel panel-default" id="sidebar">
+    <div class="panel-heading" style="background-color:#888;color:#fff;">Explorer Links</div> 
+    <div class="panel-body">
+    <ul class="nav nav-stacked">
+      <li><a href="#">Home</a></li>
+      <li><a href="#">New Search</a></li>
+    </ul>
+    
+    </div><!--/panel body-->
+    </div><!--/panel-->
+  </div><!--/end left column-->
+  
+  <div class="col-md-10">
+	<div class="col-md-7" id="content">
+    <div class="panel">
+      <div class="panel-heading" style="background-color:#111;color:#fff;"></div>
+      
+      <div class="panel-body">
+	  
+	  <h1>Listing Courses</h1>
 
-<%= form_tag courses_path, method: :get do %>
-  <%= label_tag(:search) %>
-  <%= text_field_tag :search, params[:search], id: 'course-autocomplete', placeholder: 'Course search' %>
-  <%= label_tag(:semester) %>
-  <%= select_tag :semester, options_from_collection_for_select(@semesters, :id, :to_s, params[:semester].to_i), include_blank: "All" %>
-  <%= label_tag(:professor) %>
-  <%= text_field_tag :professor, params[:professor] %>
-  <%= submit_tag "Search", name: nil %>
-<% end %>
+		<%= form_tag courses_path, method: :get do %>
+		  <%= label_tag(:search) %>
+		  <%= text_field_tag :search, params[:search], id: 'course-autocomplete', placeholder: 'Course search' %>
+          <br />
+		  <%= label_tag(:semester) %>
+		  <%= select_tag :semester, options_from_collection_for_select(@semesters, :id, :to_s, params[:semester].to_i), include_blank: "All" %>
+		  <%= label_tag(:professor) %>
+		  <%= text_field_tag :professor, params[:professor] %>
+		  <%= submit_tag "Search", name: nil %>
+		<% end %>
 
-<table>
-  <thead>
-    <tr>
-      <th>Course</th>
-      <th>Title</th>
-    </tr>
-  </thead>
+		<table>
+		  <thead>
+			<tr>
+			  <th>Course</th>
+			  <th>Title</th>
+			</tr>
+		  </thead>
 
-  <tbody>
-    <% @courses.each do |course| %>
-      <tr>
-        <td nowrap><%= link_to course, course %></td>
-        <td><%= link_to course.title, course %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-<%= paginate @courses %>
-<%= page_entries_info @courses %>
+		  <tbody>
+			<% @courses.each do |course| %>
+			  <tr>
+				<td nowrap><%= link_to course, course %></td>
+				<td><%= link_to course.title, course %></td>
+			  </tr>
+			<% end %>
+		  </tbody>
+		</table>
+		<%= paginate @courses %>
+		<%= page_entries_info @courses %>
