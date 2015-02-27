@@ -28,6 +28,7 @@
 		<%= form_tag courses_path, method: :get do %>
 		  <%= label_tag(:search) %>
 		  <%= text_field_tag :search, params[:search], id: 'course-autocomplete', placeholder: 'Course search' %>
+          <br />
 		  <%= label_tag(:semester) %>
 		  <%= select_tag :semester, options_from_collection_for_select(@semesters, :id, :to_s, params[:semester].to_i), include_blank: "All" %>
 		  <%= label_tag(:professor) %>

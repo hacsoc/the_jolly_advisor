@@ -15,12 +15,13 @@
     
   <!--mid column-->
   <div class="col-md-3">
+
     <div class="panel" id="midCol">
     <div class="panel-heading" style="background-color:#555;color:#eee;"></div> 
     <div class="panel-body">
       <div class="well">
           <img src="assets/koyuturk.jpg" class="img-responsive">
-          <h3><a href="http://www.ratemyprofessors.com/ShowRatings.jsp?tid=1104419">Mehmet Koyuturk.</a></h3>
+          <h3><a href="http://www.ratemyprofessors.com/ShowRatings.jsp?tid=1104419"><%=first_professor.name%></a></h3>
       </div>
       
       <hr>
@@ -31,6 +32,7 @@
         <p><b><%= semester %></b>:</p>
         <% instances.each do |instance| %>
           Section <%= instance.section %> taught by <%= instance.professor.name %><br />
+          <%= instance.meetings.first.schedule %><br />
         <% end %>
       <% end %>
       
@@ -46,7 +48,7 @@
       <div class="panel-body">
         <div class="row">
           <div class="col-md-8">
-          <h2>Algorithms and Data Structures</h2>
+          <h2><%= @course.long_string %></h2>
           <table border="0" id="ACE_SSR_CLS_DTL_WRK_GROUP6" cellpadding="0" cellspacing="0" cols="2" width="541">
             <tbody>
               <tr>
@@ -57,7 +59,7 @@
                   <h4>Prereqs:</h4>
                   <p>TODO</p>
                   <h4>Suggested Prereqs:</h4>
-                  <p>MATH 201</p>
+                  <p>TODO</p>
                   <h4>Required for:</h4>
                   <p>TODO</p>
                 </div></td>
