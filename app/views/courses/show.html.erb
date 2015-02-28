@@ -57,7 +57,18 @@
                   <p><%= @course.description %></p>
                   <p>&nbsp;</p>
                   <h4>Prereqs:</h4>
-                  <p>TODO</p>
+                  <p>
+                  <ul>
+                    <% prereq_sets = @course.prerequisites %>
+                    <% if prereq_sets.empty? %>
+                      <li>None</li>
+                    <% else %>
+                      <% @course.prerequisites.each do |prereq_set| %>
+                        <li><%= prereq_set.map(&:to_s).join(" or ") %></li>
+                      <% end%>
+                    <% end %>
+                  </ul>
+                  </p>
                   <h4>Suggested Prereqs:</h4>
                   <p>TODO</p>
                   <h4>Required for:</h4>
@@ -96,7 +107,15 @@
 
 <p><%= @course.description %></p>
 
-<p>Prereqs: TODO</p>
+<p>Prereqs: 
+<ul>
+  <% @course.prerequisites.each do |prereq_set| %>
+    <li>
+    <%= prereq_set.map(&:long_string).join(" or ") %>
+    </li>
+  <% end %>
+</ul>
+</p>
 
 **Previous semesters?**
 <% @instances_by_semester.each do |semester, instances| %>
