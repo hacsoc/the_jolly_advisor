@@ -59,13 +59,8 @@
                   <h4>Prereqs:</h4>
                   <p>
                   <ul>
-                    <% prereq_sets = @course.prerequisites %>
-                    <% if prereq_sets.empty? %>
-                      <li>None</li>
-                    <% else %>
-                      <% @course.prerequisites.each do |prereq_set| %>
-                        <li><%= prereq_set.map(&:to_s).join(" or ") %></li>
-                      <% end%>
+                    <% prereq_sets(@course).each do |prereq_set| %>
+                      <%= prereq_set.html_safe %>
                     <% end %>
                   </ul>
                   </p>
