@@ -93,25 +93,7 @@
   </div> 
 </div>
 
-
-
-<!-- 
-
-
-<%= @course.department %> <%= @course.course_number %>: <%= @course.title %>
-
-<p><%= @course.description %></p>
-
-<p>Prereqs: 
-<ul>
-  <% @course.prerequisites.each do |prereq_set| %>
-    <li>
-    <%= prereq_set.map(&:long_string).join(" or ") %>
-    </li>
-  <% end %>
-</ul>
-</p>
-
+<!--
 **Previous semesters?**
 <% @instances_by_semester.each do |semester, instances| %>
   <p><b><%= semester %></b>:</p>
