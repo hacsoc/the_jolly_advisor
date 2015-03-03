@@ -14,6 +14,8 @@ require 'open-uri'
 # to ActiveRecord.
 
 module SISImporter
+  using PGArrayPatch
+
   class << self
     def import_sis
       fetch_terms.each { |term_xml| process_term(term_xml, fetch_term_info(term_xml)) } 
@@ -73,19 +75,18 @@ module SISImporter
       fetch_reqs(enrollment_req_info).each do |req|
         # Build up a list of lists of course ids of the prereqs
         course_id_sets = req[:reqs].map do |clause|
-          clause.reduce([]) do |arr, long_title|
+          clause.map do |long_title|
             department, course_number = long_title.split
-            arr << 
-              Course.where(department: department, course_number: course_number)
-                    .first_or_create
-                    .id
+            Course.where(department: department, course_number: course_number)
+                  .first_or_create
+                  .id
           end
         end
 
         # for each set of prereq ids, create a row
         course_id_sets.each do |course_id_set|
           Prerequisite.where(postrequisite: course,
-                             prerequisite_ids: course_id_set.sort,
+                             prerequisite_ids: course_id_set.sort.to_pg_sql,
                              co_req: req[:co_req])
                       .first_or_create
         end
