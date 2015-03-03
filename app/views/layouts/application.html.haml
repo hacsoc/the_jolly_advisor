@@ -1,0 +1,18 @@
+!!!
+%html{lang: "en"}
+  %head
+    %meta{content: "text/html; charset=UTF-8", "http-equiv" => "content-type"}/
+    %meta{charset: "utf-8"}/
+    %title
+      = full_title(yield(:title))
+      | The Jolly Advisor
+    %meta{content: "Bootply", name: "generator"}/
+    %meta{content: "width=device-width, initial-scale=1, maximum-scale=1", name: "viewport"}/
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
+    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    = csrf_meta_tags
+  %body
+    = render 'layouts/navbar'
+    .container
+      = yield
+    = render 'layouts/footer'
