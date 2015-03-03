@@ -86,7 +86,7 @@ module SISImporter
         # for each set of prereq ids, create a row
         course_id_sets.each do |course_id_set|
           Prerequisite.where(postrequisite: course,
-                             prerequisite_ids: course_id_set.sort.to_pg_sql,
+                             prerequisite_ids: course_id_set.to_pg_sql,
                              co_req: req[:co_req])
                       .first_or_create
         end
