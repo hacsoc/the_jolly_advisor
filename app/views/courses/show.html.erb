@@ -57,7 +57,13 @@
                   <p><%= @course.description %></p>
                   <p>&nbsp;</p>
                   <h4>Prereqs:</h4>
-                  <p>TODO</p>
+                  <p>
+                  <ul>
+                    <% prereq_sets(@course).each do |prereq_set| %>
+                      <%= prereq_set.html_safe %>
+                    <% end %>
+                  </ul>
+                  </p>
                   <h4>Suggested Prereqs:</h4>
                   <p>TODO</p>
                   <h4>Required for:</h4>
@@ -87,17 +93,7 @@
   </div> 
 </div>
 
-
-
-<!-- 
-
-
-<%= @course.department %> <%= @course.course_number %>: <%= @course.title %>
-
-<p><%= @course.description %></p>
-
-<p>Prereqs: TODO</p>
-
+<!--
 **Previous semesters?**
 <% @instances_by_semester.each do |semester, instances| %>
   <p><b><%= semester %></b>:</p>
