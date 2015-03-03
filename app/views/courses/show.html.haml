@@ -1,0 +1,46 @@
+.no-gutter.row
+  = render 'sidebar'
+  / mid column
+  .col-md-3
+    #midCol.panel
+      .panel-heading{style: "background-color:#555;color:#eee;"}
+      .panel-body
+        .well
+          %h3= first_professor.name
+        %hr/
+        %h3 Previous Semesters
+        - @instances_by_semester.each do |semester, instances|
+          %p
+            %b= semester
+            \:
+          - instances.each do |instance|
+            Section #{instance.section} taught by #{instance.professor.name}
+            %br
+            = instance.meetings.first.schedule
+            %br
+  #content.col-md-7
+    .panel
+      .panel-heading{style: "background-color:#111;color:#fff;"}
+      .panel-body
+        .row
+          .col-md-8
+            %h2= @course.long_string
+            %table{border: "0", cellpadding: "0", cellspacing: "0", cols: "2", width: "541"}
+              %tbody
+                %tr
+                  %td{align: "left", valign: "top"}
+                    %h4 Description:
+                    %p= @course.description
+                    %p  
+                    %h4 Prereqs:
+                    %p
+                    %ul
+                      - prereq_sets(@course).each do |prereq_set|
+                        = prereq_set.html_safe
+                    %h4 Required for:
+                    %p TODO
+        %hr
+        #posts
+          %h2 Tips and Reviews
+          %p TODO: Populate this via the Posts model
+        %hr
