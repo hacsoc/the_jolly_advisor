@@ -8,8 +8,14 @@ class Course < ActiveRecord::Base
   # Get all prereq info from the database.
   # Return an array of arrays of courses.
   def prerequisites
-    Prerequisite.where(postrequisite: self).reduce([]) do |arr, prereq|
-      arr << Course.where('id IN (?)', prereq.prerequisite_ids)
+    Prerequisite.where(postrequisite: self).map do |prereq|
+      Course.where(id: prereq.prerequisite_ids)
+    end
+  end
+
+  def postrequisites
+    Prerequisite.where('? = ANY(prerequisite_ids)', self.id).map do |prereq|
+      Course.find_by(id: prereq.postrequisite_id)
     end
   end
 

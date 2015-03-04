@@ -11,23 +11,19 @@
         %li= link_to "Wish List", wishlist_path
         %li= link_to "FAQ", '#'
       %ul.nav.navbar-right.navbar-nav
+        %li
+          %form.navbar-form{role: 'search'}
+            .form-group
+              %input#course-autocomplete.form-control{placeholder: "Course Select", type: "text"}
         %li.dropdown
           %a.dropdown-toggle{"data-toggle" => "dropdown", href: "#"}
-            %i.glyphicon.glyphicon-search
-          %ul.dropdown-menu{style: "padding:12px;"}
-          %form.form-inline
-            %button.btn.btn-default.pull-right{type: "submit"}
-              %i.glyphicon.glyphicon-search
-            %input.form-control.pull-left{placeholder: "Search", type: "text"}/
-      %li.dropdown
-        %a.dropdown-toggle{"data-toggle" => "dropdown", href: "#"}
-          %i.glyphicon.glyphicon-user
-          %i.glyphicon.glyphicon-chevron-down
-        %ul.dropdown-menu{role: "menu"}
-          - unless user_signed_in?
-            %li= link_to "Login", login_users_path
-          - else
-            %li= link_to "#{current_user.case_id}: Logout", logout_users_path
-          %li.divider
-          %li
-            %a{href: "#"} About
+            %i.glyphicon.glyphicon-user
+            %i.glyphicon.glyphicon-chevron-down
+          %ul.dropdown-menu{role: "menu"}
+            - unless user_signed_in?
+              %li= link_to "Login", login_users_path
+            - else
+              %li= link_to "#{current_user.case_id}: Logout", logout_users_path
+            %li.divider
+            %li
+              %a{href: "#"} About

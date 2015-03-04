@@ -6,13 +6,20 @@ module CoursesHelper
   def prereq_sets(course)
     prereq_sets = course.prerequisites
     if prereq_sets.empty?
-      [content_tag(:li, 'None')]
+      ['None']
     else
       prereq_sets.map do |prereq_set|
-        content_tag :li do
-          concat prereq_set.map { |prereq| content_tag(:a, prereq.to_s, href: prereq.to_param).to_s }.join(" or ")
-        end
+        prereq_set.map { |prereq| link_to(prereq, prereq.to_param) }.join(" or ").html_safe
       end
+    end
+  end
+
+  def postreqs(course)
+    postreqs = course.postrequisites
+    if postreqs.empty?
+      ['None']
+    else
+      postreqs.map { |postreq| link_to(postreq, postreq.to_param) }
     end
   end
 end
