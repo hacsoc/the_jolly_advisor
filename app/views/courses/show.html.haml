@@ -33,12 +33,13 @@
                     %p= @course.description
                     %p  
                     %h4 Prereqs:
-                    %p
                     %ul
                       - prereq_sets(@course).each do |prereq_set|
-                        = prereq_set.html_safe
+                        %li= prereq_set
                     %h4 Required for:
-                    %p TODO
+                    %ul
+                      - postreqs(@course).each do |postreq|
+                        %li= postreq
         %hr
         #posts
           %h2 Tips and Reviews
