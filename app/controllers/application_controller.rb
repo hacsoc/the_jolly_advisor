@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
   def authenticate_user!
     unless session.has_key?('cas_user')
       session[:was_at] = request.env['PATH_INFO']
-      redirect_to login_user_path
+      redirect_to login_users_path
     end
   end
 
