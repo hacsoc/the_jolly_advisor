@@ -1,1 +1,6 @@
 %h1 Wishlist
+
+/ someone else should make this look pretty
+%ul
+  -@wishlist.each do |course|
+    %li=link_to course.to_s, course
