@@ -1,5 +1,3 @@
 / the user should already be signed in if we've gotten to this point
-- if current_user.wishlist.include? course
-  = link_to "Remove from my wishlist", wishlist_path(course_id: course.id, url: request.original_url), method: :delete
--else
-  = link_to "Add to my wishlist", wishlist_path(course_id: course.id, url: request.original_url), method: :post
+- wishlist_course_ids = current_user.wishlist.map(&:course_id)
+= link_to "#{wishlist_course_ids.include?(course.id) ? 'Remove from' : 'Add to'} my wishlist", wishlist_path(course_id: course.id, url: request.original_url), method: wishlist_course_ids.include?(course.id) ? :delete : :post
