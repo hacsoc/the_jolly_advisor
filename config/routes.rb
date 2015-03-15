@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   get 'scheduler' => 'scheduler#index'
   get 'wishlist' => 'wishlist#index'
   post 'wishlist' => 'wishlist#add_course'
+  delete 'wishlist' => 'wishlist#remove_course'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
