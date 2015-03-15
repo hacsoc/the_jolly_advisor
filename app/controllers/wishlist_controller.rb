@@ -20,6 +20,17 @@ class WishlistController < ApplicationController
     end
   end
 
+  # PUT /wishlist
+  def update
+    respond_to do |format|
+      if @wishlist_item.update(wishlist_item_params)
+        format.html { redirect_to wishlist_path }
+      else
+        format.html { redirect_to wishlist_path }
+      end
+    end
+  end
+
   # DELETE /wishlist
   def remove_course
     respond_to do |format|
@@ -38,5 +49,9 @@ class WishlistController < ApplicationController
   def find_wishlist_item
     @wishlist_item = WishlistItem.where(user: current_user, course_id: params[:course_id])
                                  .first_or_initialize
+  end
+
+  def wishlist_item_params
+    params.require(:wishlist_item).permit(:notify)
   end
 end
