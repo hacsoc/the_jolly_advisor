@@ -1,6 +1,12 @@
 %h1 Wishlist
 
 / someone else should make this look pretty
-%ul
-  -@wishlist.each do |course|
-    %li=link_to course.to_s, course
+%table
+  %thead
+    %th Course
+    %th Action
+  %tbody
+    - @wishlist.each do |item|
+      %tr
+        %td= link_to item, item 
+        %td= render partial: 'wishlist/add_remove_link', locals: { course: item }
