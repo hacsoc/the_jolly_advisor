@@ -4,6 +4,6 @@ class User < ActiveRecord::Base
   end
 
   def wishlist
-    WishlistItem.includes(:courses).where(user_id: id).map(&:course)
+    WishlistItem.includes(:course).where(user_id: id).map(&:course)
   end
 end
