@@ -1,6 +1,6 @@
 class WishlistController < ApplicationController
   before_action :authenticate_user!
-  before_action :find_wishlist_item
+  before_action :find_wishlist_item, except: [:index]
 
   # GET /wishlist
   def index
