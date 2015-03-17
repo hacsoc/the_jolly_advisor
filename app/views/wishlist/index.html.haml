@@ -15,5 +15,5 @@
         %td= link_to item.course, item.course
         %td= item.course.schedulable? ? "Yes" : "No"
         %td
-          = add_remove_link @wishlist, item.course
+          = add_remove_link @wishlist.map(&:course_id), item.course
           = set_notify_link item
