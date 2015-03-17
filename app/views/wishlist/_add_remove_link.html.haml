@@ -1,3 +1,2 @@
 / the user should already be signed in if we've gotten to this point
-- wishlist_course_ids = current_user.wishlist.map(&:course_id)
-= link_to "#{wishlist_course_ids.include?(course.id) ? 'Remove from' : 'Add to'} my wishlist", wishlist_path(course_id: course.id, url: request.original_url), method: wishlist_course_ids.include?(course.id) ? :delete : :post
+= add_remove_link(current_user.wishlist.map(&:course_id), course)
