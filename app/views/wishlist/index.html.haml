@@ -10,5 +10,5 @@
       %tr
         %td= link_to item.course, item.course
         %td
-          = render partial: 'wishlist/add_remove_link', locals: { course: item.course }
-          = render partial: 'wishlist/set_notify_link', locals: { item: item }
+          = add_remove_link current_user.wishlist.map(&:course_id), item.course
+          = set_notify_link item
