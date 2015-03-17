@@ -4,7 +4,7 @@ class WishlistController < ApplicationController
 
   # GET /wishlist
   def index
-    @wishlist = current_user.wishlist
+    @wishlist = current_user.wishlist.includes(course: :course_instances)
   end
 
   # POST /wishlist

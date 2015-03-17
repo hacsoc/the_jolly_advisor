@@ -4,11 +4,13 @@
 %table
   %thead
     %th Course
+    %th Schedulable
     %th Actions
   %tbody
     - @wishlist.each do |item|
       %tr
         %td= link_to item.course, item.course
+        %td= item.course.schedulable? ? "Yes" : "No"
         %td
-          = add_remove_link current_user.wishlist.map(&:course_id), item.course
+          = add_remove_link @wishlist, item.course
           = set_notify_link item

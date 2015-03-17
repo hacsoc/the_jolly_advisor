@@ -19,6 +19,11 @@ class Course < ActiveRecord::Base
     end
   end
 
+  # Is this course currently schedulable?
+  def schedulable?
+    !course_instances.to_a.keep_if { |instance| instance.schedulable? }.empty?
+  end
+
   def to_param
     "#{department}#{course_number}"
   end
