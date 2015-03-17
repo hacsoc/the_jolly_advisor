@@ -1,4 +1,7 @@
 %h1 Wishlist
+= form_tag wishlist_path, role: :search, id: :wishlist_course_form do
+  = hidden_field_tag :course_id
+  = text_field_tag :course_title, nil, placeholder: "Quickly add courses to your wishlist", class: 'form-control'
 
 / someone else should make this look pretty
 %table

@@ -76,7 +76,7 @@ class CoursesController < ApplicationController
   def autocomplete
     @courses = Course.search(params[:term])
     respond_to do |format|
-      format.json { render json: @courses.map{ |c| { label: c.long_string, value: c.to_param } } }
+      format.json { render json: @courses.map{ |c| { id: c.id, label: c.long_string, value: c.to_param } } }
     end
   end
 
