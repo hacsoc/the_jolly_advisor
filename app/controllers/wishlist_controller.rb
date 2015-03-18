@@ -23,11 +23,8 @@ class WishlistController < ApplicationController
   # PUT /wishlist
   def update
     respond_to do |format|
-      if @wishlist_item.update(wishlist_item_params)
-        format.html { redirect_to wishlist_path }
-      else
-        format.html { redirect_to wishlist_path }
-      end
+      @wishlist_item.update(wishlist_item_params)
+      format.html { redirect_to wishlist_path }
     end
   end
 
