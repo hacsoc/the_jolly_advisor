@@ -1,6 +1,6 @@
 class SchedulerController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_course_instances, :if => :json_request?
+  before_action :set_scheduled_meetings, :if => :json_request?
 
   # GET /scheduler
   # GET /scheduler.json
@@ -11,8 +11,8 @@ class SchedulerController < ApplicationController
 
   # Set the course instances to be rendered in the schedule
   # This is for the JSON feed that fullcalendar requires
-  def set_course_instances
-    @course_instances = current_user.enrolled_courses.ongoing.includes(:meetings)
+  def set_scheduled_meetings
+    @scheduled_meetings = current_user.enrolled_courses.ongoing.includes(:meetings).flat_map(&:meetings).flat_map(&:scheduled_meetings)
   end
 
   # move this to application controller eventually
