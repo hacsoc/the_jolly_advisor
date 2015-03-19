@@ -1,1 +1,13 @@
 %h1 Scheduler
+
+.calendar
+
+:javascript
+  $('.calendar').fullCalendar({
+    defaultView: 'agendaWeek', // think 'google calendar'
+    header: '', // no headers
+    allDaySlot: false, // don't show the 'all-day' slot at the top
+    columnFormat: 'dddd', // show the full day name, but without the date
+    weekends: false,
+    events: '/scheduler' // get the events from the JSON feed of the same url
+  });
