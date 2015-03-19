@@ -14,5 +14,7 @@
 //= require jquery_ujs
 //= require jquery-ui/autocomplete
 //= require twitter/bootstrap
+//= require moment
+//= require fullcalendar
 //= require turbolinks
 //= require_tree .
