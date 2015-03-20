@@ -1,6 +1,7 @@
 class SchedulerController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_scheduled_meetings, :if => :json_request?
+  before_action :set_scheduled_meetings, only: [:index], :if => :json_request?
+  before_action :set_enrollment, only: [:create]
 
   # GET /scheduler
   # GET /scheduler.json
@@ -8,7 +9,15 @@ class SchedulerController < ApplicationController
   def index
   end
 
+  # POST /scheduler.js
+  def create
+  end
+
   private
+
+  def set_enrollment
+    @enrollment = Enrollment.where(user: current_user, course_instance_id: params[:course_instance_id]).first_or_create
+  end
 
   # Set the course instances to be rendered in the schedule
   # This is for the JSON feed that fullcalendar requires

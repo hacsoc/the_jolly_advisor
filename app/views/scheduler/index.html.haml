@@ -7,7 +7,7 @@
   = hidden_field_tag :old_feed, nil # this is the old feed we need to remove
   = f.submit 'Change Semesters!'
 
-= form_tag scheduler_path, role: :search, id: :schedule_form do
+= form_tag scheduler_path, role: :search, id: :schedule_form, remote: true do
   = hidden_field_tag :course_instance_id
   = text_field_tag :course_title, nil, placeholder: 'Add course instance to this semester', class: 'form-control'
 
