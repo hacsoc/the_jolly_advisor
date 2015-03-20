@@ -15,7 +15,7 @@
 
 :javascript
   // pass any query parameters along to the JSON action
-  var event_feed = '#{scheduler_path(semester: params[:semester] || nil)}';
+  var event_feed = '#{scheduler_feed}';
   $('#old_feed').val(event_feed);
   $('#calendar').fullCalendar({
     defaultView: 'agendaWeek', // think 'google calendar'
