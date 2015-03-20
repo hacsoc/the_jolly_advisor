@@ -2,7 +2,6 @@ class CourseInstancesController < ApplicationController
   # GET /course_instances/autocomplete.json
   def autocomplete
     @course_instances = CourseInstance.search(params[:term], params[:current_date])
-    debugger
     respond_to do |format|
       format.json do
         render json: @course_instances.map do |ci|
