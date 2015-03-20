@@ -1,13 +1,23 @@
 %h1 Scheduler
 
-.calendar
+= form_for :semester, url: scheduler_path, method: :get, remote: true do |f|
+  = f.select :semester, %w(Fall Spring Summer).map { |str| [str, str.downcase] }
+  = f.select :year, options_for_select(2008..DateTime.now.year, DateTime.now.year)
+  = f.select :half, ['First Half', 'Second Half'].map { |str| [str, str.split.first.downcase] }
+  = hidden_field_tag :old_feed, nil # this is the old feed we need to remove
+  = f.submit 'Change Semesters!'
+
+#calendar
 
 :javascript
-  $('.calendar').fullCalendar({
+  // pass any query parameters along to the JSON action
+  var event_feed = '#{scheduler_path(semester: params[:semester] || nil)}';
+  $('#old_feed').val(event_feed);
+  $('#calendar').fullCalendar({
     defaultView: 'agendaWeek', // think 'google calendar'
     header: '', // no headers
     allDaySlot: false, // don't show the 'all-day' slot at the top
     columnFormat: 'dddd', // show the full day name, but without the date
     weekends: false,
-    events: '/scheduler' // get the events from the JSON feed of the same url
+    events: event_feed
   });

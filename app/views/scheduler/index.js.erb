@@ -1,0 +1,10 @@
+var new_feed = '<%= scheduler_path(semester: params[:semester] || nil).html_safe %>';
+
+// remove the old calendar feed
+$('#calendar').fullCalendar('removeEventSource', '<%= params[:old_feed].html_safe %>');
+
+// give the calendar a new feed
+$('#calendar').fullCalendar('addEventSource', new_feed);
+
+// update the form with the new feed
+$('#old_feed').val(new_feed);
