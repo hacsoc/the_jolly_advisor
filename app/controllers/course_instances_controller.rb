@@ -4,13 +4,12 @@ class CourseInstancesController < ApplicationController
     @course_instances = CourseInstance.search(params[:term], params[:current_date])
     respond_to do |format|
       format.json do
-        render json: @course_instances.map do |ci|
+        render json: (@course_instances.map do |ci|
           {
-            id: ci.id,
             label: "#{ci.course.long_string} (#{ci.meetings.first.try(:schedule) || 'TBA'})",
             value: ci.id
           }
-        end
+        end)
       end
     end
   end

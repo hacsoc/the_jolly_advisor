@@ -30,7 +30,7 @@
   $('#course_title').autocomplete({
     source: '#{autocomplete_course_instances_path(current_date: @jump_date.try(:to_date) || Date.today)}',
     select: function(event, ui) {
-      $('#course_instance_id').val(ui.item.id);
+      $('#course_instance_id').val(ui.item.value);
       $('#schedule_form').submit();
     }
   });
