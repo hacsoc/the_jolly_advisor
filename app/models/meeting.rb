@@ -10,7 +10,7 @@ class Meeting < ActiveRecord::Base
   # All schedules have the form:
   #   DAY_ABBRVS START_TIME - END_TIME
   def scheduled_meetings
-    return [] if schedule == 'TBA'
+    return [] if schedule.start_with?('TBA') # sometimes there's trailing whitespace
 
     # the start time is the first time in the schedule
     start_time = schedule.match(/^.* (#{MEETING_TIME_REGEX}) - #{MEETING_TIME_REGEX}$/).captures.first
