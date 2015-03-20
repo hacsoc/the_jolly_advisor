@@ -35,6 +35,7 @@ gem 'less-rails'
 gem 'twitter-bootstrap-rails'
 gem 'momentjs-rails'
 gem 'fullcalendar-rails'
+gem 'timecop'
 
 gem 'rubycas-client', github: 'rubycas/rubycas-client'
 
