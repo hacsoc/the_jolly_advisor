@@ -28,8 +28,8 @@ class SchedulerController < ApplicationController
 
   def set_timecop
     jump_date_string = Semester::SAFE_JUMP_DATES[params[:semester][:semester].to_sym][params[:semester][:half].to_sym] + " #{params[:semester][:year]}"
-    jump_date = DateTime.strptime(jump_date_string, Semester::SAFE_JUMP_DATE_STRPTIME_STRING + ' %Y')
-    Timecop.travel(jump_date)
+    @jump_date = DateTime.strptime(jump_date_string, Semester::SAFE_JUMP_DATE_STRPTIME_STRING + ' %Y')
+    Timecop.travel(@jump_date)
   end
 
   def reset_timecop

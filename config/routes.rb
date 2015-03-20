@@ -14,6 +14,12 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :course_instances, only: [] do
+    collection do
+      get :autocomplete
+    end
+  end
+
   get 'scheduler' => 'scheduler#index'
   get 'wishlist' => 'wishlist#index'
   post 'wishlist' => 'wishlist#add_course'

@@ -7,6 +7,10 @@
   = hidden_field_tag :old_feed, nil # this is the old feed we need to remove
   = f.submit 'Change Semesters!'
 
+= form_tag scheduler_path, role: :search, id: :schedule_form do
+  = hidden_field_tag :course_instance_id
+  = text_field_tag :course_title, nil, placeholder: 'Add course instance to this semester', class: 'form-control'
+
 #calendar
 
 :javascript
@@ -20,4 +24,13 @@
     columnFormat: 'dddd', // show the full day name, but without the date
     weekends: false,
     events: event_feed
+  });
+
+  // autocomplete
+  $('#course_title').autocomplete({
+    source: '#{autocomplete_course_instances_path(current_date: @jump_date.try(:to_date) || Date.today)}',
+    select: function(event, ui) {
+      $('#course_instance_id').val(ui.item.id);
+      $('#schedule_form').submit();
+    }
   });
