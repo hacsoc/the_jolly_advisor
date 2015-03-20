@@ -173,7 +173,6 @@ GEM
     thor (0.19.1)
     thread_safe (0.3.4)
     tilt (1.4.1)
-    timecop (0.7.3)
     turbolinks (2.5.3)
       coffee-rails
     twitter-bootstrap-rails (3.2.0)
@@ -218,7 +217,6 @@ DEPENDENCIES
   smarter_csv
   spring (= 1.3.2)
   therubyracer
-  timecop
   turbolinks
   twitter-bootstrap-rails
   uglifier (>= 1.3.0)

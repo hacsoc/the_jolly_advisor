@@ -1,5 +1,11 @@
 class SchedulerController < ApplicationController
   before_action :authenticate_user!
+  # jump date needs to be set before set_scheduled_meetings,
+  # so that the correct time can be used in the course instance query
+  #
+  # The jump date should also be set for JS requests, so that the
+  # source for the autocomplete can be set to the right date.
+  before_action :set_jump_date, only: [:index], :if => [:semester_request?, -> { json_request? || js_request? }]
   before_action :set_scheduled_meetings, only: [:index], :if => :json_request?
   before_action :set_enrollment, only: [:create]
 
@@ -22,32 +28,23 @@ class SchedulerController < ApplicationController
   # Set the course instances to be rendered in the schedule
   # This is for the JSON feed that fullcalendar requires
   def set_scheduled_meetings
-    if semester_request?
-      set_timecop
-    end
     # timecop should be set here to get the correct enrollments in the query
-    meetings = current_user.enrolled_courses.ongoing.includes(:meetings, :course).flat_map(&:meetings)
-    if semester_request?
-      reset_timecop
-    end
-    # But timecop needs to be unset here to make sure the dates of the scheduled_meetings
-    # are actually in the current week, which is what fullcalendar is expecting
-    @scheduled_meetings = meetings.flat_map(&:scheduled_meetings)
+    @scheduled_meetings = current_user.enrolled_courses.ongoing(@jump_date || Date.today).includes(:meetings, :course).flat_map(&:meetings).flat_map(&:scheduled_meetings)
   end
 
-  def set_timecop
+  def set_jump_date
     jump_date_string = Semester::SAFE_JUMP_DATES[params[:semester][:semester].to_sym][params[:semester][:half].to_sym] + " #{params[:semester][:year]}"
     @jump_date = DateTime.strptime(jump_date_string, Semester::SAFE_JUMP_DATE_STRPTIME_STRING + ' %Y')
-    Timecop.travel(@jump_date)
-  end
-
-  def reset_timecop
-    Timecop.return
   end
 
   # move this to application controller eventually
   def json_request?
     request.format.json?
+  end
+
+  # also move this to application controller eventually
+  def js_request?
+    request.format.js?
   end
 
   def semester_request?
