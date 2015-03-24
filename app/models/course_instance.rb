@@ -2,7 +2,7 @@ class CourseInstance < ActiveRecord::Base
   belongs_to :semester
   belongs_to :course
   belongs_to :professor
-  has_many :meetings
+  has_many :meetings, dependent: :destroy
   has_many :enrollments, dependent: :destroy
   has_many :enrolled_students, through: :enrollments, source: :user
 
