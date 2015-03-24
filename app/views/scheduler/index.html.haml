@@ -35,7 +35,7 @@
 
   // autocomplete
   $('#course_title').autocomplete({
-    source: '#{course_instance_autocomplete(@jump_date || Date.today)}',
+    source: '#{course_instance_autocomplete(@search_date || Date.today)}',
     select: function(event, ui) {
       $('#course_instance_id').val(ui.item.value);
       $('#schedule_form').submit();

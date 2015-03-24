@@ -11,4 +11,4 @@ $('#old_feed').val(new_feed);
 
 // additionally, need to change the autocomplete source so that it
 // looks for course instances in the correct day range
-$('#course_title').autocomplete('option', 'source', '<%= course_instance_autocomplete(@jump_date || Date.today).html_safe %>');
+$('#course_title').autocomplete('option', 'source', '<%= course_instance_autocomplete(@search_date || Date.today).html_safe %>');
