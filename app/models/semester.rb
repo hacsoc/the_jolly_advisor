@@ -21,7 +21,7 @@ class Semester < ActiveRecord::Base
     summer: {
       # TODO: uhhhhh
     }
-  }
+  }.with_indifferent_access
 
   # Append to this with whatever format is approprite
   # for how you are specifying the year. Then call

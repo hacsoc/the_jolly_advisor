@@ -33,7 +33,7 @@ class SchedulerController < ApplicationController
   end
 
   def set_jump_date
-    jump_date_string = Semester::SAFE_JUMP_DATES[params[:semester][:semester].to_sym][params[:semester][:half].to_sym] + " #{params[:semester][:year]}"
+    jump_date_string = Semester::SAFE_JUMP_DATES[params[:semester][:semester]][params[:semester][:half]] + " #{params[:semester][:year]}"
     @jump_date = DateTime.strptime(jump_date_string, Semester::SAFE_JUMP_DATE_STRPTIME_STRING + ' %Y')
   end
 
