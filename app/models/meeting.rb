@@ -2,7 +2,8 @@ class Meeting < ActiveRecord::Base
   belongs_to :course_instance
   belongs_to :professor
 
-  MEETING_TIME_REGEX = /\d{1,2}:\d{1,2} [AP]M/
+  TIME_REGEX = /\d{1,2}:\d{1,2} [AP]M/
+  MEETING_SCHEDULE_REGEX = /^(.*) (#{TIME_REGEX}) - (#{TIME_REGEX})/
 
   # Return an Array of ScheduledMeetings for this Meeting.
   # Empty if the schedule is TBA
@@ -12,14 +13,10 @@ class Meeting < ActiveRecord::Base
   def scheduled_meetings
     return [] if schedule.start_with?('TBA') # sometimes there's trailing whitespace
 
-    # the start time is the first time in the schedule
-    start_time = schedule.match(/^.* (#{MEETING_TIME_REGEX}) - #{MEETING_TIME_REGEX}$/).captures.first
-    # the end time is the second time
-    end_time = schedule.match(/^.* #{MEETING_TIME_REGEX} - (#{MEETING_TIME_REGEX})$/).captures.first
-    # To get the day abbreviations, only look at the schedule up to the first space.
-    # Then, for each abbreviation, create a ScheduledMeeting for that day
-    schedule[0..schedule.index(' ')].scan(/[A-Z][a-z]?/) # MTuWThFSaSu
-                                    .map { |day_abbreviation| ScheduledMeeting.new day_abbreviation, start_time, end_time, self }
+    abbreviations, start_time, end_time = schedule.match(MEETING_SCHEDULE_REGEX).captures
+    # For each abbreviation, create a ScheduledMeeting for that day
+    abbreviations.scan(/[A-Z][a-z]?/) # MTuWThFSaSu
+                 .map { |day_abbreviation| ScheduledMeeting.new day_abbreviation, start_time, end_time, self }
   end
 end
 
