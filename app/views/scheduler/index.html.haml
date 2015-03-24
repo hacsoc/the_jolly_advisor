@@ -23,7 +23,14 @@
     allDaySlot: false, // don't show the 'all-day' slot at the top
     columnFormat: 'dddd', // show the full day name, but without the date
     weekends: false,
-    events: event_feed
+    events: event_feed,
+
+    eventRender: function(event, element) {
+      // set up the tooltip on the original element
+      element.attr('data-toggle', 'tooltip');
+      element.attr('title', event.description);
+      element.tooltip();
+    }
   });
 
   // autocomplete
