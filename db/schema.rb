@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150315190038) do
+ActiveRecord::Schema.define(version: 20150318234913) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,6 +44,13 @@ ActiveRecord::Schema.define(version: 20150315190038) do
   add_index "courses", ["course_number"], name: "index_courses_on_course_number", using: :btree
   add_index "courses", ["department", "course_number"], name: "index_courses_on_department_and_course_number", using: :btree
   add_index "courses", ["department"], name: "index_courses_on_department", using: :btree
+
+  create_table "enrollments", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "course_instance_id"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
 
   create_table "meetings", force: :cascade do |t|
     t.integer  "course_instance_id"

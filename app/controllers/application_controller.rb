@@ -25,9 +25,19 @@ class ApplicationController < ActionController::Base
     raise ActionController::RoutingError.new('Not Found')
   end
 
+  def xhr_request?
+    request.xhr?
+  end
+
   def set_current_user
     if session.has_key?('cas_user')
       @current_user = User.find_or_create_by(case_id: session['cas_user'])
     end
+  end
+
+  # Used for the searching done by both the SchedulerController and CourseInstancesController
+  def set_search_date
+    search_date_string = Semester::SAFE_SEARCH_DATES[params[:semester][:semester]][params[:semester][:half]] + " #{params[:semester][:year]}"
+    @search_date = DateTime.strptime(search_date_string, Semester::SAFE_SEARCH_DATE_STRPTIME_STRING + ' %Y')
   end
 end

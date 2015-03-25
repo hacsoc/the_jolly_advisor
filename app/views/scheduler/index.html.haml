@@ -1,1 +1,73 @@
 %h1 Scheduler
+
+= form_for :semester, url: scheduler_path, method: :get, remote: true, html: {id: :semester_form} do |f|
+  = f.select :semester, %w(Fall Spring Summer).map { |str| [str, str.downcase] }
+  = f.select :year, options_for_select(2008..DateTime.now.year, DateTime.now.year)
+  = f.select :half, ['First Half', 'Second Half'].map { |str| [str, str.split.first.downcase] }
+  = hidden_field_tag :old_feed, nil # this is the old feed we need to remove
+  = f.submit 'Change Semesters!'
+
+= form_tag scheduler_path, role: :search, id: :schedule_form, remote: true do
+  = text_field_tag :course_title, nil, placeholder: 'Add course instance to this semester', class: 'form-control'
+
+#calendar
+
+:javascript
+  // pass any query parameters along to the JSON action
+  var event_feed = '#{scheduler_feed}';
+  $('#old_feed').val(event_feed);
+  $('#calendar').fullCalendar({
+    defaultView: 'agendaWeek', // think 'google calendar'
+    header: '', // no headers
+    allDaySlot: false, // don't show the 'all-day' slot at the top
+    columnFormat: 'dddd', // show the full day name, but without the date
+    weekends: false,
+    events: event_feed,
+
+    eventRender: function(event, element) {
+      // set up the tooltip on the original element
+      element.attr('data-toggle', 'tooltip');
+      element.attr('title', event.description);
+      element.tooltip();
+    }
+  });
+
+  // change semesters without hitting the server (twice)
+  $('#semester_form').on('ajax:beforeSend', function() {
+    var form_data = $(this).serialize();
+    var new_feed = '#{scheduler_path}' + '?' + form_data;
+
+    $('#calendar').fullCalendar('removeEventSource', $('#old_feed').val());
+    $('#calendar').fullCalendar('addEventSource', new_feed);
+
+    $('#old_feed').val(new_feed);
+
+    // update the autocomplete to look in the new date range
+    $('#course_title').autocomplete('option', 'source', '#{autocomplete_course_instances_path}' + '?' + form_data);
+
+    return false; // don't hit the server
+  });
+
+  // autocomplete
+  $('#course_title').autocomplete({
+    source: '#{course_instance_autocomplete(@search_date || Date.today)}',
+    select: function(event, ui) {
+      event.preventDefault();
+
+      // create the enrollment
+      $.ajax({
+        type: 'post',
+        url: '#{scheduler_path}',
+        data: JSON.stringify({course_instance_id: ui.item.id}),
+        contentType: 'application/json',
+        dataType: 'json',
+        success: function() {
+          // clear the text box
+          $('#course_title').val('');
+
+          // refresh the feed
+          $('#calendar').fullCalendar('refetchEvents');
+        }
+      });
+    }
+  });
