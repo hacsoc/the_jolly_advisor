@@ -1,6 +1,6 @@
 %h1 Scheduler
 
-= form_for :semester, url: scheduler_path, method: :get, remote: true do |f|
+= form_for :semester, url: scheduler_path, method: :get, remote: true, html: {id: :semester_form} do |f|
   = f.select :semester, %w(Fall Spring Summer).map { |str| [str, str.downcase] }
   = f.select :year, options_for_select(2008..DateTime.now.year, DateTime.now.year)
   = f.select :half, ['First Half', 'Second Half'].map { |str| [str, str.split.first.downcase] }
@@ -8,7 +8,6 @@
   = f.submit 'Change Semesters!'
 
 = form_tag scheduler_path, role: :search, id: :schedule_form, remote: true do
-  = hidden_field_tag :course_instance_id
   = text_field_tag :course_title, nil, placeholder: 'Add course instance to this semester', class: 'form-control'
 
 #calendar
@@ -33,11 +32,42 @@
     }
   });
 
+  // change semesters without hitting the server (twice)
+  $('#semester_form').on('ajax:beforeSend', function() {
+    var form_data = $(this).serialize();
+    var new_feed = '#{scheduler_path}' + '?' + form_data;
+
+    $('#calendar').fullCalendar('removeEventSource', $('#old_feed').val());
+    $('#calendar').fullCalendar('addEventSource', new_feed);
+
+    $('#old_feed').val(new_feed);
+
+    // update the autocomplete to look in the new date range
+    $('#course_title').autocomplete('option', 'source', '#{autocomplete_course_instances_path}' + '?' + form_data);
+
+    return false; // don't hit the server
+  });
+
   // autocomplete
   $('#course_title').autocomplete({
     source: '#{course_instance_autocomplete(@search_date || Date.today)}',
     select: function(event, ui) {
-      $('#course_instance_id').val(ui.item.value);
-      $('#schedule_form').submit();
+      event.preventDefault();
+
+      // create the enrollment
+      $.ajax({
+        type: 'post',
+        url: '#{scheduler_path}',
+        data: JSON.stringify({course_instance_id: ui.item.id}),
+        contentType: 'application/json',
+        dataType: 'json',
+        success: function() {
+          // clear the text box
+          $('#course_title').val('');
+
+          // refresh the feed
+          $('#calendar').fullCalendar('refetchEvents');
+        }
+      });
     }
   });

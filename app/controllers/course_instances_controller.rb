@@ -1,18 +1,27 @@
 class CourseInstancesController < ApplicationController
+  before_action :set_search_date, only: [:autocomplete], :if => -> { params[:semester] }
+
   # GET /course_instances/autocomplete.json
   def autocomplete
-    @course_instances = CourseInstance.search(params[:term], current_user, params[:current_date]).includes(:meetings)
+    @course_instances = CourseInstance.search(params[:term], current_user, params[:current_date] || @search_date).includes(:meetings)
     respond_to do |format|
       format.json do
         render json: (@course_instances.flat_map(&:meetings).map do |m|
           {
             # call .strip on the schedule because some of the imported
             # data from SIS has trailing whitespace
-            label: "#{m.course_instance.course.long_string} (#{m.schedule.strip || 'TBA'})",
-            value: m.course_instance_id
+            label: autocomplete_label(m),
+            value: autocomplete_label(m),
+            id: m.course_instance_id,
           }
         end)
       end
     end
+  end
+
+  private
+
+  def autocomplete_label(meeting)
+    "#{meeting.course_instance.course.long_string} (#{meeting.schedule.strip || 'TBA'})"
   end
 end

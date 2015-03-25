@@ -5,18 +5,20 @@ class SchedulerController < ApplicationController
   #
   # The jump date should also be set for JS requests, so that the
   # source for the autocomplete can be set to the right date.
-  before_action :set_search_date, only: [:index], :if => [:semester_request?, -> { json_request? || js_request? }]
-  before_action :set_scheduled_meetings, only: [:index], :if => :json_request?
+  before_action :set_search_date, only: [:index], :if => [:semester_request?, :xhr_request?]
+  before_action :set_scheduled_meetings, only: [:index], :if => :xhr_request?
   before_action :set_enrollment, only: [:create]
 
   # GET /scheduler
   # GET /scheduler.json
-  # GET /scheduler.js
   def index
   end
 
-  # POST /scheduler.js
+  # POST /scheduler.json
   def create
+    respond_to do |format|
+      format.json { head :no_content }
+    end
   end
 
   private
@@ -30,21 +32,6 @@ class SchedulerController < ApplicationController
   def set_scheduled_meetings
     # timecop should be set here to get the correct enrollments in the query
     @scheduled_meetings = current_user.enrolled_courses.ongoing(@search_date || Date.today).includes(:meetings, :course).flat_map(&:meetings).flat_map(&:scheduled_meetings)
-  end
-
-  def set_search_date
-    search_date_string = Semester::SAFE_SEARCH_DATES[params[:semester][:semester]][params[:semester][:half]] + " #{params[:semester][:year]}"
-    @search_date = DateTime.strptime(search_date_string, Semester::SAFE_SEARCH_DATE_STRPTIME_STRING + ' %Y')
-  end
-
-  # move this to application controller eventually
-  def json_request?
-    request.format.json?
-  end
-
-  # also move this to application controller eventually
-  def js_request?
-    request.format.js?
   end
 
   def semester_request?
