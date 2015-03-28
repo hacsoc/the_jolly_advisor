@@ -54,6 +54,7 @@ group :development, :test do
   # Testing with rspec
   gem 'rspec'
   gem 'rspec-rails'
+  gem 'shoulda-matchers'
   gem 'factory_girl_rails'
   gem 'simplecov'
   gem 'watir-webdriver'
