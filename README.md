@@ -13,10 +13,10 @@ Please take note of the following sections if you're contributing to the Jolly A
 - Wait to get a +1 from another team member before merging
 
 ### Rails Magic:
-For people who have rusty rails.
+For people who have rusty rails, follow the following steps to setup.
 
-- Require the library `require sis_importer`
 - To open up the Rails console `rails c`
+- Require the library `require "sis_importer"`
 - Import SIS Data: `SISImporter.import_sis`
 
 ### Other notes:
