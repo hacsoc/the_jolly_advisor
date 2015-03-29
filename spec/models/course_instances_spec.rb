@@ -14,7 +14,6 @@ RSpec.describe CourseInstance, type: :model do
 
     it "should return false if the class has ended" do
       expect(@course_instance_yesterday.schedulable?).to be false
-
     end
 
     it "should return false if the class ends today" do
