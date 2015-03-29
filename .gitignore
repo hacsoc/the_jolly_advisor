@@ -14,3 +14,6 @@
 
 .idea/
 .DS_STORE
+
+# Ignore test coverage
+coverage/

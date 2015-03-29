@@ -51,6 +51,14 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
 
+  # Testing with rspec
+  gem 'rspec'
+  gem 'rspec-rails'
+  gem 'shoulda-matchers'
+  gem 'factory_girl_rails'
+  gem 'simplecov'
+  gem 'watir-webdriver'
+
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
 
@@ -58,7 +66,5 @@ group :development, :test do
   gem 'spring', '1.3.2'
 
   gem 'pry-rails'
-
-  gem 'watir-webdriver'
 end
 
