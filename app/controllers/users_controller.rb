@@ -32,7 +32,7 @@ class UsersController < ApplicationController
   end
 
   def login
-    redirect_to session[:was_at] || root_path
+    redirect_to params[:was_at] || root_path
   end
 
   def logout
