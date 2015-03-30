@@ -9,7 +9,7 @@ RSpec.describe Course, type: :model do
   end
 
   describe ".postrequisites" do
-    it "should return all prerequisites for the course" do
+    it "should return all postrequisites for the course" do
       prereq = FactoryGirl.create(:course, department: "EECS", course_number: 233)
       postreq = FactoryGirl.create(:course, department: "EECS", course_number: 131 )
       FactoryGirl.create(:prerequisite, postrequisite: postreq, prerequisite_ids: [prereq.id])
@@ -18,7 +18,7 @@ RSpec.describe Course, type: :model do
   end
 
   describe ".prerequisites" do
-    it "" do
+    it "should return all prerequisites for the course" do
       postreq = FactoryGirl.create(:course, department: "EECS", course_number: 131)
       prereqs = FactoryGirl.create_list(:course, 3)
       FactoryGirl.create(:prerequisite, postrequisite: postreq, prerequisite_ids: prereqs.map(&:id))
