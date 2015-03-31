@@ -19,7 +19,8 @@ class CourseInstance < ActiveRecord::Base
   }
 
   def schedule
-    meetings.map(&:schedule).join('; ') || 'TBA'
+    return 'TBA' if meetings.blank?
+    meetings.map(&:schedule).join '; '
   end
 
   def schedulable?
