@@ -18,6 +18,11 @@ class CourseInstance < ActiveRecord::Base
     .unenrolled(user)
   }
 
+  def schedule
+    return 'TBA' if meetings.blank?
+    meetings.map(&:schedule).join '; '
+  end
+
   def schedulable?
     end_date > Date.today
   end
