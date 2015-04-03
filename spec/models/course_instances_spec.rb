@@ -21,4 +21,22 @@ RSpec.describe CourseInstance, type: :model do
     end
   end
 
+  describe '#schedule' do
+    context 'when there are no meetings' do
+      let(:course_instance) { FactoryGirl.build(:course_instance) }
+
+      it 'returns "TBA"' do
+        expect(course_instance.schedule).to eq 'TBA'
+      end
+    end
+
+    context 'when there are meetings' do
+      let(:meetings) { FactoryGirl.build_list(:meeting, 2, schedule: 'MW 10:00 AM - 10:50 AM') }
+      let(:course_instance) { FactoryGirl.build(:course_instance, meetings: meetings) }
+
+      it 'returns the meeting schedules separated by a ;' do
+        expect(course_instance.schedule).to eq 'MW 10:00 AM - 10:50 AM; MW 10:00 AM - 10:50 AM'
+      end
+    end
+  end
 end
