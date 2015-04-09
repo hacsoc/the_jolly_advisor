@@ -81,14 +81,15 @@ class CoursesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_course
-      department, course_number = params[:id].match(/([a-zA-Z]+)(\d+)/).captures.map(&:upcase)
-      @course = Course.find_by(department: department, course_number: course_number) or not_found
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def course_params
-      params.require(:course).permit(:department, :course_number, :description, :course_offering)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_course
+    department, course_number = params[:id].match(/([a-zA-Z]+)(\d+)/).captures.map(&:upcase)
+    @course = Course.find_by(department: department, course_number: course_number) or not_found
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def course_params
+    params.require(:course).permit(:department, :course_number, :description, :course_offering)
+  end
 end

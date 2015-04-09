@@ -8,8 +8,6 @@ class CourseInstancesController < ApplicationController
       format.json do
         render json: (@course_instances.flat_map(&:meetings).map do |m|
           {
-            # call .strip on the schedule because some of the imported
-            # data from SIS has trailing whitespace
             label: autocomplete_label(m),
             value: autocomplete_label(m),
             id: m.course_instance_id,
@@ -22,6 +20,8 @@ class CourseInstancesController < ApplicationController
   private
 
   def autocomplete_label(meeting)
+    # call .strip on the schedule because some of the imported
+    # data from SIS has trailing whitespace
     "#{meeting.course_instance.course.long_string} (#{meeting.schedule.strip || 'TBA'})"
   end
 end

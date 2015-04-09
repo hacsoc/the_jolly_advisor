@@ -19,7 +19,6 @@ class Course < ActiveRecord::Base
     end
   end
 
-  # Is this course currently schedulable?
   def schedulable?
     course_instances.any?(&:schedulable?)
   end
