@@ -17,7 +17,6 @@ class Course < ActiveRecord::Base
     Course.where(id: Prerequisite.where('? = ANY(prerequisite_ids)', id).pluck(:postrequisite_id))
   end
 
-  # Is this course currently schedulable?
   def schedulable?
     course_instances.any?(&:schedulable?)
   end
