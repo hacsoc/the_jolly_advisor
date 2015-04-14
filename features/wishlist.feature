@@ -5,6 +5,7 @@ Feature: Wishlist
 
   Background:
     Given I have authenticated as some user
+    And The course EECS 293 exists
 
   Scenario: View wishlist
     Given I have the course EECS 293 in my wishlist
@@ -12,8 +13,7 @@ Feature: Wishlist
     Then I should see "EECS 293"
 
   Scenario: Add course to wishlist via course show page
-    Given The course EECS 293 exists
-    And I do not have the course EECS 293 in my wishlist
+    Given I do not have the course EECS 293 in my wishlist
     When I visit "/courses/EECS293"
     Then I should see "Add to my wishlist"
     When I click the link "Add to my wishlist"
@@ -26,9 +26,12 @@ Feature: Wishlist
     Then
 
   Scenario: Remove course from wishlist via course show page
-    Given
-    When
-    Then
+    Given I have the course EECS 293 in my wishlist
+    When I visit "/courses/EECS293"
+    Then I should see "Remove from my wishlist"
+    When I click the link "Remove from my wishlist"
+    Then I should not have the course EECS 293 in my wishlist
+    And I should see "Add to my wishlist"
 
   Scenario: Remove course from wishlist via wishlist page
     Given

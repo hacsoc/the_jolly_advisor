@@ -18,3 +18,9 @@ Then(/^I should have the course ([A-Z]+) (\d+) in my wishlist$/) do |course_dept
   expect(course).to_not be nil
   expect(WishlistItem.exists?(course: course, user: @current_user)).to be true
 end
+
+Then(/^I should not have the course ([A-Z]+) (\d+) in my wishlist$/) do |course_dept, course_number|
+  course = Course.where(department: course_dept, course_number: course_number).first
+  # If the course doesn't exist it's definitely not in the wishlist
+  expect(course && WishlistItem.exists?(course: course, user: @current_user)).to be false
+end
