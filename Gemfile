@@ -68,3 +68,9 @@ group :development, :test do
   gem 'pry-rails'
 end
 
+group :test do
+  gem 'cucumber-rails'
+  gem 'database_cleaner'
+  gem 'rack_session_access'
+end
+
