@@ -106,20 +106,20 @@ module SISImporter
     end
 
     def fetch_term_info(term_xml)
-      term_xml.xpath('Descr').text.split
+      term_xml.xpath('Descr').text.split.map(&:strip)
     end
 
     def fetch_course_attributes(class_xml)
       {
-        subject:             class_xml.xpath('Subject').text,
-        number:              class_xml.xpath('CatalogNbr').text,
-        description:         class_xml.xpath('Description').text,
-        units:               class_xml.xpath('UnitsMin').text, #TODO: Should this be min or max, or something else?
-        dates:               fetch_start_end_dates(class_xml.xpath('Dates').text),
-        section:             class_xml.xpath('Section').text,
-        component_code:      class_xml.xpath('ComponentCode').text,
-        enrollment_req_info: class_xml.xpath('EnrollmentRequirements').text
-      }.merge(fetch_title_and_subtitle(class_xml.xpath('CourseTitleLong').text))
+        subject:             class_xml.xpath('Subject').text.strip,
+        number:              class_xml.xpath('CatalogNbr').text.strip,
+        description:         class_xml.xpath('Description').text.strip,
+        units:               class_xml.xpath('UnitsMin').text.strip, #TODO: Should this be min or max, or something else?
+        dates:               fetch_start_end_dates(class_xml.xpath('Dates').text.strip),
+        section:             class_xml.xpath('Section').text.strip,
+        component_code:      class_xml.xpath('ComponentCode').text.strip,
+        enrollment_req_info: class_xml.xpath('EnrollmentRequirements').text.strip
+      }.merge(fetch_title_and_subtitle(class_xml.xpath('CourseTitleLong').text.strip))
     end
 
     def fetch_title_and_subtitle(full_title)
@@ -193,10 +193,10 @@ module SISImporter
 
     def fetch_meeting_attributes(meeting_xml)
       {
-        schedule: meeting_xml.xpath('DaysTimes').text, #TODO: json?
-        room: meeting_xml.xpath('Room').text,
-        prof: process_professor(meeting_xml.xpath('Instructor').text),
-        dates: fetch_start_end_dates(meeting_xml.xpath('MeetingDates').text)
+        schedule: meeting_xml.xpath('DaysTimes').text.strip, #TODO: json?
+        room: meeting_xml.xpath('Room').text.strip,
+        prof: process_professor(meeting_xml.xpath('Instructor').text.strip),
+        dates: fetch_start_end_dates(meeting_xml.xpath('MeetingDates').text.strip)
       }
     end
     

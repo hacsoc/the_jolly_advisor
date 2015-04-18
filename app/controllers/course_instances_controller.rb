@@ -20,8 +20,6 @@ class CourseInstancesController < ApplicationController
   private
 
   def autocomplete_label(meeting)
-    # call .strip on the schedule because some of the imported
-    # data from SIS has trailing whitespace
-    "#{meeting.course_instance.course.long_string} (#{meeting.schedule.strip || 'TBA'})"
+    "#{meeting.course_instance.course.long_string} (#{meeting.schedule || 'TBA'})"
   end
 end
