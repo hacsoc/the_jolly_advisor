@@ -14,5 +14,11 @@ FactoryGirl.define do
         Prerequisite.create(postreq_id: course.id, prereq_ids: prereqs.map(&:id))
       end
     end
+
+    trait :with_course_instance do
+      after :create do |course, evaluator|
+        FactoryGirl.create(:course_instance, course: course)
+      end
+    end
   end
 end
