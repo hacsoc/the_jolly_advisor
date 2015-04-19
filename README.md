@@ -21,6 +21,12 @@ For people who have rusty rails, follow the following steps to setup.
 - Require the library `require "sis_importer"`
 - Import SIS Data: `SISImporter.import_sis`
 
+### Testing information
+
+Travis CI will run tests when you submit a pull request, but if you're using TDD, you can and should be running tests locally before submitting a pull request so you know you changes work.
+
+If adding a new feature, you must also add automated tests and prove your coverage. 
+
 ### Travis CI Info
 
 This is actually important info. It took Steph and Andrew a
@@ -41,6 +47,8 @@ The actual Travis configuration is in [.travis.yml](.travis.yml). Things to note
 be loaded when Travis attempts to run `rake db:migrate`. Then FactoryGirl will try to load
 all of its definitions, which have non-existent tables, since the migrations haven't been run.
 Now you have circular dependencies and, your build fails. Don't do this. Require false.
+
+Should you ever need to change this, please refer to the [Travis-CI Docs](http://docs.travis-ci.com/) and make sure you understand the current setup before modifying.
 
 ### Other notes:
 
