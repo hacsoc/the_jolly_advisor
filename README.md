@@ -7,7 +7,7 @@
 Please take note of the following sections if you're contributing to the Jolly Advisor.
 
 ### Git Workflow:
-- Clone from git: `git clone https://github.com/Aaronneyer/the_jolly_advisor.git`
+- Clone from git: `git clone https://github.com/hacsoc/the_jolly_advisor.git`
 - Do work on a separate branch: `git checkout -b aaron-dev`
 - Finish your work and merge in master: `git fetch origin master`; `git merge master`
 - Push your code to github: `git push origin aaron-dev`
