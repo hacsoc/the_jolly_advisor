@@ -278,6 +278,7 @@ DEPENDENCIES
   pry-rails
   rack_session_access
   rails (= 4.2.0)
+  rake
   rspec
   rspec-rails
   rubycas-client!

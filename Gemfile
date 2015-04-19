@@ -55,7 +55,7 @@ group :development, :test do
   gem 'rspec'
   gem 'rspec-rails'
   gem 'shoulda-matchers'
-  gem 'factory_girl_rails'
+  gem 'factory_girl_rails', require: false
   gem 'simplecov'
   gem 'watir-webdriver'
 
@@ -69,8 +69,9 @@ group :development, :test do
 end
 
 group :test do
-  gem 'cucumber-rails'
+  gem 'cucumber-rails', require: false
   gem 'database_cleaner'
   gem 'rack_session_access'
+  gem 'rake'
 end
 
