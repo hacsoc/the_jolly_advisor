@@ -72,5 +72,6 @@ group :test do
   gem 'cucumber-rails'
   gem 'database_cleaner'
   gem 'rack_session_access'
+  gem 'rake'
 end
 
