@@ -59,6 +59,9 @@ group :development, :test do
   gem 'simplecov'
   gem 'watir-webdriver'
 
+  # Used for GitHub badge
+  gem 'coveralls', require: false
+
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
 
