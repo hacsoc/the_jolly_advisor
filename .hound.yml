@@ -1,11 +1,12 @@
 ruby:
     enabled: true
     config_file: .ruby-style.yml
+
 coffeescript:
-    enabled: false
+    enabled: true
 
 javascript:
-    enabled: false
+    enabled: true
 
 scss:
-    enabled: false
+    enabled: true
