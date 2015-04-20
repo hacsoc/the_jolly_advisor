@@ -13,10 +13,10 @@
           %p
             %b= semester
             \:
-          - instances.each do |instance|
+          - instances.sort_by(&:section).each do |instance|
             Section #{instance.section} taught by #{instance.professor.name}
             %br
-            = instance.meetings.first.schedule
+            = instance.schedule
             %br
         - if user_signed_in?
           %hr/

@@ -14,12 +14,9 @@ class Course < ActiveRecord::Base
   end
 
   def postrequisites
-    Prerequisite.where('? = ANY(prerequisite_ids)', self.id).map do |prereq|
-      Course.find_by(id: prereq.postrequisite_id)
-    end
+    Course.where(id: Prerequisite.where('? = ANY(prerequisite_ids)', id).pluck(:postrequisite_id))
   end
 
-  # Is this course currently schedulable?
   def schedulable?
     course_instances.any?(&:schedulable?)
   end
