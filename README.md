@@ -24,7 +24,7 @@ For people who have rusty rails, follow the following steps to setup.
 
 ### Testing information
 
-Travis CI will run tests when you submit a pull request, but if you're using TDD, you can and should be running tests locally before submitting a pull request so you know you changes work.
+Travis CI will run tests when you submit a pull request, but if you're using TDD, you can and should be running tests locally before submitting a pull request so you know your changes work.
 
 If adding a new feature, you must also add automated tests and prove your coverage. 
 
