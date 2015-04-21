@@ -7,27 +7,12 @@
 
 Please take note of the following sections if you're contributing to the Jolly Advisor.
 
-### Git Workflow:
-- Clone from git: `git clone https://github.com/hacsoc/the_jolly_advisor.git`
-- Do work on a separate branch: `git checkout -b aaron-dev`
-- Finish your work and merge in master: `git fetch origin master`; `git merge master`
-- Push your code to github: `git push origin aaron-dev`
-- Create pull request from Github UI
-- Wait to get a +1 from another team member before merging
-
-### Rails Magic:
-For people who have rusty rails, follow the following steps to setup.
-
-- To open up the Rails console `rails c`
-- Require the library `require "sis_importer"`
-- Import SIS Data: `SISImporter.import_sis`
-
 ### Getting started
 1. Clone: `git clone https://github.com/hacsoc/the_jolly_advisor.git`
 2. New branch: `git checkout -b my-branch`
 3. Install rvm: https://rvm.io
 4. Switch to Ruby 2.2.0 `rvm install ruby-2.2.0`
-5. Install bundle: `gem install bundle`
+5. Install bundle: `gem install bundler`
 6. Install postgres; setup postgres; create database  
  a. `su - postgres; createuser --interactive` use your system username when it asks for role to add  
  b. `createdb the_jolly_advisor_development`  
@@ -39,6 +24,14 @@ For people who have rusty rails, follow the following steps to setup.
  b. `require “sis_importer”`  
  c. `SISImporter.import_sis`  
 11. Start local server: `rails s`
+
+### Git Workflow:
+- Clone from git: `git clone https://github.com/hacsoc/the_jolly_advisor.git`
+- Do work on a separate branch: `git checkout -b aaron-dev`
+- Finish your work and merge in master: `git fetch origin master`; `git merge master`
+- Push your code to github: `git push origin aaron-dev`
+- Create pull request from Github UI
+- Wait to get a +1 from another team member before merging
 
 Server will be available at http://localhost:3000/
 
@@ -74,5 +67,5 @@ Should you ever need to change this, please refer to the [Travis-CI Docs](http:/
 ### Other notes:
 
 - Use Github issues to note bugs and feature requests
-
+- If opening an issue, use the appropriate [labels](https://github.com/hacsoc/the_jolly_advisor/labels) to help us prioritize issues better.
 
