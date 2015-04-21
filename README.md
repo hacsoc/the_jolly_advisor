@@ -12,7 +12,7 @@ Please take note of the following sections if you're contributing to the Jolly A
 2. New branch: `git checkout -b my-branch`
 3. Install rvm: https://rvm.io
 4. Switch to Ruby 2.2.0 `rvm install ruby-2.2.0`
-5. Install bundle: `gem install bundle`
+5. Install bundle: `gem install bundler`
 6. Install postgres; setup postgres; create database  
  a. `su - postgres; createuser --interactive` use your system username when it asks for role to add  
  b. `createdb the_jolly_advisor_development`  
