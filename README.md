@@ -22,6 +22,26 @@ For people who have rusty rails, follow the following steps to setup.
 - Require the library `require "sis_importer"`
 - Import SIS Data: `SISImporter.import_sis`
 
+### Getting started
+1. Clone: `git clone https://github.com/hacsoc/the_jolly_advisor.git`
+2. New branch: `git checkout -b my-branch`
+3. Install rvm: https://rvm.io
+4. Switch to Ruby 2.2.0  
+ a. `rvm install ruby-2.2.0`  
+ b. `rvm use 2.2.0`  
+5. Install bundle: `gem install bundle`
+6. Install postgres; setup postgres; create database  
+ a. `su - postgres; createuser --interactive` use your system username when it asks for role to add  
+ b. `createdb the_jolly_advisor_development`  
+7. `cd /path/to/the_jolly_advisor`
+8. Install gems: `bundle`
+9. Migrate db: `rake db:migrate` this might take a few minutes
+10. Open rails console; get SIS data  
+ a. `rails c`  
+ b. `require “sis_importer”`  
+ c. `SISImporter.import_sis`  
+11. Start local server: `rails server`
+
 ### Testing information
 
 Travis CI will run tests when you submit a pull request, but if you're using TDD, you can and should be running tests locally before submitting a pull request so you know your changes work.
