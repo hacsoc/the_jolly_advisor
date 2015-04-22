@@ -4,7 +4,7 @@
 # instead of editing this one. Cucumber will automatically load all features/**/*.rb
 # files.
 require 'coveralls'
-Coveralls.wear!
+Coveralls.wear_merged!('rails')
 require 'factory_girl_rails'
 require 'cucumber/rails'
 
