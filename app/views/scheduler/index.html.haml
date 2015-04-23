@@ -7,17 +7,16 @@
       .panel-heading{style: "background-color:#111;color:#fff;"}
         %h1 Scheduler
       .panel-body
-        = form_for :semester, url: scheduler_path, method: :get, remote: true, html: {id: :semester_form, class: 'sem_form'} do |f|
-          = f.select :semester, %w(Fall Spring Summer).map { |str| [str, str.downcase] }, class: 'term_dropdown'
-          = f.select :year, options_for_select(2008..DateTime.now.year, DateTime.now.year), class: 'year_dropdown'
-          = f.select :half, ['First Half', 'Second Half'].map { |str| [str, str.split.first.downcase] }, class: 'half_dropdown'
+        = form_for :semester, url: scheduler_path, method: :get, remote: true, html: {id: :semester_form} do |f|
+          = f.select :semester, %w(Fall Spring Summer).map { |str| [str, str.downcase] }
+          = f.select :year, options_for_select(2008..DateTime.now.year, DateTime.now.year)
+          = f.select :half, ['First Half', 'Second Half'].map { |str| [str, str.split.first.downcase] }
           = hidden_field_tag :old_feed, nil # this is the old feed we need to remove
-          = f.submit 'Change Semesters!', class: 'submit_button'
+          = f.submit 'Change Semester'
 
         = form_tag scheduler_path, role: :search, id: :schedule_form, remote: true do
-          = text_field_tag :course_title, nil, placeholder: 'Add course instance to this semester', class: 'form-control'
+          = text_field_tag :course_title, nil, placeholder: 'Add course instance', class: 'form-control'
 
-        %br
         %hr
         %br
 
