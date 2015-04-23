@@ -7,6 +7,9 @@
       .panel-heading{style: "background-color:#111;color:#fff;"}
         %h1 Scheduler
       .panel-body
+        = form_tag scheduler_path, role: :search, id: :schedule_form, remote: true do
+          = text_field_tag :course_title, nil, placeholder: 'Add course instance', class: 'form-control'
+
         = form_for :semester, url: scheduler_path, method: :get, remote: true, html: {id: :semester_form} do |f|
           = f.select :semester, %w(Fall Spring Summer).map { |str| [str, str.downcase] }
           = f.select :year, options_for_select(2008..DateTime.now.year, DateTime.now.year)
@@ -14,8 +17,6 @@
           = hidden_field_tag :old_feed, nil # this is the old feed we need to remove
           = f.submit 'Change Semester'
 
-        = form_tag scheduler_path, role: :search, id: :schedule_form, remote: true do
-          = text_field_tag :course_title, nil, placeholder: 'Add course instance', class: 'form-control'
 
         %hr
         %br
