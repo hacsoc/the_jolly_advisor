@@ -24,6 +24,7 @@ Please take note of the following sections if you're contributing to the Jolly A
  b. `require “sis_importer”`  
  c. `SISImporter.import_sis`  
 11. Start local server: `rails s`
+ a. Server will be available at http://localhost:3000/
 
 ### Git Workflow:
 - Clone from git: `git clone https://github.com/hacsoc/the_jolly_advisor.git`
@@ -33,11 +34,16 @@ Please take note of the following sections if you're contributing to the Jolly A
 - Create pull request from Github UI
 - Wait to get a +1 from another team member before merging
 
-Server will be available at http://localhost:3000/
+### Guard and TDD
+
+We have the guard gem installed to help you with your TDD-ness. It's so agile.
+It watches for file changes and then runs the corresponding tests. This way you
+know right away if you broke anything. For more info, see their
+[GitHub](https://github.com/guard/guard).
 
 ### Testing information
 
-Travis CI will run tests when you submit a pull request, but if you're using TDD, you can and should be running tests locally before submitting a pull request so you know your changes work.
+Travis CI will run tests when you submit a pull request, but if you're using TDD (see above), you can and should be running tests locally before submitting a pull request so you know your changes work.
 
 If adding a new feature, you must also add automated tests and prove your coverage. 
 
