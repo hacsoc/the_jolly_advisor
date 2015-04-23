@@ -16,7 +16,7 @@ FactoryGirl.define do
     end
 
     trait :with_course_instance do
-      after :create do |course, evaluator|
+      after :create do |course, _evaluator|
         FactoryGirl.create(:course_instance, course: course)
       end
     end

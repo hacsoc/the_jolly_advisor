@@ -2,9 +2,9 @@ require 'rails_helper'
 
 RSpec.describe CourseInstance, type: :model do
   before do
-    @course_instance_yesterday = FactoryGirl.build(:course_instance, end_date: Date.today-1)
+    @course_instance_yesterday = FactoryGirl.build(:course_instance, end_date: Date.today - 1)
     @course_instance_today = FactoryGirl.build(:course_instance, end_date: Date.today)
-    @course_instance_tomorrow = FactoryGirl.build(:course_instance, end_date: Date.today+1)
+    @course_instance_tomorrow = FactoryGirl.build(:course_instance, end_date: Date.today + 1)
   end
 
   describe ".schedulable?" do

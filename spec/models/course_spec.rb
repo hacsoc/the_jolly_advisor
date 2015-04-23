@@ -3,15 +3,16 @@ require 'rails_helper'
 RSpec.describe Course, type: :model do
   before do
     @course = FactoryGirl.build(:course, department: "EECS", course_number: 132)
-    @course.course_instances = [FactoryGirl.build(:course_instance, :end_date => Date.today-1), FactoryGirl.build(:course_instance, :end_date=>Date.today+365)]
-    #Testing unhappy paths
+    @course.course_instances = [FactoryGirl.build(:course_instance, :end_date => Date.today - 1),
+                                FactoryGirl.build(:course_instance, :end_date => Date.today + 365)]
+    # Testing unhappy paths
     @course_bad = FactoryGirl.build(:course, department: 132, course_number: "EECS")
   end
 
   describe ".postrequisites" do
     it "should return all postrequisites for the course" do
       prereq = FactoryGirl.create(:course, department: "EECS", course_number: 233)
-      postreq = FactoryGirl.create(:course, department: "EECS", course_number: 131 )
+      postreq = FactoryGirl.create(:course, department: "EECS", course_number: 131)
       FactoryGirl.create(:prerequisite, postrequisite: postreq, prerequisite_ids: [prereq.id])
       expect(prereq.postrequisites).to eq [postreq]
     end
@@ -34,7 +35,7 @@ RSpec.describe Course, type: :model do
 
   describe ".to_param" do
     it "should return a spaceless version of to_s" do
-      expect(@course.to_param).to eq @course.to_s.gsub(' ','')
+      expect(@course.to_param).to eq @course.to_s.gsub(' ', '')
     end
   end
 
@@ -49,5 +50,4 @@ RSpec.describe Course, type: :model do
       expect(@course.long_string).to eq "EECS 132: Intro to Java"
     end
   end
-
 end

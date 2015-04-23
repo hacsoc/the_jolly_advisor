@@ -37,7 +37,8 @@ class ApplicationController < ActionController::Base
 
   # Used for the searching done by both the SchedulerController and CourseInstancesController
   def set_search_date
-    search_date_string = Semester::SAFE_SEARCH_DATES[params[:semester][:semester]][params[:semester][:half]] + " #{params[:semester][:year]}"
+    search_date_string = Semester::SAFE_SEARCH_DATES[params[:semester][:semester]][params[:semester][:half]] +
+        " #{params[:semester][:year]}"
     @search_date = DateTime.strptime(search_date_string, Semester::SAFE_SEARCH_DATE_STRPTIME_STRING + ' %Y')
   end
 end

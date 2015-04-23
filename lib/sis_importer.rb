@@ -41,8 +41,8 @@ module SISImporter
       course.update_attributes(description: course_attributes[:description], title: course_attributes[:title])
 
       process_prerequisites(course, course_attributes[:enrollment_req_info]) if course_attributes[:enrollment_req_info] != '' # not every course has this attribute
-      #TODO: course.course_offering = do something
-      #TODO: We need some stuff for professor of class (Hard because there can be multiple)
+      # TODO: course.course_offering = do something
+      # TODO: We need some stuff for professor of class (Hard because there can be multiple)
       process_course_instance(class_xml,
                               CourseInstance.where(semester: semester,
                                                    course: course,
@@ -114,7 +114,7 @@ module SISImporter
         subject:             class_xml.xpath('Subject').text.strip,
         number:              class_xml.xpath('CatalogNbr').text.strip,
         description:         class_xml.xpath('Description').text.strip,
-        units:               class_xml.xpath('UnitsMin').text.strip, #TODO: Should this be min or max, or something else?
+        units:               class_xml.xpath('UnitsMin').text.strip, #TODO: Should this be min, max, or something else?
         dates:               fetch_start_end_dates(class_xml.xpath('Dates').text.strip),
         section:             class_xml.xpath('Section').text.strip,
         component_code:      class_xml.xpath('ComponentCode').text.strip,
@@ -172,8 +172,8 @@ module SISImporter
         req_info.last << match and break if index == (req_matches.count - 1)
 
         str_between_start = reqs.index(match) + match.length
-        str_between_end   = reqs.index(req_matches[index + 1][0])
-        str_between       = reqs[str_between_start..str_between_end]
+        str_between_end = reqs.index(req_matches[index + 1][0])
+        str_between = reqs[str_between_start..str_between_end]
 
         # Assumption: if the string between two matches contains 'or',
         # then it is an OR relationship between the current set of
@@ -193,15 +193,15 @@ module SISImporter
 
     def fetch_meeting_attributes(meeting_xml)
       {
-        schedule: meeting_xml.xpath('DaysTimes').text.strip, #TODO: json?
+        schedule: meeting_xml.xpath('DaysTimes').text.strip,
         room: meeting_xml.xpath('Room').text.strip,
         prof: process_professor(meeting_xml.xpath('Instructor').text.strip),
         dates: fetch_start_end_dates(meeting_xml.xpath('MeetingDates').text.strip)
       }
     end
-    
+
     def fetch_start_end_dates(dates)
-      dates.split(/\s-\s/).map{ |d| Date.strptime(d, '%m/%d/%Y') }
+      dates.split(/\s-\s/).map { |d| Date.strptime(d, '%m/%d/%Y') }
     end
   end
 end
