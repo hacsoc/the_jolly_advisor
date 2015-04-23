@@ -2,21 +2,29 @@
 / Course Search Page
 .no-gutter.row
   / left side column
-  .col-md-9
+  .col-md-9.col-md-offset-2
     #explorer_main.panel
       .panel-heading{style: "background-color:#111;color:#fff;"}
+        %h1 Course Listing
       .panel-body
-        %h1 Listing Courses
+        /%h1 Listing Courses
         = form_tag courses_path, method: :get do
           = label_tag(:search)
-          = text_field_tag :search, params[:search], placeholder: 'Course search', class: 'crs_search'
-          %br
+          = text_field_tag :search, params[:search], placeholder: 'Ex. EECS 395', class: 'crs_search'
+
+          = label_tag (:professor)
+          = text_field_tag :professor, params[:professor], placeholder: 'Ex. Tekin', class: 'prfssr_input'
+
           = label_tag(:semester)
           = select_tag :semester, options_from_collection_for_select(@semesters, :id, :to_s, params[:semester].to_i), include_blank: "All", class: 'smstr'
           %br
-          = label_tag(:professor)
-          = text_field_tag :professor, params[:professor], class: 'prfssr'
+          %br
+
           = submit_tag "Search", name: nil
+
+        %hr
+
+        %br
         %table
           %thead
             %tr
@@ -28,6 +36,6 @@
                 %td{nowrap: "nowrap"}= link_to course, course
                 %td= link_to course.title, course
         = paginate @courses
-        = page_entries_info @courses
-
+        %br
+        = page_entries_info @courses, class: 'crs_count'
         %hr
