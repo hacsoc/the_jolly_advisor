@@ -18,7 +18,7 @@ class Course < ActiveRecord::Base
   end
 
   def schedulable?
-    course_instances.any?(&:schedulable?)
+    course_instances.any?{|course_instance| course_instance.try(:schedulable?)}
   end
 
   def to_param

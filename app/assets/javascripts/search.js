@@ -5,7 +5,9 @@ $(document).ready(function(){
       window.location.href = "/courses/" + ui.item.value;
     }
   });
+});
 
+$(document).ready(function() {
   $('#wishlist_course_form #course_title').autocomplete({
     source: '/courses/autocomplete.json',
     select: function(event, ui) {
