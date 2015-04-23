@@ -81,8 +81,10 @@ test: &test
 production:
   <<: *default
   database: the_jolly_advisor_production
-  username: the_jolly_advisor
+  username: <%= ENV['THE_JOLLY_ADVISOR_DATABASE_USERNAME'] %>
   password: <%= ENV['THE_JOLLY_ADVISOR_DATABASE_PASSWORD'] %>
+  host: <%= ENV['THE_JOLLY_ADVISOR_DATABASE_HOST'] %>
+  port: <%= ENV['THE_JOLLY_ADVISOR_DATABASE_PORT'] %>
 
 cucumber:
   <<: *test
