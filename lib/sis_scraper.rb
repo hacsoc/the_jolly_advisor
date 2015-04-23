@@ -3,18 +3,16 @@ require 'sis_scraper.rb'
 class SISScraper
   ALPHA = ('A'..'Z').to_a
   SIS = 'https://sisguest.case.edu'
-  SEM_LIST_POS = 1 		# position of the select list that determines the semester
-  LEN_DEPT_NAME = 4		# Standard length of a department abbreviation
- 
+  SEM_LIST_POS = 1 # position of the select list that determines the semester
+  LEN_DEPT_NAME = 4	# Standard length of a department abbreviation
+
   def initialize(download_dir)
-    @download_dir=download_dir
+    @download_dir = download_dir
     @browser = Watir::Browser.new :firefox
   end
 
-  def download_all_sis_data(user,pword)
+  def download_all_sis_data
     go_to_sis
-    #sign_in_to_sis(user, pword)
-    #navigate_to_search_from_landing_page
     wait_while_sis_processing
     get_all_depts.each do |dept|
       get_all_semesters.each do |semester|
@@ -48,19 +46,19 @@ class SISScraper
     depts = []
     ALPHA.each do |letter|
       @browser.span(text: letter).a.when_present.click
-      sleep(4) #arbitrary to satisfy SIS finickiness. 
-      depts += @browser.spans(class: 'PSEDITBOX_DISPONLY').collect{|dept| dept.text if dept.text.length == LEN_DEPT_NAME}.keep_if{|dept| !dept.nil?}
-    end 
+      sleep(4) # arbitrary to satisfy SIS finickiness.
+      depts += @browser.spans(class: 'PSEDITBOX_DISPONLY').collect { |dept| dept.text if dept.text.length == LEN_DEPT_NAME }.keep_if { |dept| !dept.nil? }
+    end
     @browser.a(text: 'Close').click
     wait_while_sis_processing
-    return depts
+    depts
   end
 
   def get_all_semesters
     @browser.select_lists[SEM_LIST_POS].text.split("\n")
   end
 
-  def search_for_classes(dept,semester)
+  def search_for_classes(dept, semester)
     validate_on_search_criteria_page
     set_dept(dept)
     set_semester(semester)
@@ -71,8 +69,8 @@ class SISScraper
   end
 
   def set_dept(dept)
-    #Clear the text_field if there is still something there.
-    4.times{@browser.inputs(type: 'text').first.when_present.send_keys(:backspace)}
+    # Clear the text_field if there is still something there.
+    4.times { @browser.inputs(type: 'text').first.when_present.send_keys(:backspace) }
     @browser.inputs(type: 'text').first.when_present.send_keys(dept)
   end
 
@@ -82,11 +80,11 @@ class SISScraper
 
   def include_all_days_of_week
     @browser.select_list(id: 'SSR_CLSRCH_WRK_INCLUDE_CLASS_DAYS$6').when_present.select("include any of these days")
-    @browser.inputs(type: "checkbox")[1..7].each{|box| box.click unless box.checked?}
+    @browser.inputs(type: "checkbox")[1..7].each { |box| box.click unless box.checked? }
   end
 
   def search
-    #uses id to distinguish from menu bar search
+    # uses id to distinguish from menu bar search
     @browser.a(id: 'CLASS_SRCH_WRK2_SSR_PB_CLASS_SRCH').when_present.click
   end
 
@@ -112,16 +110,15 @@ class SISScraper
   end
 
   def downloadable?
-    #Check for download icon
+    # Check for download icon
     @browser.img(title: 'Download').present?
   end
 
-  def download_course_info(dept,semester)
-    #Download courses
+  def download_course_info(dept, semester)
+    # Download courses
     @browser.img(title: 'Download').when_present.click
-    sleep(2) #Arbitrary sleep sacrifice to satisfy SIS's finicky behavior
-
-    #Rename the file to [DEPT]_[SEMESTER]
+    sleep(2) # Arbitrary sleep sacrifice to satisfy SIS's finicky behavior
+    # Rename the file to [DEPT]_[SEMESTER]
     new_file_name = "#{@download_dir}#{dept}_#{semester}.xls".strip
     default_file_name = "#{@download_dir}ps.xls"
     File.rename(default_file_name, new_file_name) if File.exists?(default_file_name)
