@@ -6,6 +6,13 @@ class SISScraper
   SEM_LIST_POS = 1 # position of the select list that determines the semester
   LEN_DEPT_NAME = 4	# Standard length of a department abbreviation
 
+  # All the seemingly somewhat randomly generated strings for SIS's HTML ids for grabbing elements
+  DEPT_BUTTONS_CLASS = 'PSEDITBOX_DISPONLY'
+  DAYS_WEEK_SELECT_LIST_ID = 'SSR_CLSRCH_WRK_INCLUDE_CLASS_DAYS$6'
+  SEARCH_CLASSES_ID = 'CLASS_SRCH_WRK2_SSR_PB_CLASS_SRCH'
+  SIS_PROCESSING_ID = 'processing'
+  NO_RESULTS_ID = 'DERIVED_CLSMSG_ERROR_TEXT'
+  
   def initialize(download_dir)
     @download_dir = download_dir
     @browser = Watir::Browser.new :firefox
@@ -47,7 +54,7 @@ class SISScraper
     ALPHA.each do |letter|
       @browser.span(text: letter).a.when_present.click
       sleep(4) # arbitrary to satisfy SIS finickiness.
-      depts += @browser.spans(class: 'PSEDITBOX_DISPONLY').collect { |dept| dept.text if dept.text.length == LEN_DEPT_NAME }.keep_if { |dept| !dept.nil? }
+      depts += @browser.spans(class: DEPT_BUTTONS_CLASS).collect { |dept| dept.text if dept.text.length == LEN_DEPT_NAME }.keep_if { |dept| !dept.nil? }
     end
     @browser.a(text: 'Close').click
     wait_while_sis_processing
@@ -79,13 +86,13 @@ class SISScraper
   end
 
   def include_all_days_of_week
-    @browser.select_list(id: 'SSR_CLSRCH_WRK_INCLUDE_CLASS_DAYS$6').when_present.select("include any of these days")
+    @browser.select_list(id: DAYS_WEEK_SELECT_LIST_ID).when_present.select("include any of these days")
     @browser.inputs(type: "checkbox")[1..7].each { |box| box.click unless box.checked? }
   end
 
   def search
     # uses id to distinguish from menu bar search
-    @browser.a(id: 'CLASS_SRCH_WRK2_SSR_PB_CLASS_SRCH').when_present.click
+    @browser.a(id: SEARCH_CLASSES_ID).when_present.click
   end
 
   def validate_on_search_criteria_page
@@ -93,7 +100,7 @@ class SISScraper
   end
 
   def wait_while_sis_processing
-    @browser.img(id: 'processing').wait_while_present
+    @browser.img(id: SIS_PROCESSING_ID).wait_while_present
   end
 
   def ok_more_than_20_results
@@ -135,6 +142,6 @@ class SISScraper
   end
 
   def results?
-    !@browser.span(id: 'DERIVED_CLSMSG_ERROR_TEXT').present?
+    !@browser.span(id: NO_RESULTS_ID).present?
   end
 end
