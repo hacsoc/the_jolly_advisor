@@ -1,8 +1,8 @@
 class Course < ActiveRecord::Base
   has_many :course_instances, dependent: :destroy
 
-  scope :search, ->(q) { where("concat(lower(department), course_number) like ?
-                               OR lower(title) like ?",
+  scope :search, ->(q) { where("concat(lower(courses.department), courses.course_number) like ?
+                               OR lower(courses.title) like ?",
                                "%#{q.to_s.downcase.gsub(/\s+/,'')}%", "%#{q.to_s.downcase}%") }
 
   # Get all prereq info from the database.
