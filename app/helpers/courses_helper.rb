@@ -1,6 +1,6 @@
 module CoursesHelper
   def first_professor
-    @course.course_instances.first.professor
+    @course.course_instances.first.try(:professor) || Professor.TBA
   end
 
   def prereq_sets(course)

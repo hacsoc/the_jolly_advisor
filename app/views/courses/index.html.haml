@@ -34,7 +34,7 @@
             - @courses.each do |course|
               %tr
                 %td{nowrap: "nowrap"}= link_to course, course
-                %td= link_to course.title, course
+                %td= link_to course.title || "Title Not Found", course
         = paginate @courses
         %br
         = page_entries_info @courses, class: 'crs_count'
