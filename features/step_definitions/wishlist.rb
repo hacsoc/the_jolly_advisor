@@ -15,7 +15,7 @@ end
 
 Given(/^My wishlist is empty$/) do
   WishlistItem.destroy_all(user: @current_user)
-  expect(WishlistItem.where(user: @current_user).to_a) to eq []
+  expect(WishlistItem.where(user: @current_user).to_a).to eq []
 end
 
 Given(/^I do not have notifications turned on for ([A-Z]+) (\d+)$/) do |course_dept, course_number|
