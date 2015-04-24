@@ -15,16 +15,19 @@ end
 
 Given(/^My wishlist is empty$/) do
   WishlistItem.destroy_all(user: @current_user)
+  expect(WishlistItem.where(user: @current_user).to_a).to eq []
 end
 
 Given(/^I do not have notifications turned on for ([A-Z]+) (\d+)$/) do |course_dept, course_number|
   course = Course.where(department: course_dept, course_number: course_number).first
   WishlistItem.where(course: course, user: @current_user).update_all(notify: false)
+  expect(WishlistItem.where(course: course, user: @current_user)).to eq []
 end
 
 Given(/^I have notifications turned on for ([A-Z]+) (\d+)$/) do |course_dept, course_number|
   course = Course.where(department: course_dept, course_number: course_number).first
   WishlistItem.where(course: course, user: @current_user).update_all(notify: true)
+  expect(WishlistItem.where(course: course, user: @current_user)).to be true
 end
 
 Then(/^I should have the course ([A-Z]+) (\d+) in my wishlist$/) do |course_dept, course_number|
