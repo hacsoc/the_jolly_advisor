@@ -14,3 +14,7 @@ for more information.
 Please refer to the [maitaining page in our wiki](https://github.com/hacsoc/the_jolly_advisor/wiki/Maitaining)
 for more information.
 
+## Suggestions
+
+Want to request a feature or give some feedback on things that aren't necessarily broken but could be better? Please [let us know here](http://feathub.com/hacsoc/the_jolly_advisor).
+
