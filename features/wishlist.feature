@@ -21,9 +21,13 @@ Feature: Wishlist
     And  I should see "Remove from my wishlist"
 
   Scenario: Add course to wishlist via wishlist page
-    Given
-    When
-    Then
+    Given I do not have the course EECS 293 in my wishlist
+    When I visit "/wishlist"
+    Then I should not see "EECS 293"
+    When I fill in "course_title" with "EECS293"
+    And I click the hidden button "#submit"
+    Then I should have the course EECS 293 in my wishlist
+    And I should see "Remove from my wishlist"
 
   Scenario: Remove course from wishlist via course show page
     Given I have the course EECS 293 in my wishlist

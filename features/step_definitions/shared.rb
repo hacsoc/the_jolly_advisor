@@ -20,6 +20,14 @@ When(/^I click the link "(.*)"$/) do |text|
   click_link text
 end
 
+When(/^I click the hidden button "(.*?)"$/) do |text|
+  find(text, visible: false).click
+end
+
+When(/^I fill in "(.*?)" with "(.*?)"$/) do |field, text|
+  fill_in field, with: text
+end
+
 Then(/^I should see "(.*)"$/) do |content|
   expect(page).to have_content content
 end
