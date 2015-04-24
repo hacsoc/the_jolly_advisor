@@ -5,7 +5,7 @@ class CoursesController < ApplicationController
   # GET /courses.json
   def index
     @semesters = Semester.all
-    @courses = Course.page.uniq
+    @courses = Course.all
     if params[:search].present?
       @courses = @courses.search(params[:search])
     end
@@ -16,6 +16,7 @@ class CoursesController < ApplicationController
       professor = Professor.arel_table
       @courses = @courses.joins(course_instances: :professor).where(professor[:name].matches("%#{params[:professor]}%"))
     end
+    @courses = @courses.page(params[:page])
   end
 
   # GET /courses/1
