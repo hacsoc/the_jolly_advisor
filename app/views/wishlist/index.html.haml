@@ -22,7 +22,7 @@
             - @wishlist.each do |item|
               %tr
                 %td= link_to item.course, item.course
-                %td= item.course.schedulable? ? "Yes" : "No"
+                %td= item.course.try(:schedulable?) ? "Yes" : "No"
                 %td
                   = add_remove_link @wishlist.map(&:course_id), item.course
                 %td
