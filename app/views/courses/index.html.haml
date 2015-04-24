@@ -1,7 +1,7 @@
 %p#notice= notice
 / Course Search Page
 .no-gutter.row
-  / left side column
+  / Main (and only) side column
   .col-md-9.col-md-offset-2
     #explorer_main.panel
       .panel-heading{style: "background-color:#111;color:#fff;"}
@@ -13,14 +13,14 @@
           = text_field_tag :search, params[:search], placeholder: 'Ex. EECS 395', class: 'crs_search'
 
           = label_tag (:professor)
-          = text_field_tag :professor, params[:professor], placeholder: 'Ex. Tekin', class: 'prfssr_input'
+          = text_field_tag :professor, params[:professor], placeholder: 'Ex. Smith', class: 'prfssr_input'
 
           = label_tag(:semester)
           = select_tag :semester, options_from_collection_for_select(@semesters, :id, :to_s, params[:semester].to_i), include_blank: "All", class: 'smstr'
           %br
           %br
 
-          = submit_tag "Search", name: nil
+          = submit_tag "Search", name: nil, class: 'search_button'
 
         %hr
 
