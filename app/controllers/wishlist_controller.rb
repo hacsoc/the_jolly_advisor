@@ -48,7 +48,12 @@ class WishlistController < ApplicationController
     # value. If they did, use that course id. Otherwise pass the :course_title
     # search to the Course search method and just grab the first result. If we
     # still don't have a legit course id, redirect to the wishlist page.
-    course_id = params[:course_id].present? ? params[:course_id] : Course.search(params[:course_title]).first.try(:id)
+    course_id =
+      if params[:course_id].present?
+        params[:course_id]
+      else
+        Course.search(params[:course_title]).first.try(:id)
+      end
     redirect_to wishlist_path if course_id.nil?
 
     @wishlist_item = WishlistItem.where(user: current_user, course_id: course_id)
