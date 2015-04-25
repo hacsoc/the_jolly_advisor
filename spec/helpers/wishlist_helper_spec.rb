@@ -9,8 +9,8 @@ RSpec.describe WishlistHelper, type: :helper do
 
     context 'when the id set includes the course id' do
       it 'should return a link to remove the id' do
-        result = %{<a rel="nofollow" data-method="delete" href="/wishlist?course_id=1&amp;url=foo">} +
-          %{Remove from my wishlist</a>}
+        result = %{<a rel="nofollow" data-method="delete" href="/wishlist?course_id=1&amp;} +
+                 %{url=foo">Remove from my wishlist</a>}
         expect(helper.add_remove_link(@id_set, double(id: 1))).to eq result
       end
     end
@@ -18,7 +18,7 @@ RSpec.describe WishlistHelper, type: :helper do
     context 'when the id set does not include the course id' do
       it 'should return a link to add the id' do
         result = %{<a rel="nofollow" data-method="post" href="/wishlist?course_id=3&amp;url=foo">} +
-          %{Add to my wishlist</a>}
+                 %{Add to my wishlist</a>}
         expect(helper.add_remove_link(@id_set, double(id: 3))).to eq result
       end
     end
@@ -30,8 +30,8 @@ RSpec.describe WishlistHelper, type: :helper do
 
       it 'should return a link to turn on notifications' do
         result = %{<a rel="nofollow" data-method="put" } +
-          %{href="/wishlist?course_id=1&amp;wishlist_item%5Bnotify%5D=true">} +
-          %{Turn on notifications</a>}
+                 %{href="/wishlist?course_id=1&amp;wishlist_item%5Bnotify%5D=true">} +
+                 %{Turn on notifications</a>}
         expect(helper.set_notify_link(@item)).to eq result
       end
     end
@@ -41,8 +41,9 @@ RSpec.describe WishlistHelper, type: :helper do
 
       it 'should return a link to turn off notifications' do
         result = %{<a rel="nofollow" data-method="put" } +
-          %{href="/wishlist?course_id=1&amp;wishlist_item%5Bnotify%5D=false">} +
-          %{Turn off notifications</a>}
+                 %{href="/wishlist?course_id=1&amp;wishlist_item%5Bnotify%5D=false">} +
+                 %{Turn off notifications</a>}
+        expect(helper.set_notify_link(@item)).to eq result
       end
     end
   end

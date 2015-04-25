@@ -5,7 +5,7 @@ RSpec.describe ApplicationHelper, type: :helper do
     it 'should return the value of @current_user' do
       helper.instance_variable_set(:@current_user, 10)
       expect(helper.current_user).to eq 10
-      
+ 
       helper.instance_variable_set(:@current_user, nil)
       expect(helper.current_user).to be nil
     end
