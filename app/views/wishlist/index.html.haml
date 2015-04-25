@@ -10,6 +10,7 @@
         = form_tag wishlist_path, role: :search, id: :wishlist_course_form do
           = hidden_field_tag :course_id
           = text_field_tag :course_title, nil, placeholder: "Add course to wishlist", class: 'form-control'
+          = submit_tag 'Submit', hidden: true, id: :submit
 
         %hr
 
@@ -22,7 +23,7 @@
             - @wishlist.each do |item|
               %tr
                 %td= link_to item.course, item.course
-                %td= item.course.schedulable? ? "Yes" : "No"
+                %td= item.course.try(:schedulable?) ? "Yes" : "No"
                 %td
                   = add_remove_link @wishlist.map(&:course_id), item.course
                 %td
