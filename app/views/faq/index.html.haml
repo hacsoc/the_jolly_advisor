@@ -6,5 +6,28 @@
     %th Answer
   %tbody
     %tr
-      %td= "Why shouldn't you use ruby?"
-      %td= "Because it doesn't scale."
+      %td Why should you use Ruby?
+      %td Because it scales!
+    %tr
+      %td How do I search for classes?
+      %td
+        You can either search from the top right search box, or from the
+        =link_to 'explorer page.', root_path
+    %tr
+      %td What's a wishlist?
+      %td A wishlist is a list of classes you're interested in taking at some point. You can sign up to get notifications when a class on your wishlist becomes schedulable?
+    %tr
+      %td How do I add a class to my wishlist?
+      %td
+        On the
+        =link_to 'wishlist page,', wishlist_path
+        if you start typing, you'll see a dropdown list of classes. Select one, and it will be added to your wishlist.
+
+        Alternatively, you can add a class from it's own page.
+    %tr
+      %td How do I remove a class from my wishlist?
+      %td
+        On the
+        =link_to 'wishlist page,', wishlist_path
+        there are links to remove classes from your wishlist.
+        Alternatively, you can remove a class from it's own page, similarly to how you can add one.
