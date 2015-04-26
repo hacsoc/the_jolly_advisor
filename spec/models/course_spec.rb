@@ -47,7 +47,7 @@ RSpec.describe Course, type: :model do
 
   describe ".long_string" do
     it "should return a long description" do
-      expect(@course.long_string).to eq "EECS 132: Intro to Java"
+      expect(@course.long_string).to match /[A-Z]{4}\s[\d]{3,4}:\s/
     end
   end
 end

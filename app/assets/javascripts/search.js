@@ -1,13 +1,23 @@
-$(document).ready(function(){
-  $("#course-autocomplete").autocomplete({
-    source: "/courses/autocomplete.json",
-    select: function(event, ui) {
-      window.location.href = "/courses/" + ui.item.value;
-    }
-  });
+$(document).ready(function() {
+  autocompleteCourseSearch();
+  autocompleteWishlist();
 });
 
-$(document).ready(function() {
+$(document).on('page:load', function() {
+  autocompleteCourseSearch();
+  autocompleteWishlist();
+});
+
+function autocompleteCourseSearch() {
+  $('#course-autocomplete').autocomplete({
+    source: '/courses/autocomplete.json',
+    select: function(event, ui) {
+      window.location.href = '/courses/' + ui.item.value;
+    }
+  });
+}
+
+function autocompleteWishlist() {
   $('#wishlist_course_form #course_title').autocomplete({
     source: '/courses/autocomplete.json',
     select: function(event, ui) {
@@ -15,4 +25,5 @@ $(document).ready(function() {
       $('#wishlist_course_form').submit();
     }
   });
-});
+}
+

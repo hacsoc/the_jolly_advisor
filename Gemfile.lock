@@ -104,6 +104,7 @@ GEM
       factory_girl (~> 4.5.0)
       railties (>= 3.0.0)
     ffi (1.9.6)
+    forgery (0.6.0)
     formatador (0.2.5)
     fullcalendar-rails (2.3.1.0)
       jquery-rails (>= 3.1.1, < 5.0.0)
@@ -324,6 +325,7 @@ DEPENDENCIES
   cucumber-rails
   database_cleaner
   factory_girl_rails
+  forgery
   fullcalendar-rails
   guard
   guard-cucumber

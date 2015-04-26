@@ -1,8 +1,9 @@
 FactoryGirl.define do
   factory :course do
-    department "EECS"
-    course_number 132
-    title "Intro to Java"
+    department { Forgery(:basic).text[0...4].upcase }
+    course_number { Forgery(:basic).number*100 }
+    title { Forgery(:basic).text }
+    description { Forgery(:basic).text }
 
     trait :with_prereqs do
       transient do

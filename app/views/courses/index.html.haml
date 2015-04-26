@@ -30,11 +30,11 @@
             %tr
               %th Course
               %th Title
-          %tbody
+          %tbody#results
             - @courses.each do |course|
               %tr
-                %td{nowrap: "nowrap"}= link_to course, course
-                %td= link_to course.title || "Title Not Found", course
+                %td.course_num{nowrap: "nowrap"}= link_to course, course
+                %td.course_name= link_to course.title || "Title Not Found", course
         = paginate @courses
         %br
         = page_entries_info @courses, class: 'crs_count'
