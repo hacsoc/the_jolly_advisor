@@ -79,16 +79,16 @@ Then(/^I can page through courses$/) do
 end
 
 When(/^I select a class on the Course Explorer Page$/) do
-  @course = page.all('#results tr').to_a.sample
-  @course_num = @course.all('td').first.text
-  @course_title = @course.all('td').last.text
+  @rand_course = page.all('#results tr').to_a.sample
+  @rand_course_num = @rand_course.all('td').first.text
+  @rand_course_title = @rand_course.all('td').last.text
   within(@course.all('td').first) do
-    click_on @course_num
+    click_on @rand_course_num
   end
 end
 
 Then(/^I am taken to the show page of that class$/) do
-  expect(current_path).to eq "/courses/#{@course_num.gsub(' ', '')}"
+  expect(current_path).to eq "/courses/#{@rand_course_num.gsub(' ', '')}"
   # Expect h2 to eq course department coursenum
-  expect(page.find('h2').text).to eq "#{@course_num}: #{@course_title}"
+  expect(page.find('h2').text).to eq "#{@rand_course_num}: #{@rand_course_title}"
 end
