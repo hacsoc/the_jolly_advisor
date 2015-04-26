@@ -12,7 +12,7 @@ end
 When(/^I search for a professor$/) do
   # Grab the first professor or course
   @professor = Professor.first
-  fill_in 'professor', :with => @professor.name
+  fill_in 'professor', with: @professor.name
   click_button 'Search'
 end
 
@@ -41,7 +41,7 @@ end
 
 When(/^I search for a department$/) do
   @dept = Course.all.sample.department # O(n) but test data small so yolo.
-  fill_in 'search', :with => @dept
+  fill_in 'search', with: @dept
   click_button 'Search'
 end
 
@@ -53,7 +53,7 @@ end
 
 When(/^I search for courses by a keyword$/) do
   @keyword = Course.all.sample.title.split(" ").sample # O(n) but test data small so yolo.
-  fill_in 'search', :with => @keyword
+  fill_in 'search', with: @keyword
   click_button 'Search'
 end
 
@@ -64,9 +64,9 @@ Then(/^I see only classes with that keyword in the name$/) do
 end
 
 Given(/^An unsearched list of courses$/) do
-  fill_in 'search', :with => ''
-  fill_in 'professor', :with => ''
-  select 'All', :from => 'semester'
+  fill_in 'search', with: ''
+  fill_in 'professor', with: ''
+  select 'All', from: 'semester'
   click_button 'Search'
   @all_courses = page.all('#results tr')
 end
@@ -74,7 +74,7 @@ end
 Then(/^I can page through courses$/) do
   # Next Page
   page.find(:css, '.next').click
-  #New data should not be different from our data
+  # New data should not be different from our data
   expect(@all_courses.to_a - page.all('#results tr').to_a).not_to be_empty
 end
 
