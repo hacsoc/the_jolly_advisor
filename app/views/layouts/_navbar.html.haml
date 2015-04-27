@@ -12,9 +12,9 @@
         %li= link_to "FAQ", faq_path
       %ul.nav.navbar-right.navbar-nav
         %li
-          %form.navbar-form{role: 'search'}
+          %form.navbar-form{role: 'search', action: '/courses', method: :get}
             .form-group
-              %input#course-autocomplete.form-control{placeholder: "Course Select", type: "text"}
+              %input#course-autocomplete.form-control{placeholder: "Course Select", type: "text", name: 'search' }
         %li.dropdown
           %a.dropdown-toggle{"data-toggle" => "dropdown", href: "#"}
             %i.glyphicon.glyphicon-user
