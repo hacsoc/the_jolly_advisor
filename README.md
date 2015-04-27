@@ -11,7 +11,7 @@ for more information.
 
 ## Maintaining
 
-Please refer to the [maitaining page in our wiki](https://github.com/hacsoc/the_jolly_advisor/wiki/Maitaining)
+Please refer to the [maintaining page in our wiki](https://github.com/hacsoc/the_jolly_advisor/wiki/Maintaining)
 for more information.
 
 ## Suggestions
