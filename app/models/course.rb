@@ -3,7 +3,9 @@ class Course < ActiveRecord::Base
 
   scope :search, ->(q) { where("concat(lower(courses.department), courses.course_number) like ?
                                OR lower(courses.title) like ?",
-                               "%#{q.to_s.downcase.gsub(/\s+/,'')}%", "%#{q.to_s.downcase}%") }
+                               "%#{q.to_s.downcase.gsub(/\s+/,'')}%", "%#{q.to_s.downcase}%")
+                                .order(%{concat(lower(courses.department), courses.course_number)})
+  }
 
   # Get all prereq info from the database.
   # Return an array of arrays of courses.
