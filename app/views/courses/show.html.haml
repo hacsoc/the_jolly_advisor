@@ -5,7 +5,7 @@
       .panel-heading{style: "background-color:#555;color:#eee;"}
       .panel-body
         .well
-          %h3= first_professor.name
+          %h3= professor_search_link(first_professor)
         %hr/
         %h3 Previous Semesters
         - @instances_by_semester.each do |semester, instances|
@@ -13,7 +13,7 @@
             %b= semester
             \:
           - instances.sort_by(&:section).each do |instance|
-            Section #{instance.section} taught by #{instance.professor.name}
+            Section #{instance.section} taught by #{professor_search_link(instance.professor)}
             %br
             = instance.schedule
             %br
