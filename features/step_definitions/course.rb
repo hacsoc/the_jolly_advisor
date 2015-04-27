@@ -98,7 +98,7 @@ end
 And(/^the courses are in ascending order$/) do
   page.all('#results tr').each_with_index do |row, i|
     unless page.all('#results tr')[i-1]
-      expect(row.all('td').first.text).to be >= (page.all('#results tr')[i-1].all('td').first.first.text)
+      expect(row.all('td').first.text).to be >= (page.all('#results tr')[i - 1].all('td').first.first.text)
     end
   end
 end
