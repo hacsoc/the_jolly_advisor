@@ -7,7 +7,7 @@ class SchedulerController < ApplicationController
   # source for the autocomplete can be set to the right date.
   before_action :set_search_date, only: [:index], :if => [:semester_request?, :xhr_request?]
   before_action :set_scheduled_meetings, only: [:index], :if => :xhr_request?
-  before_action :set_enrollment, only: [:create, :destroy]
+  before_action :set_enrollment, only: [:create]
 
   # GET /scheduler
   # GET /scheduler.json
@@ -19,11 +19,6 @@ class SchedulerController < ApplicationController
     respond_to do |format|
       format.json { head :no_content }
     end
-  end
-
-  # DELETE /scheduler.json
-  def destroy
-    @enrollment.destroy
   end
 
   private
