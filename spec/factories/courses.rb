@@ -1,9 +1,9 @@
 FactoryGirl.define do
   factory :course do
-    department { Forgery(:basic).text[0...4].upcase }
+    department { Forgery(:basic).text(allow_numeric: false)[0...4].upcase }
     course_number { Forgery(:basic).number*100 }
-    title { Forgery(:basic).text }
-    description { Forgery(:basic).text }
+    title { Forgery(:basic).text(allow_numeric: false) }
+    description { Forgery(:basic).text(allow_numeric: false) }
 
     trait :with_prereqs do
       transient do
