@@ -19,6 +19,7 @@ Feature: Explorer
   Scenario: Search by Department
     When I search for a department
     Then I only see classes from that department
+    And the courses are in ascending order
 
   Scenario: Search by keyword in a course description
     When I search for courses by a keyword

@@ -29,7 +29,9 @@ end
 
 When(/^I search for a course by course department and number$/) do
   @course = Course.all.sample # O(n) but test data small so yolo.
-  fill_in 'search', with: "#{@course.department}#{@course.course_number}"
+  # Need to find by id, since there are 2 elements on the page with the name
+  # "search" so that the navbar searching does not require autocomplete
+  find('#search').set("#{@course.department}#{@course.course_number}")
   click_button 'Search'
 end
 
@@ -41,7 +43,7 @@ end
 
 When(/^I search for a department$/) do
   @dept = Course.all.sample.department # O(n) but test data small so yolo.
-  fill_in 'search', with: @dept
+  find('#search').set(@dept)
   click_button 'Search'
 end
 
@@ -53,7 +55,7 @@ end
 
 When(/^I search for courses by a keyword$/) do
   @keyword = Course.all.sample.title.split(" ").sample # O(n) but test data small so yolo.
-  fill_in 'search', with: @keyword
+  find('#search').set(@keyword)
   click_button 'Search'
 end
 
@@ -64,7 +66,7 @@ Then(/^I see only classes with that keyword in the name$/) do
 end
 
 Given(/^An unsearched list of courses$/) do
-  fill_in 'search', with: ''
+  find('#search').set('')
   fill_in 'professor', with: ''
   select 'All', from: 'semester'
   click_button 'Search'
@@ -91,4 +93,12 @@ Then(/^I am taken to the show page of that class$/) do
   expect(current_path).to eq "/courses/#{@course_num.gsub(' ', '')}"
   # Expect h2 to eq course department coursenum
   expect(page.find('h2').text).to eq "#{@course_num}: #{@course_title}"
+end
+
+And(/^the courses are in ascending order$/) do
+  page.all('#results tr').each_with_index do |row, i|
+    unless page.all('#results tr')[i-1]
+      expect(row.all('td').first.text).to be >= (page.all('#results tr')[i - 1].all('td').first.first.text)
+    end
+  end
 end
