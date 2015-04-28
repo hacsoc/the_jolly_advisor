@@ -24,6 +24,7 @@ class SchedulerController < ApplicationController
   # DELETE /scheduler.json
   def destroy
     @enrollment.destroy
+    head :no_content
   end
 
   private

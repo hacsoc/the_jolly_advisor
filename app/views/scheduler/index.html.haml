@@ -47,10 +47,6 @@
     },
 
     eventClick: function(calEvent, jsEvent, view){
-      $(this).css('border-color', 'red');
-    },
-
-    eventClick: function(calEvent, jsEvent, view){
 
       if(confirm("Delete?")){
           $.ajax({
@@ -58,12 +54,11 @@
           url: calEvent.url,
           contentType: 'application/json',
           dataType: 'json',
-          success: function(){
-            // refresh the feed
-            $('claendar').fullCalendar('refetchEvents');
-          }
         });
+        $('#calendar').fullCalendar('refetchEvents');
       }
+      
+      return false;
     }
   });
 
