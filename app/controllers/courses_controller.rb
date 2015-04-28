@@ -16,6 +16,8 @@ class CoursesController < ApplicationController
       professor = Professor.arel_table
       @courses = @courses.joins(course_instances: :professor).where(professor[:name].matches("%#{params[:professor]}%"))
     end
+    course_ids = @courses.pluck('courses.id').uniq
+    @courses = Course.where('id IN (?)', course_ids).dept_order
     @courses = @courses.page(params[:page])
   end
 
