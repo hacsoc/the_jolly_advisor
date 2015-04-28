@@ -5,7 +5,7 @@ class CoursesController < ApplicationController
   # GET /courses.json
   def index
     @semesters = Semester.all
-    @courses = Course.all.order('courses.id')
+    @courses = Course.all
     if params[:search].present?
       @courses = @courses.search(params[:search])
     end
