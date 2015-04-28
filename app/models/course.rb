@@ -6,7 +6,7 @@ class Course < ActiveRecord::Base
                                "%#{q.to_s.downcase.gsub(/\s+/, '')}%", "%#{q.to_s.downcase}%")
   }
 
-  scope :dept_order, -> { order(%{concat(lower(courses.department), courses.course_number)}) }
+  scope :order_by_short_name, -> { order(:department, :course_number) }
 
   # Get all prereq info from the database.
   # Return an array of arrays of courses.
