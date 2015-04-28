@@ -1,4 +1,28 @@
-%h1 FAQ Advising Questions
+
+%script(src="/assets/javascript/faq.js")
+
+.no-gutter.row
+  .col-md-10.col-md-offset-1
+    #faq_main.panel
+      .panel-heading{style: "background-color:#111;color:#fff;"}
+        %h1 FAQ Advising Questions
+      .main.panel-body
+        .col-md-8
+          .panel.panel-default
+            .panel-heading
+              %h4 Where can I find my degree requirements?
+              %span.pull-right.clickable.glyphicon.glyphicon-chevron-up
+            .answer-body
+              The #{ link_to 'University Bulletin', 'http://bulletin.case.edu/'} is your legally binding list of requirements.
+              You alone are #{ link_to 'responsible', 'http://case.edu/ugstudies/academic-policies/academic-regulations/' }
+              for making sure they are correct by the time of your graduation. SIS is not guaranteed to be up-to-date or error
+              free.
+
+
+
+%br
+%br
+%hr
 
 %table
   %tbody

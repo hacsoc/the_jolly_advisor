@@ -1,5 +1,3 @@
-%p#notice= notice
-
 
 .no-gutter.row
   .col-md-10.col-md-offset-1
@@ -26,10 +24,12 @@
 
 
 
-/ Why is the javascript here instead of it's own separate file?
+
 :javascript
   // pass any query parameters along to the JSON action
   var event_feed = '#{scheduler_feed}';
+  var calDiv = $("#calendar");
+
   $('#old_feed').val(event_feed);
   $('#calendar').fullCalendar({
     defaultView: 'agendaWeek', // think 'google calendar'
@@ -44,6 +44,26 @@
       element.attr('data-toggle', 'tooltip');
       element.attr('title', event.description);
       element.tooltip();
+    },
+
+    eventClick: function(calEvent, jsEvent, view){
+      $(this).css('border-color', 'red');
+    },
+
+    eventClick: function(calEvent, jsEvent, view){
+
+      if(confirm("Delete?")){
+          $.ajax({
+          type: 'DELETE',
+          url: calEvent.url,
+          contentType: 'application/json',
+          dataType: 'json',
+          success: function(){
+            // refresh the feed
+            $('claendar').fullCalendar('refetchEvents');
+          }
+        });
+      }
     }
   });
 

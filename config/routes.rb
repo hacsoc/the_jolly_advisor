@@ -22,6 +22,7 @@ Rails.application.routes.draw do
 
   get 'scheduler' => 'scheduler#index'
   post 'scheduler' => 'scheduler#create'
+  delete 'scheduler' => 'scheduler#destroy'
   get 'wishlist' => 'wishlist#index'
   post 'wishlist' => 'wishlist#add_course'
   put 'wishlist' => 'wishlist#update'
