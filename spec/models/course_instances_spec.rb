@@ -1,6 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe CourseInstance, type: :model do
+  it { should belong_to :semester }
+  it { should belong_to :course }
+  it { should belong_to :professor }
+
+  it { should have_many :meetings }
+  it { should have_many :enrollments }
+  it { should have_many(:enrolled_students).through(:enrollments) }
+
   before do
     @course_instance_yesterday = FactoryGirl.build(:course_instance, end_date: Date.today - 1)
     @course_instance_today = FactoryGirl.build(:course_instance, end_date: Date.today)
