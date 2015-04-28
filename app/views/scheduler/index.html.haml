@@ -101,3 +101,15 @@
       });
     }
   });
+
+  $('#schedule_form').on('ajax:beforeSend', function(event, xhr, settings) {
+    settings.data += '&' + $('#semester_form').serialize();
+  });
+
+  $('#schedule_form').on('ajax:success', function() {
+    // clear the autocomplete
+    $('#course_title').val('');
+    $('ul.ui-autocomplete').hide();
+    // refresh the calendar to show the new event
+    $('#calendar').fullCalendar('refetchEvents');
+  });
