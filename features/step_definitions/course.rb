@@ -6,7 +6,8 @@ end
 
 Given(/^The course ([A-Z]+) (\d+) exists$/) do |department, course_number|
   Course.exists?(department: department, course_number: course_number) ||
-    FactoryGirl.create(:course, :with_course_instance, department: department, course_number: course_number)
+    FactoryGirl.create(:course, :with_course_instance,
+                       department: department, course_number: course_number)
 end
 
 When(/^I search for a professor$/) do
@@ -97,8 +98,10 @@ end
 
 And(/^the courses are in ascending order$/) do
   page.all('#results tr').each_with_index do |row, i|
-    unless page.all('#results tr')[i-1]
-      expect(row.all('td').first.text).to be >= (page.all('#results tr')[i - 1].all('td').first.first.text)
+    unless page.all('#results tr')[i - 1]
+      current = row.all('td').first.text
+      previous = page.all('#results tr')[i - 1].all('td').first.first.text
+      expect(current).to be >= previous
     end
   end
 end
