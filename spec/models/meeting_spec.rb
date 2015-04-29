@@ -7,7 +7,7 @@ RSpec.describe Meeting, type: :model do
   describe '#scheduled_meetings' do
     context 'when the schedule is TBA' do
       let(:meeting) { FactoryGirl.build(:meeting, :tba) }
-      
+
       it 'returns an empty array' do
         expect(meeting.scheduled_meetings.empty?).to be true
       end

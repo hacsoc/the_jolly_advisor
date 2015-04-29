@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :course do
     department { Forgery(:basic).text(allow_numeric: false)[0...4].upcase }
-    course_number { Forgery(:basic).number*100 }
+    course_number { Forgery(:basic).number * 100 }
     title { Forgery(:basic).text(allow_numeric: false) }
     description { Forgery(:basic).text(allow_numeric: false) }
 
