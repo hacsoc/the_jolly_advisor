@@ -6,16 +6,22 @@ class CourseInstance < ActiveRecord::Base
   has_many :enrollments, dependent: :destroy
   has_many :enrolled_students, through: :enrollments, source: :user
 
-  scope :ongoing, ->(date) { where('? BETWEEN course_instances.start_date AND course_instances.end_date', date) }
-  scope :unenrolled, ->(user) { where('NOT EXISTS (SELECT enrollments.id FROM enrollments WHERE enrollments.course_instance_id = course_instances.id AND enrollments.user_id = ?)', user.id) }
+  scope :ongoing, ->(date) {
+    where('? BETWEEN course_instances.start_date AND course_instances.end_date', date)
+  }
+  scope :unenrolled, ->(user) {
+    where(%{NOT EXISTS (SELECT enrollments.id FROM enrollments WHERE
+          enrollments.course_instance_id = course_instances.id AND enrollments.user_id = ?)},
+          user.id)
+  }
   scope :search, ->(term, user, date) {
     includes(:course, :meetings)
-    .ongoing(date)
-    .joins(:course)
-    .where(%{concat(lower(courses.department), courses.course_number) like ?
-            OR lower(courses.title) like ?},
-            "%#{term.to_s.downcase.gsub(/\s+/,'')}%", "%#{term.to_s.downcase}%")
-    .unenrolled(user)
+      .ongoing(date)
+      .joins(:course)
+      .where(%{concat(lower(courses.department), courses.course_number) like ?
+              OR lower(courses.title) like ?},
+             "%#{term.to_s.downcase.gsub(/\s+/, '')}%", "%#{term.to_s.downcase}%")
+      .unenrolled(user)
   }
 
   def schedule
