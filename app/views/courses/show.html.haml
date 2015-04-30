@@ -32,7 +32,7 @@
                 %tr
                   %td{align: "left", valign: "top"}
                     %h4 Description:
-                    %p= @course.description
+                    %p= course_linkify(@course.description)
                     %p  
                     %h4 Prerequisites:
                     %ul
