@@ -49,7 +49,7 @@ class SchedulerController < ApplicationController
   # Set the course instances to be rendered in the schedule
   # This is for the JSON feed that fullcalendar requires
   def set_scheduled_meetings
-    @scheduled_meetings = current_user.enrolled_course
+    @scheduled_meetings = current_user.enrolled_courses
                           .ongoing(@search_date || Date.today)
                           .includes(:meetings, :course)
                           .flat_map(&:meetings)
