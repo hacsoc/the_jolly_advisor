@@ -10,11 +10,15 @@ class CoursesController < ApplicationController
       @courses = @courses.search(params[:search])
     end
     if params[:semester].present?
-      @courses = @courses.joins(:course_instances).where(course_instances: { semester_id: params[:semester].to_i })
+      @courses =
+        @courses.joins(:course_instances)
+        .where(course_instances: { semester_id: params[:semester].to_i })
     end
     if params[:professor].present?
       professor = Professor.arel_table
-      @courses = @courses.joins(course_instances: :professor).where(professor[:name].matches("%#{params[:professor]}%"))
+      @courses =
+        @courses.joins(course_instances: :professor)
+        .where(professor[:name].matches("%#{params[:professor]}%"))
     end
     course_ids = @courses.pluck('courses.id').uniq
     @courses = Course.where('id IN (?)', course_ids).order_by_short_name
@@ -79,7 +83,9 @@ class CoursesController < ApplicationController
   def autocomplete
     @courses = Course.search(params[:term])
     respond_to do |format|
-      format.json { render json: @courses.map{ |c| { id: c.id, label: c.long_string, value: c.to_param } } }
+      format.json do
+        render json: @courses.map { |c| { id: c.id, label: c.long_string, value: c.to_param } }
+      end
     end
   end
 
