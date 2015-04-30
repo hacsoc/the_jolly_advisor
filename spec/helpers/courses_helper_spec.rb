@@ -42,6 +42,28 @@ RSpec.describe CoursesHelper, type: :helper do
     end
   end
 
+  describe '#course_linkify' do
+    context 'when the text has nothing that looks like a course' do
+      it 'should return the same text' do
+        text = 'This definitely has no courses'
+        expect(helper.course_linkify(text)).to eq text
+      end
+    end
+
+    context 'when the text has something that looks like a course' do
+      before do
+        @text = 'Recommended preparation includes EECS 340, EECS 233'
+        @results = ['<a href="/courses/EECS340">EECS 340</a>',
+                    '<a href="/courses/EECS233">EECS 233</a>']
+      end
+
+      it 'should replace those courses with links to their show pages' do
+        result_text = helper.course_linkify(@text)
+        @results.each { |r| expect(result_text).to include r }
+      end
+    end
+  end
+
   describe '#prereq_sets' do
     context 'when the course has no prerequisites' do
       before { @course = double(prerequisites: []) }
