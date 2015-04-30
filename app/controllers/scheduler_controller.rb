@@ -5,8 +5,9 @@ class SchedulerController < ApplicationController
   #
   # The jump date should also be set for JS requests, so that the
   # source for the autocomplete can be set to the right date.
-  before_action :set_search_date, only: [:index, :create],
-    :if => [:semester_request?, :xhr_request?]
+  before_action :set_search_date,
+                only: [:index, :create],
+                :if => [:semester_request?, :xhr_request?]
   before_action :set_scheduled_meetings, only: [:index], :if => :xhr_request?
   before_action :set_enrollment, only: [:create, :destroy]
 
@@ -35,24 +36,24 @@ class SchedulerController < ApplicationController
       if params[:course_instance_id].present?
         params[:course_instance_id]
       else
-        CourseInstance.search(params[:course_title], current_user, @search_date || Date.today)
-                      .first
-                      .try(:id)
+        CourseInstance.search(params[:course_title],
+                              current_user,
+                              @search_date || Date.today).first.try(:id)
       end
     return false if course_instance_id.nil?
 
-    @enrollment = Enrollment.where(user: current_user, course_instance_id: course_instance_id)
-                            .first_or_create
+    @enrollment = Enrollment.where(user: current_user,
+                                   course_instance_id: course_instance_id).first_or_create
   end
 
   # Set the course instances to be rendered in the schedule
   # This is for the JSON feed that fullcalendar requires
   def set_scheduled_meetings
     @scheduled_meetings = current_user.enrolled_course
-                                      .ongoing(@search_date || Date.today)
-                                      .includes(:meetings, :course)
-                                      .flat_map(&:meetings)
-                                      .flat_map(&:scheduled_meetings)
+                          .ongoing(@search_date || Date.today)
+                          .includes(:meetings, :course)
+                          .flat_map(&:meetings)
+                          .flat_map(&:scheduled_meetings)
   end
 
   def semester_request?

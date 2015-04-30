@@ -6,9 +6,8 @@ class ApplicationController < ActionController::Base
   before_action :set_current_user
 
   def authenticate_user!
-    unless session.has_key?('cas_user')
-      redirect_to login_users_path(was_at: request.env['PATH_INFO'])
-    end
+    return if session.has_key?('cas_user')
+    redirect_to login_users_path(was_at: request.env['PATH_INFO'])
   end
 
   def current_user
@@ -22,7 +21,7 @@ class ApplicationController < ActionController::Base
   private
 
   def not_found
-    raise ActionController::RoutingError.new('Not Found')
+    raise ActionController::RoutingError, 'Not Found'
   end
 
   def xhr_request?
@@ -30,15 +29,16 @@ class ApplicationController < ActionController::Base
   end
 
   def set_current_user
-    if session.has_key?('cas_user')
-      @current_user = User.find_or_create_by(case_id: session['cas_user'])
-    end
+    return unless session.has_key?('cas_user')
+    @current_user = User.find_or_create_by(case_id: session['cas_user'])
   end
 
   # Used for the searching done by both the SchedulerController and CourseInstancesController
   def set_search_date
-    search_date_string = Semester::SAFE_SEARCH_DATES[params[:semester][:semester]][params[:semester][:half]] +
-        " #{params[:semester][:year]}"
-    @search_date = DateTime.strptime(search_date_string, Semester::SAFE_SEARCH_DATE_STRPTIME_STRING + ' %Y')
+    search_date_string =
+      Semester::SAFE_SEARCH_DATES[params[:semester][:semester]][params[:semester][:half]] +
+      " #{params[:semester][:year]}"
+    @search_date = DateTime.strptime(search_date_string,
+                                     Semester::SAFE_SEARCH_DATE_STRPTIME_STRING + ' %Y')
   end
 end

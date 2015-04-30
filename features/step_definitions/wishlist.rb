@@ -1,6 +1,6 @@
 Given(/^I have the course ([A-Z]+) (\d+) in my wishlist$/) do |course_dept, course_number|
   course = Course.where(department: course_dept, course_number: course_number).first ||
-    FactoryGirl.create(:course, department: course_dept, course_number: course_number)
+           FactoryGirl.create(:course, department: course_dept, course_number: course_number)
   WishlistItem.exists?(course: course, user: @current_user) ||
     FactoryGirl.create(:wishlist_item, course: course, user: @current_user)
 end
@@ -21,13 +21,13 @@ end
 Given(/^I do not have notifications turned on for ([A-Z]+) (\d+)$/) do |course_dept, course_number|
   course = Course.where(department: course_dept, course_number: course_number).first
   WishlistItem.where(course: course, user: @current_user).update_all(notify: false)
-  expect(WishlistItem.where(course: course, user: @current_user).where(course_id: course.id, notify: true).to_a).to eq []
+  expect(WishlistItem.where(course: course, user: @current_user, notify: true).to_a).to eq []
 end
 
 Given(/^I have notifications turned on for ([A-Z]+) (\d+)$/) do |course_dept, course_number|
   course = Course.where(department: course_dept, course_number: course_number).first
   WishlistItem.where(course: course, user: @current_user).update_all(notify: true)
-  expect(WishlistItem.where(course: course, user: @current_user).where(course_id: course.id, notify: false).to_a).to eq []
+  expect(WishlistItem.where(course: course, user: @current_user, notify: false).to_a).to eq []
 end
 
 Then(/^I should have the course ([A-Z]+) (\d+) in my wishlist$/) do |course_dept, course_number|
