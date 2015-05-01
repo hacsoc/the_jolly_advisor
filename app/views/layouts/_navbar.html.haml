@@ -25,5 +25,4 @@
             - else
               %li= link_to "#{current_user.case_id}: Logout", logout_users_path
             %li.divider
-            %li
-              %a{href: "#"} About
+            %li= link_to 'About', about_path
