@@ -51,6 +51,7 @@ group :development do
   gem 'guard'
   gem 'guard-rspec'
   gem 'guard-cucumber'
+  gem 'haml-rails'
 end
 
 group :development, :test do
