@@ -28,7 +28,7 @@ Feature: Tips and Reviews
     Then That review should have helpfulness 1
 
   Scenario: Reading reviews
-    Given The course EECS 293 has a 10 reviews
+    Given The course EECS 293 has 10 reviews
     When I visit "/courses/EECS293"
     Then I should see 10 reviews
     And The reviews should be ordered by helpfulness

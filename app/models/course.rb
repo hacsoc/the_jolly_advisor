@@ -1,5 +1,6 @@
 class Course < ActiveRecord::Base
   has_many :course_instances, dependent: :destroy
+  has_many :reviews, dependent: :destroy
 
   scope :search, ->(q) {
     where(%{concat(lower(courses.department), courses.course_number) like ?
