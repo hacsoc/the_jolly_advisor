@@ -27,7 +27,8 @@ Rails.application.routes.draw do
   post 'wishlist' => 'wishlist#add_course'
   put 'wishlist' => 'wishlist#update'
   delete 'wishlist' => 'wishlist#remove_course'
-  get 'faq' => 'faq#index'
+  get 'faq' => 'site#faq'
+  get 'about' => 'site#about'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
