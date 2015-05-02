@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
-  resources :reviews
+  resources :reviews do
+    member do
+      put :upvote
+      put :downvote
+    end
+  end
 
   root 'courses#index'
 

@@ -19,7 +19,8 @@ Then(/^The reviews should be ordered by helpfulness$/) do
   reviews = page.all('#reviews .review')
   reviews.each_with_index do |review_row, index|
     if reviews[index + 1]
-      expect(review_row.find('td:last').text).to be >= reviews[index + 1].find('td:last').text
+      expect(review_row.find('span.helpfulness').text.to_i).to be >=
+        reviews[index + 1].find('span.helpfulness').text.to_i
     end
   end
 end

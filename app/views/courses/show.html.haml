@@ -20,7 +20,7 @@
         - if user_signed_in?
           %hr/
           = add_remove_link current_user.wishlist.map(&:course_id), @course
-  #content.col-md-7
+  #content.col-md-6
     .panel
       .panel-heading{style: "background-color:#111;color:#fff;"}
       .panel-body
@@ -42,12 +42,22 @@
                     %ul
                       - postreqs(@course).each do |postreq|
                         %li= postreq
-  .col-md-2
-    %h4 Tips and Reviews
-    %table#reviews
-      %tbody
-        - @reviews.each do |review|
-          %tr.review
-            %td= review.body
-            %td= review.professor.name
-            %td= review.helpfulness
+  .col-md-3
+    .panel
+      .panel-heading{ style: 'background-color: #555; color: #eee;' }
+      .panel-body
+        %h4 Tips and Reviews
+        #reviews
+          - @reviews.each do |review|
+            .review.row
+              .col-md-10
+                %strong
+                  Professor:
+                  =review.professor.name
+                = review.body
+              .helpfulness.col-md-2
+                = link_to upvote_review_path(review), remote: true, method: :put, class: 'upvote' do
+                  %span.glyphicon.glyphicon-chevron-up
+                %span.helpfulness= review.helpfulness
+                = link_to downvote_review_path(review), remote: true, method: :put, class: 'downvote' do
+                  %span.glyphicon.glyphicon-chevron-down
