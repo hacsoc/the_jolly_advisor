@@ -1,5 +1,6 @@
 class Course < ActiveRecord::Base
   has_many :course_instances, dependent: :destroy
+  has_many :professors, through: :course_instances
   has_many :reviews, dependent: :destroy
 
   scope :search, ->(q) {
