@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :reviews
+
   root 'courses#index'
 
   resources :users, except: [:create, :new, :destroy] do
