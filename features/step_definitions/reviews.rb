@@ -9,3 +9,17 @@ Given(/^The course ([A-Z]+) (\d+) has (\d+) reviews$/) do |dept, course_num, rev
   end
   expect(course.reload.reviews.count).to eq review_count.to_i
 end
+
+Then(/^I should see (\d+) reviews$/) do |count|
+  reviews = page.all('#reviews .review')
+  expect(reviews.count).to eq count.to_i
+end
+
+Then(/^The reviews should be ordered by helpfulness$/) do
+  reviews = page.all('#reviews .review')
+  reviews.each_with_index do |review_row, index|
+    if reviews[index + 1]
+      expect(review_row.find('td:last').text).to be >= reviews[index + 1].find('td:last').text
+    end
+  end
+end

@@ -42,8 +42,12 @@
                     %ul
                       - postreqs(@course).each do |postreq|
                         %li= postreq
-        %hr
-        -##posts
-        -#  %h2 Tips and Reviews
-        -#  %p TODO: Populate this via the Posts model
-        -#%hr
+  .col-md-2
+    %h4 Tips and Reviews
+    %table#reviews
+      %tbody
+        - @reviews.each do |review|
+          %tr.review
+            %td= review.body
+            %td= review.professor.name
+            %td= review.helpfulness

@@ -29,6 +29,7 @@ class CoursesController < ApplicationController
   # GET /courses/1.json
   def show
     @instances_by_semester = @course.course_instances.includes(:semester).group_by(&:semester)
+    @reviews = @course.reviews.order(helpfulness: :desc)
   end
 
   # GET /courses/new

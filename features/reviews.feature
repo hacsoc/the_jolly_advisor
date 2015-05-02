@@ -30,5 +30,6 @@ Feature: Tips and Reviews
   Scenario: Reading reviews
     Given The course EECS 293 has 10 reviews
     When I visit "/courses/EECS293"
-    Then I should see 10 reviews
+    Then I should see "Tips and Reviews"
+    And I should see 10 reviews
     And The reviews should be ordered by helpfulness
