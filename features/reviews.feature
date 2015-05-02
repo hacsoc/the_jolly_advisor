@@ -5,13 +5,15 @@ Feature: Tips and Reviews
 
   Scenario: Create a review
     Given I have authenticated as some user
-    And The course EECS 293 exists and has course instances
+    And The course EECS 293 exists
+    And The course EECS 293 has 0 reviews
     When I visit "/courses/EECS293"
     Then I should see "Tips and Reviews"
     When I fill in "professor" with an EECS 293 professor
     And I fill in "body" with some text
     And I click the button "Submit"
     Then I should see that review
+    And That review should have helpfulness 0
 
   Scenario: Upvote a review
     Given I have authenticated as some user
