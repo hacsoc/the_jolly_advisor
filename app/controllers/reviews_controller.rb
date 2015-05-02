@@ -1,5 +1,5 @@
 class ReviewsController < ApplicationController
-  before_action :set_review, only: [:show, :edit, :update, :destroy]
+  before_action :set_review, only: [:show, :edit, :update, :upvote, :downvote, :destroy]
 
   # GET /reviews
   # GET /reviews.json
@@ -47,6 +47,32 @@ class ReviewsController < ApplicationController
       else
         format.html { render :edit }
         format.json { render json: @review.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # PUT /reviews/1/upvote
+  def upvote
+    respond_to do |format|
+      if @review.upvote
+        format.html { redirect_to course_path(@review.course) }
+        format.js { head :no_content }
+      else
+        format.html { redirect_to course_path(@review.course) }
+        format.js { head 500 }
+      end
+    end
+  end
+
+  # PUT /reviews/1/downvote
+  def downvote
+    respond_to do |format|
+      if @review.downvote
+        format.html { redirect_to course_path(@review.course) }
+        format.js { head :no_content }
+      else
+        format.html { redirect_to course_path(@review.course) }
+        format.js { head 500 }
       end
     end
   end
