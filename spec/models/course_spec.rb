@@ -51,8 +51,10 @@ RSpec.describe Course, type: :model do
 
     context 'when some professors have real names' do
       before do
-        allow(@course).to receive(:professors) { [double(name: 'Staff'),
-                                                  double(name: 'Real Name')] }
+        allow(@course).to receive(:professors) do
+          [double(name: 'Staff'),
+           double(name: 'Real Name')]
+        end
       end
 
       it 'returns a subset of the professors' do
@@ -69,8 +71,10 @@ RSpec.describe Course, type: :model do
 
     context 'when all professors have real names' do
       before do
-        allow(@course).to receive(:professors) { [double(name: 'Real'),
-                                                  double(name: 'Name')] }
+        allow(@course).to receive(:professors) do
+          [double(name: 'Real'),
+           double(name: 'Name')]
+        end
       end
 
       it 'returns the array of professors' do
