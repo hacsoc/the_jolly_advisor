@@ -1,6 +1,6 @@
 module CoursesHelper
   def first_professor
-    @course.course_instances.first.try(:professor) || Professor.TBA
+    @course.real_professors.first || @course.professors.first || Professor.TBA
   end
 
   def course_linkify(text)
