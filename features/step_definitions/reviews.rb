@@ -26,6 +26,21 @@ When(/^I click the (.*) button for that review$/) do |button_class|
   end
 end
 
+When(/^I select a professor from the dropdown$/) do
+  options = page.all('#review_professor_id option')
+  option = options.sample
+  @professor = Professor.find(option.value)
+  select option.text, from: 'review_professor_id'
+end
+
+Then(/^I should see that review$/) do
+  @review = Review.where(user: @current_user,
+                         course: @course,
+                         professor: @professor,
+                         body: @text).first
+  expect(page.find('#reviews')).to have_content @review.body
+end
+
 Then(/^That review should have helpfulness (\d+)$/) do |helpfulness|
   expect(@review.reload.helpfulness).to eq helpfulness.to_i
   within('#reviews') do

@@ -9,9 +9,9 @@ Feature: Tips and Reviews
     And The course EECS 293 has 0 reviews
     When I visit "/courses/EECS293"
     Then I should see "Tips and Reviews"
-    When I fill in "professor" with an EECS 293 professor
-    And I fill in "body" with some text
-    And I click the button "Submit"
+    When I select a professor from the dropdown
+    And I fill in "review_body" with some text
+    And I click the button "Create Review"
     Then I should see that review
     And That review should have helpfulness 0
 

@@ -25,14 +25,16 @@ class ReviewsController < ApplicationController
   # POST /reviews
   # POST /reviews.json
   def create
-    @review = Review.new(review_params)
+    @review = Review.new(review_params.merge({helpfulness: 0}))
 
     respond_to do |format|
       if @review.save
-        format.html { redirect_to @review, notice: 'Review was successfully created.' }
+        format.html { redirect_to @review.course, notice: 'Review was successfully created.' }
+        format.js { head :no_content }
         format.json { render :show, status: :created, location: @review }
       else
-        format.html { render :new }
+        format.html { redirect_to request.original_url }
+        format.js { head 500 }
         format.json { render json: @review.errors, status: :unprocessable_entity }
       end
     end
@@ -89,13 +91,13 @@ class ReviewsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_review
-      @review = Review.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_review
+    @review = Review.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def review_params
-      params[:review]
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def review_params
+    params.require(:review).permit(:body, :course_id, :professor_id, :user_id)
+  end
 end

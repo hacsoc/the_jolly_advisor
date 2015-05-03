@@ -23,6 +23,10 @@ class Course < ActiveRecord::Base
     Course.where(id: Prerequisite.where('? = ANY(prerequisite_ids)', id).pluck(:postrequisite_id))
   end
 
+  def real_professors
+    professors.find_all { |p| !['Staff', 'TBA'].include?(p.name) }
+  end
+
   def schedulable?
     course_instances.any? { |course_instance| course_instance.try(:schedulable?) }
   end

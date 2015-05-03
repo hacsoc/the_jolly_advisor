@@ -12,12 +12,21 @@ Given(/^I have authenticated as (.*)$/) do |case_id|
   expect(page).to have_content(@current_user.case_id)
 end
 
+When(/^I fill in "(.*)" with some text$/) do |field|
+  @text = Forgery::Basic.text
+  fill_in field, with: @text
+end
+
 When(/^I visit "(.*)"$/) do |path|
   visit path
 end
 
 When(/^I click the link "(.*)"$/) do |text|
   click_link text
+end
+
+When(/^I click the button "(.*)"$/) do |name|
+  click_button name
 end
 
 When(/^I click the hidden button "(.*?)"$/) do |text|
