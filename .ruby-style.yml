@@ -105,9 +105,9 @@ Style/CollectionMethods:
   PreferredMethods:
     collect: map
     collect!: map!
-    find: detect
-    find_all: select
-    reduce: inject
+    detect: find
+    select: find_all
+    inject: reduce
 Style/CommentAnnotation:
   Description: Checks formatting of special comments (TODO, FIXME, OPTIMIZE, HACK,
     REVIEW).
