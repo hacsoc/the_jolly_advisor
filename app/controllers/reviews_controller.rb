@@ -25,16 +25,14 @@ class ReviewsController < ApplicationController
   # POST /reviews
   # POST /reviews.json
   def create
-    @review = Review.new(review_params.merge({helpfulness: 0}))
+    @review = Review.new(review_params.merge({helpfulness: 0, user_id: current_user.id}))
 
     respond_to do |format|
       if @review.save
         format.html { redirect_to @review.course, notice: 'Review was successfully created.' }
-        format.js { head :no_content }
         format.json { render :show, status: :created, location: @review }
       else
         format.html { redirect_to request.original_url }
-        format.js { head 500 }
         format.json { render json: @review.errors, status: :unprocessable_entity }
       end
     end
