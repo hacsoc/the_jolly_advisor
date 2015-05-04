@@ -47,6 +47,7 @@
       .panel-heading{ style: 'background-color: #555; color: #eee;' }
       .panel-body
         %h4 Tips and Reviews
+        = paginate @reviews, window: 1
         #reviews
           = render partial: 'reviews/show', collection: @reviews, as: :review
           - if user_signed_in?

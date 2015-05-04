@@ -29,9 +29,9 @@ Feature: Tips and Reviews
     And I click the downvote button for that review
     Then That review should have helpfulness 1
 
-  Scenario: Reading reviews
+  Scenario: Reading reviews (with pagination)
     Given The course EECS 293 has 10 reviews
     When I visit "/courses/EECS293"
     Then I should see "Tips and Reviews"
-    And I should see 10 reviews
+    And I should see 5 reviews
     And The reviews should be ordered by helpfulness
