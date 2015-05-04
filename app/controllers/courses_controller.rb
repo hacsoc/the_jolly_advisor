@@ -81,7 +81,7 @@ class CoursesController < ApplicationController
   end
 
   def autocomplete
-    @courses = Course.search(params[:term])
+    @courses = Course.search(params[:term]).sort_by { |c| -c.score(params[:term]) }
     respond_to do |format|
       format.json do
         render json: @courses.map { |c| { id: c.id, label: c.long_string, value: c.to_param } }
