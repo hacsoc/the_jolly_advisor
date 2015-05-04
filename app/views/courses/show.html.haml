@@ -48,25 +48,11 @@
       .panel-body
         %h4 Tips and Reviews
         #reviews
-          - @reviews.each do |review|
-            .review.row
-              .col-md-10
-                %strong
-                  Professor:
-                  =review.professor.name
-                = review.body
-              .helpfulness.col-md-2
-                = link_to upvote_review_path(review), remote: true, method: :put, class: 'upvote' do
-                  %span.glyphicon.glyphicon-chevron-up
-                %span.helpfulness= review.helpfulness
-                = link_to downvote_review_path(review), remote: true, method: :put, class: 'downvote' do
-                  %span.glyphicon.glyphicon-chevron-down
-            %hr
+          = render partial: 'reviews/show', collection: @reviews, as: :review
           - if user_signed_in?
             .new-review.row
-              = form_for Review.new, remote: true do |f|
+              = form_for Review.new do |f|
                 = f.hidden_field :course_id, value: @course.id
-                = f.hidden_field :user_id, value: current_user.id
                 .input-group
                   = f.text_field :body, class: 'form-control'
                   = f.select :professor_id, options_for_select(@course.real_professors.map { |p| [p.name, p.id] })
