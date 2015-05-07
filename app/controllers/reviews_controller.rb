@@ -25,7 +25,7 @@ class ReviewsController < ApplicationController
   # POST /reviews
   # POST /reviews.json
   def create
-    @review = Review.new(review_params.merge({helpfulness: 0, user_id: current_user.id}))
+    @review = Review.new(review_params.merge(helpfulness: 0, user_id: current_user.id))
 
     respond_to do |format|
       if @review.save
@@ -89,6 +89,7 @@ class ReviewsController < ApplicationController
   end
 
   private
+
   # Use callbacks to share common setup or constraints between actions.
   def set_review
     @review = Review.find(params[:id])
