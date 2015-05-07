@@ -49,20 +49,9 @@ guard :rspec, cmd: "bundle exec rspec", all_on_start: true do
   # Rails files
   rails = dsl.rails(view_extensions: %w(erb haml slim))
   dsl.watch_spec_files_for(rails.app_files)
-  dsl.watch_spec_files_for(rails.views)
-
-  watch(rails.controllers) do |m|
-    [
-      rspec.spec.("routing/#{m[1]}_routing"),
-      rspec.spec.("controllers/#{m[1]}_controller"),
-      rspec.spec.("acceptance/#{m[1]}")
-    ]
-  end
 
   # Rails config changes
   watch(rails.spec_helper)     { rspec.spec_dir }
-  watch(rails.routes)          { "#{rspec.spec_dir}/routing" }
-  watch(rails.app_controller)  { "#{rspec.spec_dir}/controllers" }
 
   # Watch factories
   watch(%r{^spec/factories/(.*)s\.rb$}) { |m| "spec/models/#{m[1]}_spec.rb" }
