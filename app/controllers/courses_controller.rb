@@ -29,7 +29,8 @@ class CoursesController < ApplicationController
   # GET /courses/1.json
   def show
     @instances_by_semester = @course.course_instances.includes(:semester).group_by(&:semester)
-    @reviews = @course.reviews.order(helpfulness: :desc).page(params[:page])
+    @reviews = @course.reviews.includes(:votes)
+    @reviews = Kaminari.paginate_array(@reviews.sort_by(&:helpfulness)).page(params[:page])
   end
 
   # GET /courses/new

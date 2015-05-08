@@ -25,7 +25,7 @@ class ReviewsController < ApplicationController
   # POST /reviews
   # POST /reviews.json
   def create
-    @review = Review.new(review_params.merge(helpfulness: 0, user_id: current_user.id))
+    @review = Review.new(review_params.merge(user_id: current_user.id))
 
     respond_to do |format|
       if @review.save
@@ -55,7 +55,7 @@ class ReviewsController < ApplicationController
   # PUT /reviews/1/upvote
   def upvote
     respond_to do |format|
-      if @review.upvote
+      if @review.upvote(current_user)
         format.html { redirect_to course_path(@review.course) }
         format.js { head :no_content }
       else
@@ -68,7 +68,7 @@ class ReviewsController < ApplicationController
   # PUT /reviews/1/downvote
   def downvote
     respond_to do |format|
-      if @review.downvote
+      if @review.downvote(current_user)
         format.html { redirect_to course_path(@review.course) }
         format.js { head :no_content }
       else
