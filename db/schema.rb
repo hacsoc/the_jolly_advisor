@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150502155729) do
+ActiveRecord::Schema.define(version: 20150508111347) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -79,18 +79,27 @@ ActiveRecord::Schema.define(version: 20150502155729) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "review_votes", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "review_id"
+    t.integer  "score"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "review_votes", ["review_id"], name: "index_review_votes_on_review_id", using: :btree
+  add_index "review_votes", ["user_id"], name: "index_review_votes_on_user_id", using: :btree
+
   create_table "reviews", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "course_id"
     t.integer  "professor_id"
     t.string   "body"
-    t.integer  "helpfulness"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
   end
 
   add_index "reviews", ["course_id"], name: "index_reviews_on_course_id", using: :btree
-  add_index "reviews", ["helpfulness"], name: "index_reviews_on_helpfulness", using: :btree
   add_index "reviews", ["professor_id"], name: "index_reviews_on_professor_id", using: :btree
   add_index "reviews", ["user_id"], name: "index_reviews_on_user_id", using: :btree
 
@@ -122,6 +131,8 @@ ActiveRecord::Schema.define(version: 20150502155729) do
   add_foreign_key "course_instances", "semesters"
   add_foreign_key "meetings", "course_instances"
   add_foreign_key "meetings", "professors"
+  add_foreign_key "review_votes", "reviews"
+  add_foreign_key "review_votes", "users"
   add_foreign_key "reviews", "courses"
   add_foreign_key "reviews", "professors"
   add_foreign_key "reviews", "users"
