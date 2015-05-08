@@ -5,8 +5,10 @@ class Review < ActiveRecord::Base
   belongs_to :course
   belongs_to :professor
   belongs_to :user
+  has_many :votes, class_name: 'ReviewVote'
 
   def helpfulness
+    votes.map(&:score).reduce(0, :+)
   end
 
   def downvote(user)
