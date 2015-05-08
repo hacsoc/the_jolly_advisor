@@ -11,13 +11,15 @@ Given(/^The course ([A-Z]+) (\d+) has (\d+) reviews$/) do |dept, course_num, rev
 end
 
 Given(/^The course ([A-Z]+) (\d+) has a review with helpfulness (\d+)$/) do |dept, course_num, helpfulness|
+  helpfulness = helpfulness.to_i
   course = Course.where(department: dept, course_number: course_num.to_i).first ||
            FactoryGirl.create(:course, department: dept, course_number: course_num.to_i)
   course.reviews.destroy_all
-  @review = FactoryGirl.create(:review, course: course, helpfulness: helpfulness.to_i)
+  @review = FactoryGirl.create(:review, course: course)
+  FactoryGirl.create_list(:review_vote, helpfulness, review: @review, score: helpfulness < 0 ? -1 : 1)
   course.reload
   expect(course.reviews.count).to eq 1
-  expect(course.reviews.first.helpfulness).to eq helpfulness.to_i
+  expect(course.reviews.first.helpfulness).to eq helpfulness
 end
 
 When(/^I click the (.*) button for that review$/) do |button_class|
