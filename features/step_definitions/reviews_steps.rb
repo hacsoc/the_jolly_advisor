@@ -22,6 +22,33 @@ Given(/^The course ([A-Z]+) (\d+) has a review with helpfulness (\d+)$/) do |dep
   expect(course.reviews.first.helpfulness).to eq helpfulness
 end
 
+Given(/^I have already upvoted that review$/) do
+  # This has the unfortunate side-effect of changing the helpfulness of the
+  # review, which breaks expectations in other parts of the tests. So, we
+  # need to do some extra to make sure the helpfulness is held constant for the
+  # review.
+  helpfulness = @review.helpfulness
+  vote = ReviewVote.where(review: @review, user: @current_user).first ||
+         FactoryGirl.create(:review_vote, review: @review, user: @current_user, score: 1)
+  vote.update_attributes(score: 1) unless vote.score == 1
+  @review.reload
+  if @review.helpfulness > helpfulness
+    FactoryGirl.create_list(:review_vote, @review.helpfulness - helpfulness, review: @review, score: -1)
+  end
+end
+
+Given(/^I have already downvoted that review$/) do
+  # See the comment in the block for "I've already upvoted ..."
+  helpfulness = @review.helpfulness
+  vote = ReviewVote.where(review: @review, user: @current_user).first ||
+         FactoryGirl.create(:review_vote, review: @review, user: @current_user, score: -1)
+  vote.update_attributes(score: -1) unless vote.score == -1
+  @review.reload
+  if @review.helpfulness < helpfulness
+    FactoryGirl.create_list(:review_vote, helpfulness - @review.helpfulness, review: @review, score: 1)
+  end
+end
+
 When(/^I click the (.*) button for that review$/) do |button_class|
   within('#reviews') do
     find(".#{button_class}").click
