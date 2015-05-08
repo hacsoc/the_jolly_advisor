@@ -22,9 +22,41 @@ Feature: Tips and Reviews
     And I click the upvote button for that review
     Then That review should have helpfulness 4
 
+  Scenario: Double upvote
+    Given I have authenticated as some user
+    And The course EECS 293 has a review with helpfulness 3
+    And I have already upvoted that review
+    When I visit "/courses/EECS293"
+    And I click the upvote button for that review
+    Then That review should have helpfulness 3
+
+  Scenario: Upvote after downvote
+    Given I have authenticated as some user
+    And The course EECS 293 has a review with helpfulness 3
+    And I have already downvoted that review
+    When I visit "/courses/EECS293"
+    And I click the upvote button for that review
+    Then That review should have helpfulness 5
+
   Scenario: Downvote a review
     Given I have authenticated as some user
     And The course EECS 293 has a review with helpfulness 2
+    When I visit "/courses/EECS293"
+    And I click the downvote button for that review
+    Then That review should have helpfulness 1
+
+  Scenario: Double downvote
+    Given I have authenticated as some user
+    And The course EECS 293 has a review with helpfulness 3
+    And I have already downvoted that review
+    When I visit "/courses/EECS293"
+    And I click the downvote button for that review
+    Then That review should have helpfulness 3
+
+  Scenario: Downvote after upvote
+    Given I have authenticated as some user
+    And The course EECS 293 has a review with helpfulness 3
+    And I have already upvoted that review
     When I visit "/courses/EECS293"
     And I click the downvote button for that review
     Then That review should have helpfulness 1
