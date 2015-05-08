@@ -6,11 +6,18 @@ class Review < ActiveRecord::Base
   belongs_to :professor
   belongs_to :user
 
-  def downvote
-    update_attributes(helpfulness: helpfulness - 1)
+  def helpfulness
   end
 
-  def upvote
-    update_attributes(helpfulness: helpfulness + 1)
+  def downvote(user)
+    vote = ReviewVote.where(review: self, user: user).first_or_initialize
+    return false if vote.score == -1
+    vote.update_attributes(score: -1)
+  end
+
+  def upvote(user)
+    vote = ReviewVote.where(review: self, user: user).first_or_initialize
+    return false if vote.score == 1
+    vote.update_attributes(score: 1)
   end
 end
