@@ -30,7 +30,7 @@ class CoursesController < ApplicationController
   def show
     @instances_by_semester = @course.course_instances.includes(:semester).group_by(&:semester)
     @reviews = @course.reviews.includes(:votes)
-    @reviews = Kaminari.paginate_array(@reviews.sort_by(&:helpfulness)).page(params[:page])
+    @reviews = Kaminari.paginate_array(@reviews.sort_by(&:helpfulness)).page(params[:page]).per(5)
   end
 
   # GET /courses/new
