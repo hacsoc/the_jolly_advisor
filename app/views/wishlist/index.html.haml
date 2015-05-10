@@ -20,7 +20,7 @@
             %th Schedulable
             %th Actions
           %tbody
-            - @wishlist.each do |item|
+            - @wishlist.order('course_id').each do |item|
               %tr
                 %td= link_to item.course, item.course
                 %td= item.course.try(:schedulable?) ? "Yes" : "No"
