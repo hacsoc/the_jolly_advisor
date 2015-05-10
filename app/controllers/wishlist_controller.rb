@@ -4,7 +4,7 @@ class WishlistController < ApplicationController
 
   # GET /wishlist
   def index
-      @wishlist = current_user.wishlist.includes(course: :course_instances).order(:course_id)
+    @wishlist = current_user.wishlist.includes(course: :course_instances).order(:course_id)
   end
 
   # POST /wishlist
