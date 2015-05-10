@@ -29,7 +29,7 @@ class CoursesController < ApplicationController
   # GET /courses/1.json
   def show
     @instances_by_semester = @course.course_instances.includes(:semester).group_by(&:semester)
-    @reviews = @course.reviews.includes(:votes)
+    @reviews = @course.reviews.includes(:professor, votes: :user)
     @reviews = Kaminari.paginate_array(@reviews.sort_by(&:helpfulness)).page(params[:page]).per(5)
   end
 
