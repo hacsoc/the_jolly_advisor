@@ -5,9 +5,11 @@
       = review.professor.try(:name)
     = review.body
   .helpfulness.col-md-2
-    = link_to upvote_review_path(review), remote: true, method: :put, class: 'upvote' do
-      %span.glyphicon.glyphicon-chevron-up
+    - if user_signed_in?
+      = link_to upvote_review_path(review), remote: true, method: :put, class: 'upvote' + (disable_vote_link?(review, @current_user, 1) ? ' disabled' : '') do
+        %span.glyphicon.glyphicon-chevron-up
     %span.helpfulness= review.helpfulness
-    = link_to downvote_review_path(review), remote: true, method: :put, class: 'downvote' do
-      %span.glyphicon.glyphicon-chevron-down
+    - if user_signed_in?
+      = link_to downvote_review_path(review), remote: true, method: :put, class: 'downvote' + (disable_vote_link?(review, @current_user, -1) ? ' disabled' : '') do
+        %span.glyphicon.glyphicon-chevron-down
 %hr

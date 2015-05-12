@@ -12,14 +12,21 @@ $(document).on('page:load', function() {
 });
 
 function addUpvoteHandler() {
-  $('a.upvote').on('ajax:success', function(data) { updateHelpfulness(this, 1); });
+  $('a.upvote').on('ajax:success', function(data) { updateHelpfulness(this, 1, 'a.downvote'); });
 }
 
 function addDownvoteHandler() {
-  $('a.downvote').on('ajax:success', function (data) { updateHelpfulness(this, -1); });
+  $('a.downvote').on('ajax:success', function (data) { updateHelpfulness(this, -1, 'a.upvote'); });
 }
 
-function updateHelpfulness(link, amount) {
-  var helpfulness = $(link).closest('div').find('.helpfulness');
+function updateHelpfulness(link, amount, otherLinkSelector) {
+  var div = $(link).closest('div');
+  var helpfulness = div.find('.helpfulness');
+  var otherLink = div.find(otherLinkSelector);
+  if (otherLink.hasClass('disabled')) {
+    amount *= 2;
+    otherLink.removeClass('disabled');
+  }
   helpfulness.text(parseInt(helpfulness.text()) + amount);
+  $(link).addClass('disabled');
 }
