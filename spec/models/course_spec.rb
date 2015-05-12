@@ -31,6 +31,59 @@ RSpec.describe Course, type: :model do
     end
   end
 
+  describe '#real_professors' do
+    before { @course = FactoryGirl.build(:course) }
+
+    context 'when all professors are "Staff"' do
+      before { allow(@course).to receive(:professors) { [double(name: 'Staff')] } }
+
+      it 'returns an empty array' do
+        expect(@course.real_professors).to eq []
+      end
+    end
+
+    context 'when all professors are "TBA"' do
+      before { allow(@course).to receive(:professors) { [double(name: 'TBA')] } }
+
+      it 'returns an empty array' do
+        expect(@course.real_professors).to eq []
+      end
+    end
+
+    context 'when some professors have real names' do
+      before do
+        allow(@course).to receive(:professors) do
+          [double(name: 'Staff'),
+           double(name: 'Real Name')]
+        end
+      end
+
+      it 'returns a subset of the professors' do
+        expect(@course.real_professors.length).to eq 1
+      end
+
+      it 'returns only the professors with real names' do
+        @course.real_professors.each do |p|
+          expect(p.name).to_not eq 'Staff'
+          expect(p.name).to_not eq 'TBA'
+        end
+      end
+    end
+
+    context 'when all professors have real names' do
+      before do
+        allow(@course).to receive(:professors) do
+          [double(name: 'Real'),
+           double(name: 'Name')]
+        end
+      end
+
+      it 'returns the array of professors' do
+        expect(@course.real_professors.map(&:name)).to eq @course.professors.map(&:name)
+      end
+    end
+  end
+
   describe ".schedulable?" do
     it "should say the class is schedulable" do
       expect(@course.schedulable?).to be true

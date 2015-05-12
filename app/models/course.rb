@@ -24,7 +24,7 @@ class Course < ActiveRecord::Base
   end
 
   def real_professors
-    professors.find_all { |p| !['Staff', 'TBA'].include?(p.name) }
+    professors.find_all { |p| !%w(Staff TBA).include? p.name }
   end
 
   def schedulable?
