@@ -1,5 +1,5 @@
 Given(/^I have the course ([A-Z]+) (\d+) in my wishlist$/) do |course_dept, course_number|
-  course = Course.where(department: course_dept, course_number: course_number).first ||
+ course = Course.where(department: course_dept, course_number: course_number).first ||
            FactoryGirl.create(:course, department: course_dept, course_number: course_number)
   WishlistItem.exists?(course: course, user: @current_user) ||
     FactoryGirl.create(:wishlist_item, course: course, user: @current_user)
@@ -50,4 +50,15 @@ end
 Then(/^I should have notifications turned off for ([A-Z]+) (\d+)$/) do |course_dept, course_number|
   course = Course.where(department: course_dept, course_number: course_number)
   expect(WishlistItem.where(course: course, user: @current_user).first.notify).to be false
+end
+
+Then(/^([A-Z]+) (\d+) is the first class in my wishlist$/) do |course_dept, course_number|
+  course = Course.where(department: course_dept, course_number: course_number)
+  row = page.all('tr')[1]
+  course_data = row.all('td').first.text
+  expected_dept = course_data[0...4]
+  expected_number = course_data[4...course_data.length]
+  expected_course = Course.where(department: expected_dept, course_number:
+                                expected_number)
+  expect(course == expected_course).to be true
 end
