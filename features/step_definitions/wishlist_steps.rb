@@ -54,7 +54,7 @@ end
 
 Then(/^([A-Z]+) (\d+) is the first class in my wishlist$/) do |course_dept, course_number|
   course = Course.where(department: course_dept, course_number: course_number)
-  row = page.all('tr')[1]
+  row = page.all('tr')[1] #The table header will be the first tr
   course_data = row.all('td').first.text
   expected_dept = course_data[0...4]
   expected_number = course_data[4...course_data.length]
