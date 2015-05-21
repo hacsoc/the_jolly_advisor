@@ -58,7 +58,7 @@ Then(/^([A-Z]+) (\d+) is the first class in my wishlist$/) do |course_dept, cour
   course_data = row.all('td').first.text
   expected_dept = course_data[0...4]
   expected_number = course_data[4...course_data.length]
-  expected_course = Course.where(department: expected_dept, course_number:
-                                expected_number)
+  expected_course = Course.where(department: expected_dept,
+                                 course_number: expected_number)
   expect(course == expected_course).to be true
 end
