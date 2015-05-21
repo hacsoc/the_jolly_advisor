@@ -1,5 +1,6 @@
 class Course < ActiveRecord::Base
   has_many :course_instances, dependent: :destroy
+  has_many :professors, through: :course_instances
 
   scope :search, ->(q) {
     where(%{concat(lower(courses.department), courses.course_number) like ?
@@ -19,6 +20,10 @@ class Course < ActiveRecord::Base
 
   def postrequisites
     Course.where(id: Prerequisite.where('? = ANY(prerequisite_ids)', id).pluck(:postrequisite_id))
+  end
+
+  def real_professors
+    professors.find_all { |p| !%w(Staff TBA).include? p.name }
   end
 
   def schedulable?
