@@ -22,26 +22,22 @@
           = add_remove_link current_user.wishlist.map(&:course_id), @course
   #content.col-md-7
     .panel
-      .panel-heading{style: "background-color:#111;color:#fff;"}
+      .panel-heading{style: "background-color:#111;color:#000;"}
       .panel-body
         .row
-          .col-md-8
+          .col-md-12
             %h2= @course.long_string
-            %table{border: "0", cellpadding: "0", cellspacing: "0", cols: "2", width: "541"}
-              %tbody
-                %tr
-                  %td{align: "left", valign: "top"}
-                    %h4 Description:
-                    %p= course_linkify(@course.description || '')
-                    %p  
-                    %h4 Prerequisites:
-                    %ul
-                      - prereq_sets(@course).each do |prereq_set|
-                        %li= prereq_set
-                    %h4 Required for:
-                    %ul
-                      - postreqs(@course).each do |postreq|
-                        %li= postreq
+            %h4 Description:
+            %p= course_linkify(@course.description || '')
+            %p  
+            %h4 Prerequisites:
+            %ul
+              - prereq_sets(@course).each do |prereq_set|
+                %li= prereq_set
+            %h4 Required for:
+            %ul
+              - postreqs(@course).each do |postreq|
+                %li= postreq
         %hr
         -##posts
         -#  %h2 Tips and Reviews
