@@ -22,10 +22,10 @@
           = add_remove_link current_user.wishlist.map(&:course_id), @course
   #content.col-md-7
     .panel
-      .panel-heading{style: "background-color:#111;color:#fff;"}
+      .panel-heading{style: "background-color:#111;color:#000;"}
       .panel-body
         .row
-          .col-md-8
+          .col-md-12
             %h2= @course.long_string
             %h4 Description:
             %p= course_linkify(@course.description || '')
