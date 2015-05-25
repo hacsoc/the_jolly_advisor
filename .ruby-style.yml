@@ -18,6 +18,9 @@ AllCops:
   Exclude:
   - "vendor/**/*"
   - "db/schema.rb"
+  - "lib/tasks/*"
+  - "bin/**/*"
+  - "script/**/*"
   RunRailsCops: false
   DisplayCopNames: false
   StyleGuideCopsOnly: false
@@ -102,9 +105,9 @@ Style/CollectionMethods:
   PreferredMethods:
     collect: map
     collect!: map!
-    find: detect
-    find_all: select
-    reduce: inject
+    detect: find
+    select: find_all
+    inject: reduce
 Style/CommentAnnotation:
   Description: Checks formatting of special comments (TODO, FIXME, OPTIMIZE, HACK,
     REVIEW).
@@ -120,7 +123,7 @@ Style/DotPosition:
   Description: Checks the position of the dot in multi-line method calls.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#consistent-multi-line-chains
   Enabled: true
-  EnforcedStyle: trailing
+  EnforcedStyle: leading
   SupportedStyles:
   - leading
   - trailing
@@ -161,7 +164,7 @@ Style/Encoding:
 Style/FileName:
   Description: Use snake_case for source file names.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#snake-case-files
-  Enabled: false
+  Enabled: true
   Exclude: []
 Style/FirstParameterIndentation:
   Description: Checks the indentation of the first parameter in a method call.
@@ -196,7 +199,7 @@ Style/GlobalVars:
 Style/GuardClause:
   Description: Check for conditionals that can be replaced with guard clauses
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#no-nested-conditionals
-  Enabled: false
+  Enabled: true
   MinBodyLength: 1
 Style/HashSyntax:
   Description: 'Prefer Ruby 1.9 hash syntax { a: 1, b: 2 } over 1.8 syntax { :a =>
@@ -210,7 +213,7 @@ Style/HashSyntax:
 Style/IfUnlessModifier:
   Description: Favor modifier if/unless usage when you have a single-line body.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#if-as-a-modifier
-  Enabled: false
+  Enabled: true
   MaxLineLength: 100
 Style/IndentationWidth:
   Description: Use 2 spaces for indentation.
@@ -272,7 +275,7 @@ Style/MultilineOperationIndentation:
 Style/NumericLiterals:
   Description: Add underscores to large numeric literals to improve their readability.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#underscores-in-numerics
-  Enabled: false
+  Enabled: true
   MinDigits: 5
 Style/ParenthesesAroundCondition:
   Description: Don't use parentheses around the condition of an if/unless/while.
@@ -313,7 +316,7 @@ Style/PredicateName:
 Style/RaiseArgs:
   Description: Checks the arguments passed to raise/fail.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#exception-class-messages
-  Enabled: false
+  Enabled: true
   EnforcedStyle: exploded
   SupportedStyles:
   - compact
@@ -328,7 +331,7 @@ Style/RegexpLiteral:
     characters. Use %r only for regular expressions matching more than `MaxSlashes`
     '/' character.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#percent-r
-  Enabled: false
+  Enabled: true
   MaxSlashes: 1
 Style/Semicolon:
   Description: Don't use semicolons to terminate expressions.
@@ -358,8 +361,8 @@ Style/SingleLineBlockParams:
 Style/SingleLineMethods:
   Description: Avoid single-line methods.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#no-single-line-methods
-  Enabled: false
-  AllowIfMethodIsEmpty: true
+  Enabled: true
+  AllowIfMethodIsEmpty: false
 Style/StringLiterals:
   Description: Checks if uses of quotes match the configured preference.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#consistent-string-literals
@@ -435,7 +438,7 @@ Style/TrailingBlankLines:
 Style/TrailingComma:
   Description: Checks for trailing comma in parameter lists and literals.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#no-trailing-array-commas
-  Enabled: false
+  Enabled: true
   EnforcedStyleForMultiline: no_comma
   SupportedStyles:
   - comma
@@ -487,7 +490,7 @@ Style/WordArray:
 Metrics/AbcSize:
   Description: A calculated magnitude based on number of assignments, branches, and
     conditions.
-  Enabled: true
+  Enabled: false
   Max: 15
 Metrics/BlockNesting:
   Description: Avoid excessive block nesting
@@ -502,8 +505,8 @@ Metrics/ClassLength:
 Metrics/CyclomaticComplexity:
   Description: A complexity metric that is strongly correlated to the number of test
     cases needed to validate a method.
-  Enabled: false
-  Max: 6
+  Enabled: true
+  Max: 4
 Metrics/LineLength:
   Description: Limit lines to 100 characters.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#80-character-limits
@@ -516,14 +519,14 @@ Metrics/LineLength:
 Metrics/MethodLength:
   Description: Avoid methods longer than 10 lines of code.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#short-methods
-  Enabled: false
+  Enabled: true
   CountComments: false
-  Max: 10
+  Max: 20
 Metrics/ParameterLists:
   Description: Avoid parameter lists longer than three or four parameters.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#too-many-params
-  Enabled: false
-  Max: 5
+  Enabled: true
+  Max: 3
   CountKeywordArgs: true
 Metrics/PerceivedComplexity:
   Description: A complexity metric geared towards measuring complexity for a human
@@ -619,7 +622,7 @@ Style/AlignArray:
 Style/ArrayJoin:
   Description: Use Array#join instead of Array#*.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#array-join
-  Enabled: false
+  Enabled: true
 Style/AsciiComments:
   Description: Use only ascii symbols in comments.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#english-comments
@@ -651,7 +654,7 @@ Style/Blocks:
 Style/CaseEquality:
   Description: Avoid explicit use of the case equality operator(===).
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#no-case-equality
-  Enabled: false
+  Enabled: true
 Style/CharacterLiteral:
   Description: Checks for uses of character literals.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#no-character-literals
@@ -671,7 +674,7 @@ Style/ClassVars:
 Style/ColonMethodCall:
   Description: 'Do not use :: for method call.'
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#double-colons
-  Enabled: false
+  Enabled: true
 Style/CommentIndentation:
   Description: Indentation of comments.
   Enabled: true
@@ -693,7 +696,7 @@ Style/Documentation:
 Style/DoubleNegation:
   Description: Checks for uses of double negation (!!).
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#no-bang-bang
-  Enabled: false
+  Enabled: true
 Style/EachWithObject:
   Description: Prefer `each_with_object` over `inject` or `reduce`.
   Enabled: false
@@ -727,15 +730,15 @@ Style/EndOfLine:
 Style/EvenOdd:
   Description: Favor the use of Fixnum#even? && Fixnum#odd?
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#predicate-methods
-  Enabled: false
+  Enabled: true
 Style/FlipFlop:
   Description: Checks for flip flops
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#no-flip-flops
-  Enabled: false
+  Enabled: true
 Style/IfWithSemicolon:
   Description: Do not use if x; .... Use the ternary operator instead.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#no-semicolon-ifs
-  Enabled: false
+  Enabled: true
 Style/IndentationConsistency:
   Description: Keep indentation straight.
   Enabled: true
@@ -784,11 +787,11 @@ Style/MultilineTernaryOperator:
 Style/NegatedIf:
   Description: Favor unless over if for negative conditions (or control flow or).
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#unless-for-negatives
-  Enabled: false
+  Enabled: true
 Style/NegatedWhile:
   Description: Favor until over while for negative conditions.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#until-for-negatives
-  Enabled: false
+  Enabled: true
 Style/NestedTernaryOperator:
   Description: Use one expression per branch in a ternary operator.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#no-nested-ternary
@@ -796,11 +799,11 @@ Style/NestedTernaryOperator:
 Style/NilComparison:
   Description: Prefer x.nil? to x == nil.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#predicate-methods
-  Enabled: false
+  Enabled: true
 Style/Not:
   Description: Use ! instead of not.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#bang-not-not
-  Enabled: false
+  Enabled: true
 Style/OneLineConditional:
   Description: Favor the ternary operator(?:) over if/then/else/end constructs.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#ternary-operator
@@ -837,7 +840,7 @@ Style/SelfAssignment:
   Description: Checks for places where self-assignment shorthand should have been
     used.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#self-assignment
-  Enabled: false
+  Enabled: true
 Style/SingleSpaceBeforeFirstArg:
   Description: Checks that exactly one space is used between a method name and the
     first argument for method calls without parentheses.
@@ -960,7 +963,7 @@ Lint/Debugger:
   Enabled: true
 Lint/DeprecatedClassMethods:
   Description: Check for deprecated class method calls.
-  Enabled: false
+  Enabled: true
 Lint/DuplicateMethods:
   Description: Check for duplicate methods calls.
   Enabled: true

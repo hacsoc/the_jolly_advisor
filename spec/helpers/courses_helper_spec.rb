@@ -2,42 +2,69 @@ require 'rails_helper'
 
 RSpec.describe CoursesHelper, type: :helper do
   describe '#first_professor' do
-    context 'when @course has no course instances' do
+    before { @course = FactoryGirl.build(:course) }
+
+    context 'when @course has no professors' do
       before do
-        course = double(course_instances: [])
-        helper.instance_variable_set(:@course, course)
+        allow(@course).to receive(:professors) { [] }
+        helper.instance_variable_set(:@course, @course)
       end
 
-      it 'should return the TBA professor' do
+      it 'returns the TBA professor' do
         expect(helper.first_professor).to eq Professor.TBA
       end
     end
 
-    context 'when @course has one course instance' do
+    context 'when @course has no real professors' do
       before do
-        course = double(course_instances: [double(professor: 'prof')])
-        helper.instance_variable_set(:@course, course)
+        allow(@course).to receive(:professors) { [double(name: 'Staff'), double(name: 'TBA')] }
+        helper.instance_variable_set(:@course, @course)
       end
 
-      it 'should return the professor of that instance' do
-        expect(helper.first_professor).to eq 'prof'
+      it 'returns the first fake professor' do
+        expect(helper.first_professor.name).to eq 'Staff'
+        expect(helper.first_professor.name).to_not eq 'TBA'
       end
     end
 
-    context 'when @course has multiple instances' do
+    context 'when @course has real professors' do
       before do
-        @instances = (1..3).map { |n| double(professor: "prof#{n}") }
-        course = double(course_instances: @instances)
-        helper.instance_variable_set(:@course, course)
+        allow(@course).to receive(:professors) do
+          [double(name: 'Staff'), double(name: 'Real'), double(name: 'Staff'), double(name: 'Name')]
+        end
+        helper.instance_variable_set(:@course, @course)
       end
 
-      it 'should return the professor of the first instance' do
-        expect(helper.first_professor).to eq @instances.first.professor
+      it 'returns a real professor' do
+        expect(helper.first_professor.name).to_not eq 'Staff'
+        expect(helper.first_professor.name).to_not eq 'TBA'
       end
 
-      it 'should not return the professor of any of the other instances' do
-        prof = helper.first_professor
-        expect(@instances[1..-1].any? { |i| i.professor == prof }).to be false
+      it 'returns the first real professor' do
+        expect(helper.first_professor.name).to eq 'Real'
+        expect(helper.first_professor.name).to_not eq 'Name'
+      end
+    end
+  end
+
+  describe '#course_linkify' do
+    context 'when the text has nothing that looks like a course' do
+      it 'should return the same text' do
+        text = 'This definitely has no courses'
+        expect(helper.course_linkify(text)).to eq text
+      end
+    end
+
+    context 'when the text has something that looks like a course' do
+      before do
+        @text = 'Recommended preparation includes EECS 340, EECS 233'
+        @results = ['<a href="/courses/EECS340">EECS 340</a>',
+                    '<a href="/courses/EECS233">EECS 233</a>']
+      end
+
+      it 'should replace those courses with links to their show pages' do
+        result_text = helper.course_linkify(@text)
+        @results.each { |r| expect(result_text).to include r }
       end
     end
   end

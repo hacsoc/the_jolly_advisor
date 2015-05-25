@@ -1,8 +1,8 @@
 # For use with the SchedulerController.
-# 
+#
 # CourseInstances have Meetings which have a
 # schedule attribute like 'MWF 10:00 AM - 10:50 AM'
-# 
+#
 # This class represents an actual scheduled meeting
 # for a meeting. So, for the above example schedule,
 # the meeting would have three ScheduledMeetings,
@@ -39,7 +39,7 @@ class ScheduledMeeting
     # portion of the DateTime to midnight (that is when the week technically begins after all)
     # so this guarantee allows the advance function (see below) to work they way it does.
     date = DateTime.now.at_beginning_of_week +
-      DateTime::DAYS_INTO_WEEK[day_sym].days
+           DateTime::DAYS_INTO_WEEK[day_sym].days
 
     start_time = Time.strptime(start_string, TIME_FORMAT)
     end_time = Time.strptime(end_string, TIME_FORMAT)

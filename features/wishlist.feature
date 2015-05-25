@@ -66,3 +66,13 @@ Feature: Wishlist
     When I click the link "Turn off notifications"
     Then I should have notifications turned off for EECS 293
     And I should see "Turn on notifications"
+
+  Scenario: Toggle notifications in a wishlist with several courses
+    Given My wishlist is empty
+    And I have the course EECS 293 in my wishlist
+    And The course EECS 233 exists
+    And I have the course EECS 233 in my wishlist
+    And I have notifications turned on for EECS 293
+    When I visit "/wishlist"
+    And I click the link "Turn off notifications"
+    Then EECS 233 is the first class in my wishlist

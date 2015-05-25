@@ -4,7 +4,7 @@ class WishlistController < ApplicationController
 
   # GET /wishlist
   def index
-    @wishlist = current_user.wishlist.includes(course: :course_instances)
+    @wishlist = current_user.wishlist.includes(course: :course_instances).order(:course_id)
   end
 
   # POST /wishlist
@@ -35,7 +35,8 @@ class WishlistController < ApplicationController
         flash[:notice] = 'Course successfully removed from your wishlist'
         format.html { redirect_to params[:url] || wishlist_path }
       else
-        flash[:notice] = 'An error occurred while attempting to remove the course from your wishlist'
+        flash[:notice] =
+          'An error occurred while attempting to remove the course from your wishlist'
         format.html { redirect_to params[:url] || wishlist_path }
       end
     end
@@ -56,8 +57,8 @@ class WishlistController < ApplicationController
       end
     redirect_to wishlist_path if course_id.nil?
 
-    @wishlist_item = WishlistItem.where(user: current_user, course_id: course_id)
-                                 .first_or_initialize
+    @wishlist_item =
+      WishlistItem.where(user: current_user, course_id: course_id).first_or_initialize
   end
 
   def wishlist_item_params
