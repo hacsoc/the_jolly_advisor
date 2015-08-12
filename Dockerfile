@@ -17,4 +17,4 @@ RUN whenever -w
 RUN RAILS_ENV=production rake assets:precompile
 
 EXPOSE 3000
-CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/supervisor.conf"]
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf"]
