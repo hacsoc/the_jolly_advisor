@@ -1,5 +1,7 @@
 FROM ruby:2.2.2-onbuild
 
+MAINTAINER Matthew Bentley <matthew.t.bentley@gmail.com>
+
 RUN apt-get update && \
     apt-get install -y \
       vim \
