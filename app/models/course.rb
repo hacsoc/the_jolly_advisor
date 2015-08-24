@@ -27,7 +27,7 @@ class Course < ActiveRecord::Base
   end
 
   def schedulable?
-    course_instances.any? { |course_instance| course_instance.try(:schedulable?) }
+    course_instances.any?(&:schedulable?)
   end
 
   def score(query)
