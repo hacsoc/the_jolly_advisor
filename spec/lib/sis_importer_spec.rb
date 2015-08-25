@@ -68,4 +68,14 @@ RSpec.describe SISImporter do
       end
     end
   end
+
+  describe '::fetch_start_end_dates' do
+    let(:date_string) { '1/14/2015 - 2/16/2015' }
+
+    it 'returns a list of dates' do
+      dates = SISImporter::fetch_start_end_dates(date_string)
+      expect(dates[0]).to eq Date.new(2015, 1, 14)
+      expect(dates[1]).to eq Date.new(2015, 2, 16)
+    end
+  end
 end
