@@ -1,10 +1,6 @@
 require 'nokogiri'
 require 'open-uri'
 
-# I've re-written this module to be much more functional.
-# The only publicly accessible method is now #import_sis
-# All other methods are now private.
-
 # Helper methods can be split into 2 categories based on
 # the prefix of the method name. Methods that begin with
 # fetch_* handle pulling information out of the XML doc
@@ -14,6 +10,8 @@ require 'open-uri'
 # to ActiveRecord.
 
 module SISImporter
+  TermInfo = Struct.new(:semester, :year)
+
   using PGArrayPatch
 
   class << self
@@ -21,12 +19,8 @@ module SISImporter
       fetch_terms.each { |term_xml| process_term(term_xml, fetch_term_info(term_xml)) } 
     end
 
-    private
-
-    # term_info is an array of two values, the first being the semester and
-    # the second being the year.
     def process_term(term_xml, term_info)
-      process_semester(term_xml, Semester.where(semester: term_info[0], year: term_info[1]).first_or_create)
+      process_semester(term_xml, Semester.where(semester: term_info.semester, year: term_info.year).first_or_create)
     end
     
     def process_semester(term_xml, semester)
@@ -106,7 +100,7 @@ module SISImporter
     end
 
     def fetch_term_info(term_xml)
-      term_xml.xpath('Descr').text.split.map(&:strip)
+      TermInfo.new(*term_xml.xpath('Descr').text.split.map(&:strip))
     end
 
     def fetch_course_attributes(class_xml)
