@@ -1,4 +1,4 @@
-FROM ruby:2.2.2-onbuild
+FROM ruby:2.2.3-onbuild
 
 MAINTAINER Matthew Bentley <matthew.t.bentley@gmail.com>
 
