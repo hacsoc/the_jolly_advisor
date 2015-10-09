@@ -37,7 +37,7 @@ RSpec.describe Course, type: :model do
     end
   end
 
-  before do
+  before(:all) do
     @course = FactoryGirl.build(:course, department: "EECS", course_number: 132)
     @course.course_instances = [FactoryGirl.build(:course_instance, end_date: Date.today - 1),
                                 FactoryGirl.build(:course_instance, end_date: Date.today + 365)]
