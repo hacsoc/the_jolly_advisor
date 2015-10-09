@@ -4,6 +4,39 @@ RSpec.describe Course, type: :model do
   it { should have_many :course_instances }
   it { should have_many(:professors).through(:course_instances) }
 
+  describe '::filter_by_name' do
+    it 'searches on the name' do
+      courses = [double]
+      allow(Course).to receive(:search).and_return(courses)
+      expect(Course.filter_by_name('search')).to eq courses
+    end
+
+    it 'does not filter when there is nothing to filter on' do
+      all_courses = [double]
+      allow(Course).to receive(:all).and_return(all_courses)
+      actual = Course.filter_by_name(nil)
+      expect(actual).to eq all_courses
+    end
+  end
+
+  describe '::filter_by_semester' do
+    it 'does not filter when there is nothing to filter on' do
+      all_courses = [double]
+      allow(Course).to receive(:all).and_return(all_courses)
+      actual = Course.filter_by_semester(nil)
+      expect(actual).to eq all_courses
+    end
+  end
+
+  describe '::filter_by_professor' do
+    it 'does not filter when there is nothing to filter on' do
+      all_courses = [double]
+      allow(Course).to receive(:all).and_return(all_courses)
+      actual = Course.filter_by_professor(nil)
+      expect(actual).to eq all_courses
+    end
+  end
+
   before do
     @course = FactoryGirl.build(:course, department: "EECS", course_number: 132)
     @course.course_instances = [FactoryGirl.build(:course_instance, end_date: Date.today - 1),
