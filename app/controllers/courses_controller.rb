@@ -5,23 +5,11 @@ class CoursesController < ApplicationController
   # GET /courses.json
   def index
     @semesters = Semester.all
-    @courses = Course.all
-    if params[:search].present?
-      @courses = @courses.search(params[:search])
-    end
-    if params[:semester].present?
-      @courses =
-        @courses.joins(:course_instances)
-        .where(course_instances: { semester_id: params[:semester].to_i })
-    end
-    if params[:professor].present?
-      professor = Professor.arel_table
-      @courses =
-        @courses.joins(course_instances: :professor)
-        .where(professor[:name].matches("%#{params[:professor]}%"))
-    end
-    course_ids = @courses.pluck('courses.id').uniq
-    @courses = Course.where('id IN (?)', course_ids).order_by_short_name
+    @courses = Course.filter_by_name(params[:search])
+               .filter_by_semester(params[:semester])
+               .filter_by_professor(params[:professor])
+               .order_by_short_name
+               .uniq
     @courses = @courses.page(params[:page])
   end
 
