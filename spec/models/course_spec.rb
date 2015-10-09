@@ -48,9 +48,9 @@ RSpec.describe Course, type: :model do
 
   describe "#postrequisites" do
     it "should return all postrequisites for the course" do
-      prereq = FactoryGirl.create(:course, department: "EECS", course_number: 233)
-      postreq = FactoryGirl.create(:course, department: "EECS", course_number: 131)
-      FactoryGirl.create(:prerequisite, postrequisite: postreq, prerequisite_ids: [prereq.id])
+      prereq = Course.new
+      postreq = @course
+      allow(Prerequisite).to receive(:where).and_return(double(pluck: [postreq.id]))
       expect(prereq.postrequisites).to eq [postreq]
     end
   end
