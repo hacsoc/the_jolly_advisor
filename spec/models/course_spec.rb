@@ -65,8 +65,6 @@ RSpec.describe Course, type: :model do
   end
 
   describe '#real_professors' do
-    before { @course = FactoryGirl.build(:course) }
-
     context 'when all professors are "Staff"' do
       before { allow(@course).to receive(:professors) { [double(name: 'Staff')] } }
 
@@ -118,8 +116,30 @@ RSpec.describe Course, type: :model do
   end
 
   describe "#schedulable?" do
-    it "should say the class is schedulable" do
-      expect(@course.schedulable?).to be true
+    before { allow(@course).to receive(:course_instances).and_return(course_instances) }
+
+    context 'when a course instance is schedulable' do
+      let(:course_instances) { [double(schedulable?: true)] }
+
+      it "should say the class is schedulable" do
+        expect(@course.schedulable?).to be true
+      end
+    end
+
+    context 'when a course instance is not schedulable' do
+      let(:course_instances) { [double(schedulable?: false)] }
+
+      it "should say the class is not schedulable" do
+        expect(@course.schedulable?).to be false
+      end
+    end
+
+    context 'when there are no course instances' do
+      let(:course_instances) { [] }
+
+      it 'says the class is not schedulable' do
+        expect(@course.schedulable?).to be false
+      end
     end
   end
 
