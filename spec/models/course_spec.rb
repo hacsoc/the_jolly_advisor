@@ -41,6 +41,7 @@ RSpec.describe Course, type: :model do
     @course = FactoryGirl.build(:course, department: "EECS", course_number: 132)
     @course.course_instances = [FactoryGirl.build(:course_instance, end_date: Date.today - 1),
                                 FactoryGirl.build(:course_instance, end_date: Date.today + 365)]
+    @course.save
     # Testing unhappy paths
     @course_bad = FactoryGirl.build(:course, department: 132, course_number: "EECS")
   end
@@ -56,10 +57,10 @@ RSpec.describe Course, type: :model do
 
   describe "#prerequisites" do
     it "should return all prerequisites for the course" do
-      postreq = FactoryGirl.create(:course, department: "EECS", course_number: 131)
-      prereqs = FactoryGirl.create_list(:course, 3)
-      FactoryGirl.create(:prerequisite, postrequisite: postreq, prerequisite_ids: prereqs.map(&:id))
-      expect(postreq.prerequisites).to eq [prereqs]
+      prereq = @course
+      postreq = Course.new
+      allow(Prerequisite).to receive(:where).and_return([double(prerequisite_ids: [prereq.id])])
+      expect(postreq.prerequisites.to_a).to eq [[prereq]]
     end
   end
 
