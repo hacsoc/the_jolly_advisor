@@ -65,16 +65,10 @@ RSpec.describe Course, type: :model do
   end
 
   describe '#real_professors' do
-    context 'when all professors are "Staff"' do
-      before { allow(@course).to receive(:professors) { [double(name: 'Staff')] } }
+    before { allow(@course).to receive(:professors).and_return(professors) }
 
-      it 'returns an empty array' do
-        expect(@course.real_professors).to eq []
-      end
-    end
-
-    context 'when all professors are "TBA"' do
-      before { allow(@course).to receive(:professors) { [double(name: 'TBA')] } }
+    context 'when all professors are "Staff" or "TBA"' do
+      let(:professors) { [double(name: 'Staff'), double(name: 'TBA')] }
 
       it 'returns an empty array' do
         expect(@course.real_professors).to eq []
@@ -82,12 +76,7 @@ RSpec.describe Course, type: :model do
     end
 
     context 'when some professors have real names' do
-      before do
-        allow(@course).to receive(:professors) do
-          [double(name: 'Staff'),
-           double(name: 'Real Name')]
-        end
-      end
+      let(:professors) { [double(name: 'Staff'), double(name: 'Real Name')] }
 
       it 'returns a subset of the professors' do
         expect(@course.real_professors.length).to eq 1
@@ -102,12 +91,7 @@ RSpec.describe Course, type: :model do
     end
 
     context 'when all professors have real names' do
-      before do
-        allow(@course).to receive(:professors) do
-          [double(name: 'Real'),
-           double(name: 'Name')]
-        end
-      end
+      let(:professors) { [double(name: 'Real'), double(name: 'Name')] }
 
       it 'returns the array of professors' do
         expect(@course.real_professors.map(&:name)).to eq @course.professors.map(&:name)
