@@ -177,13 +177,17 @@ RSpec.describe Course, type: :model do
 
   describe "#to_s" do
     it "should return a string of the department and the course number" do
+      allow(@course).to receive(:department).and_return('EECS')
+      allow(@course).to receive(:course_number).and_return(132)
       expect(@course.to_s).to eq "EECS 132"
     end
   end
 
   describe "#long_string" do
-    it "should return a long description" do
-      expect(@course.long_string).to match /[A-Z]{4}\s[\d]{3,4}:\s/
+    it 'returns to_s followed by the title' do
+      allow(@course).to receive(:to_s).and_return('hello')
+      allow(@course).to receive(:title).and_return('world')
+      expect(@course.long_string).to eq 'hello: world'
     end
   end
 end
