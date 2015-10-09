@@ -38,12 +38,7 @@ RSpec.describe Course, type: :model do
   end
 
   before(:all) do
-    @course = FactoryGirl.build(:course, department: "EECS", course_number: 132)
-    @course.course_instances = [FactoryGirl.build(:course_instance, end_date: Date.today - 1),
-                                FactoryGirl.build(:course_instance, end_date: Date.today + 365)]
-    @course.save
-    # Testing unhappy paths
-    @course_bad = FactoryGirl.build(:course, department: 132, course_number: "EECS")
+    @course = FactoryGirl.create(:course, department: "EECS", course_number: 132)
   end
 
   describe "#postrequisites" do
