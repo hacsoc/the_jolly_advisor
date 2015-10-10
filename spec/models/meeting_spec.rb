@@ -33,4 +33,27 @@ RSpec.describe Meeting, type: :model do
       end
     end
   end
+
+  describe '#autocomplete_label' do
+    let(:meeting) { Meeting.new schedule: schedule }
+    let(:course_instance) { double(course: double(long_string: 'ls')) }
+    let(:schedule) { '1234' }
+    before { allow(meeting).to receive(:course_instance).and_return(course_instance) }
+
+    it 'has the course string for the title' do
+      expect(meeting.autocomplete_label).to start_with 'ls'
+    end
+
+    it 'has the schedule in parens' do
+      expect(meeting.autocomplete_label).to end_with '(1234)'
+    end
+
+    context 'with no schedule' do
+      let(:schedule) { nil }
+
+      it 'has TBA for the schedule' do
+        expect(meeting.autocomplete_label).to end_with '(TBA)'
+      end
+    end
+  end
 end
