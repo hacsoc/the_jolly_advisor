@@ -6,7 +6,7 @@ RSpec.describe Meeting, type: :model do
 
   describe '#scheduled_meetings' do
     context 'when the schedule is TBA' do
-      let(:meeting) { FactoryGirl.build(:meeting, :tba) }
+      let(:meeting) { Meeting.new schedule: 'TBA' }
 
       it 'returns an empty array' do
         expect(meeting.scheduled_meetings.empty?).to be true
@@ -14,7 +14,7 @@ RSpec.describe Meeting, type: :model do
     end
 
     context 'when the meeting times are MWF' do
-      let(:meeting) { FactoryGirl.build(:meeting, schedule: 'MWF 10:00 AM - 10:50 AM') }
+      let(:meeting) { Meeting.new schedule: 'MWF 10:00 AM - 10:50 AM' }
 
       it 'returns three scheduled meetings' do
         expect(meeting.scheduled_meetings.size).to eq 3

@@ -6,7 +6,7 @@ RSpec.describe User, type: :model do
   it { should have_many(:enrolled_courses).through(:enrollments) }
 
   describe '#to_s' do
-    before { @user = FactoryGirl.build(:user) }
+    before { @user = User.new case_id: 'abc123' }
 
     it 'return the case_id as a string' do
       expect(@user.to_s).to eq @user.case_id.to_s
