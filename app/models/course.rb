@@ -10,6 +10,23 @@ class Course < ActiveRecord::Base
 
   scope :order_by_short_name, -> { order(:department, :course_number) }
 
+  def self.filter_by_name(name)
+    return all unless name.present?
+    search(name)
+  end
+
+  def self.filter_by_semester(semester)
+    return all unless semester.present?
+    joins(:course_instances)
+      .where(course_instances: { semester_id: semester.to_i })
+  end
+
+  def self.filter_by_professor(professor)
+    return all unless professor.present?
+    joins(course_instances: :professor)
+      .where(Professor.arel_table[:name].matches("%#{professor}%"))
+  end
+
   # Get all prereq info from the database.
   # Return an array of arrays of courses.
   def prerequisites

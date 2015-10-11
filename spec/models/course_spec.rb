@@ -4,7 +4,40 @@ RSpec.describe Course, type: :model do
   it { should have_many :course_instances }
   it { should have_many(:professors).through(:course_instances) }
 
-  before do
+  describe '::filter_by_name' do
+    it 'searches on the name' do
+      courses = [double]
+      allow(Course).to receive(:search).and_return(courses)
+      expect(Course.filter_by_name('search')).to eq courses
+    end
+
+    it 'does not filter when there is nothing to filter on' do
+      all_courses = [double]
+      allow(Course).to receive(:all).and_return(all_courses)
+      actual = Course.filter_by_name(nil)
+      expect(actual).to eq all_courses
+    end
+  end
+
+  describe '::filter_by_semester' do
+    it 'does not filter when there is nothing to filter on' do
+      all_courses = [double]
+      allow(Course).to receive(:all).and_return(all_courses)
+      actual = Course.filter_by_semester(nil)
+      expect(actual).to eq all_courses
+    end
+  end
+
+  describe '::filter_by_professor' do
+    it 'does not filter when there is nothing to filter on' do
+      all_courses = [double]
+      allow(Course).to receive(:all).and_return(all_courses)
+      actual = Course.filter_by_professor(nil)
+      expect(actual).to eq all_courses
+    end
+  end
+
+  before(:all) do
     @course = FactoryGirl.build(:course, department: "EECS", course_number: 132)
     @course.course_instances = [FactoryGirl.build(:course_instance, end_date: Date.today - 1),
                                 FactoryGirl.build(:course_instance, end_date: Date.today + 365)]
@@ -12,7 +45,7 @@ RSpec.describe Course, type: :model do
     @course_bad = FactoryGirl.build(:course, department: 132, course_number: "EECS")
   end
 
-  describe ".postrequisites" do
+  describe "#postrequisites" do
     it "should return all postrequisites for the course" do
       prereq = FactoryGirl.create(:course, department: "EECS", course_number: 233)
       postreq = FactoryGirl.create(:course, department: "EECS", course_number: 131)
@@ -21,7 +54,7 @@ RSpec.describe Course, type: :model do
     end
   end
 
-  describe ".prerequisites" do
+  describe "#prerequisites" do
     it "should return all prerequisites for the course" do
       postreq = FactoryGirl.create(:course, department: "EECS", course_number: 131)
       prereqs = FactoryGirl.create_list(:course, 3)
@@ -83,7 +116,7 @@ RSpec.describe Course, type: :model do
     end
   end
 
-  describe ".schedulable?" do
+  describe "#schedulable?" do
     it "should say the class is schedulable" do
       expect(@course.schedulable?).to be true
     end
@@ -115,19 +148,19 @@ RSpec.describe Course, type: :model do
     end
   end
 
-  describe ".to_param" do
+  describe "#to_param" do
     it "should return a spaceless version of to_s" do
       expect(@course.to_param).to eq @course.to_s.gsub(' ', '')
     end
   end
 
-  describe ".to_s" do
+  describe "#to_s" do
     it "should return a string of the department and the course number" do
       expect(@course.to_s).to eq "EECS 132"
     end
   end
 
-  describe ".long_string" do
+  describe "#long_string" do
     it "should return a long description" do
       expect(@course.long_string).to match /[A-Z]{4}\s[\d]{3,4}:\s/
     end
