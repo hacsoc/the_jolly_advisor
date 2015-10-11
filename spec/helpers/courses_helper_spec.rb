@@ -1,46 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe CoursesHelper, type: :helper do
-  describe '#first_professor' do
-    before do
-      @course = Course.new
-      helper.instance_variable_set(:@course, @course)
-    end
-
-    context 'when @course has no professors' do
-      before { allow(@course).to receive(:professors).and_return([]) }
-
-      it 'returns the TBA professor' do
-        expect(helper.first_professor).to eq Professor.TBA
-      end
-    end
-
-    context 'when @course has no real professors' do
-      before do
-        allow(@course).to receive(:professors).and_return([double(name: 'Staff'),
-                                                          double(name: 'TBA')])
-      end
-
-      it 'returns the first fake professor' do
-        expect(helper.first_professor.name).to eq 'Staff'
-        expect(helper.first_professor.name).to_not eq 'TBA'
-      end
-    end
-
-    context 'when @course has real professors' do
-      before do
-        allow(@course).to receive(:professors).and_return([double(name: 'Staff'),
-                                                          double(name: 'Real'),
-                                                          double(name: 'Staff'),
-                                                          double(name: 'Name')])
-      end
-
-      it 'returns the first real professor' do
-        expect(helper.first_professor.name).to eq 'Real'
-      end
-    end
-  end
-
   describe '#course_linkify' do
     it 'returns text unchanged when there are no course names' do
       text = 'This definitely has no courses'

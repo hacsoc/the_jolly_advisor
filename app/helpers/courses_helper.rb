@@ -1,8 +1,4 @@
 module CoursesHelper
-  def first_professor
-    @course.real_professors.first || @course.professors.first || Professor.TBA
-  end
-
   def course_linkify(text)
     # "{2,}" says "at least two of".
     #

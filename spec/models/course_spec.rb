@@ -41,6 +41,20 @@ RSpec.describe Course, type: :model do
     @course = FactoryGirl.create(:course, department: "EECS", course_number: 132)
   end
 
+  describe '#first_professor' do
+    it 'returns the first real one' do
+      allow(@course).to receive(:professors).and_return(double(order_by_realness: [double(name: 'Real'),
+                                                                                  double(name: 'Name'),
+                                                                                  double(name: 'Staff')]))
+      expect(@course.first_professor.name).to eq 'Real'
+    end
+
+    it 'returns the TBA professor when the course has no professors' do
+      allow(@course).to receive(:professors).and_return(double(order_by_realness: []))
+      expect(@course.first_professor).to eq Professor.TBA
+    end
+  end
+
   describe "#postrequisites" do
     it "should return all postrequisites for the course" do
       prereq = Course.new
@@ -56,41 +70,6 @@ RSpec.describe Course, type: :model do
       postreq = Course.new
       allow(Prerequisite).to receive(:where).and_return([double(prerequisite_ids: [prereq.id])])
       expect(postreq.prerequisites.to_a).to eq [[prereq]]
-    end
-  end
-
-  describe '#real_professors' do
-    before { allow(@course).to receive(:professors).and_return(professors) }
-
-    context 'when all professors are "Staff" or "TBA"' do
-      let(:professors) { [double(name: 'Staff'), double(name: 'TBA')] }
-
-      it 'returns an empty array' do
-        expect(@course.real_professors).to eq []
-      end
-    end
-
-    context 'when some professors have real names' do
-      let(:professors) { [double(name: 'Staff'), double(name: 'Real Name')] }
-
-      it 'returns a subset of the professors' do
-        expect(@course.real_professors.length).to eq 1
-      end
-
-      it 'returns only the professors with real names' do
-        @course.real_professors.each do |p|
-          expect(p.name).to_not eq 'Staff'
-          expect(p.name).to_not eq 'TBA'
-        end
-      end
-    end
-
-    context 'when all professors have real names' do
-      let(:professors) { [double(name: 'Real'), double(name: 'Name')] }
-
-      it 'returns the array of professors' do
-        expect(@course.real_professors.map(&:name)).to eq @course.professors.map(&:name)
-      end
     end
   end
 

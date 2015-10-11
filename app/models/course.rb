@@ -27,6 +27,10 @@ class Course < ActiveRecord::Base
       .where(Professor.arel_table[:name].matches("%#{professor}%"))
   end
 
+  def first_professor
+    professors.order_by_realness.first || Professor.TBA
+  end
+
   # Get all prereq info from the database.
   # Return an array of arrays of courses.
   def prerequisites
@@ -37,10 +41,6 @@ class Course < ActiveRecord::Base
 
   def postrequisites
     Course.where(id: Prerequisite.where('? = ANY(prerequisite_ids)', id).pluck(:postrequisite_id))
-  end
-
-  def real_professors
-    professors.find_all { |p| !%w(Staff TBA).include? p.name }
   end
 
   def schedulable?
