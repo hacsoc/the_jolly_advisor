@@ -38,7 +38,7 @@ RSpec.describe Course, type: :model do
   end
 
   before(:all) do
-    @course = FactoryGirl.create(:course, department: "EECS", course_number: 132)
+    @course = Course.create! department: 'EECS', course_number: 132
   end
 
   describe '#first_professor' do
@@ -102,9 +102,7 @@ RSpec.describe Course, type: :model do
   end
 
   describe '#score' do
-    let(:course) do
-      FactoryGirl.build(:course, department: 'EECS', course_number: 132, title: 'Intro to Java')
-    end
+    let(:course) { Course.new department: 'EECS', course_number: 132, title: 'Intro to Java' }
 
     context 'with no word-level exact matches' do
       it 'returns 0' do
