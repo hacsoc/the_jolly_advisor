@@ -43,9 +43,11 @@ RSpec.describe Course, type: :model do
 
   describe '#first_professor' do
     it 'returns the first real one' do
-      allow(@course).to receive(:professors).and_return(double(order_by_realness: [double(name: 'Real'),
-                                                                                  double(name: 'Name'),
-                                                                                  double(name: 'Staff')]))
+      allow(@course).to receive(:professors).and_return(
+        double(order_by_realness: [double(name: 'Real'),
+                                   double(name: 'Name'),
+                                   double(name: 'Staff')])
+      )
       expect(@course.first_professor.name).to eq 'Real'
     end
 

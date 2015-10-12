@@ -10,7 +10,7 @@ RSpec.describe CoursesHelper, type: :helper do
     it 'replaces course namse with links to their show pages' do
       text = 'Recommended preparation includes EECS 340, EECS 233'
       results = ['<a href="/courses/EECS340">EECS 340</a>',
-                  '<a href="/courses/EECS233">EECS 233</a>']
+                 '<a href="/courses/EECS233">EECS 233</a>']
       result_text = helper.course_linkify(text)
       results.each { |r| expect(result_text).to include r }
     end
