@@ -5,7 +5,7 @@
       .panel-heading{style: "background-color:#555;color:#eee;"}
       .panel-body
         .well
-          %h3= professor_search_link(first_professor)
+          %h3= professor_search_link(@course.first_professor)
         %hr/
         %h3 Previous Semesters
         - @instances_by_semester.each do |semester, instances|

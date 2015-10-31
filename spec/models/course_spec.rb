@@ -38,94 +38,73 @@ RSpec.describe Course, type: :model do
   end
 
   before(:all) do
-    @course = FactoryGirl.build(:course, department: "EECS", course_number: 132)
-    @course.course_instances = [FactoryGirl.build(:course_instance, end_date: Date.today - 1),
-                                FactoryGirl.build(:course_instance, end_date: Date.today + 365)]
-    # Testing unhappy paths
-    @course_bad = FactoryGirl.build(:course, department: 132, course_number: "EECS")
+    @course = Course.create! department: 'EECS', course_number: 132
+  end
+
+  describe '#first_professor' do
+    it 'returns the first real one' do
+      allow(@course).to receive(:professors).and_return(
+        double(order_by_realness: [double(name: 'Real'),
+                                   double(name: 'Name'),
+                                   double(name: 'Staff')])
+      )
+      expect(@course.first_professor.name).to eq 'Real'
+    end
+
+    it 'returns the TBA professor when the course has no professors' do
+      allow(@course).to receive(:professors).and_return(double(order_by_realness: []))
+      expect(@course.first_professor).to eq Professor.TBA
+    end
   end
 
   describe "#postrequisites" do
     it "should return all postrequisites for the course" do
-      prereq = FactoryGirl.create(:course, department: "EECS", course_number: 233)
-      postreq = FactoryGirl.create(:course, department: "EECS", course_number: 131)
-      FactoryGirl.create(:prerequisite, postrequisite: postreq, prerequisite_ids: [prereq.id])
+      prereq = Course.new
+      postreq = @course
+      allow(Prerequisite).to receive(:where).and_return(double(pluck: [postreq.id]))
       expect(prereq.postrequisites).to eq [postreq]
     end
   end
 
   describe "#prerequisites" do
     it "should return all prerequisites for the course" do
-      postreq = FactoryGirl.create(:course, department: "EECS", course_number: 131)
-      prereqs = FactoryGirl.create_list(:course, 3)
-      FactoryGirl.create(:prerequisite, postrequisite: postreq, prerequisite_ids: prereqs.map(&:id))
-      expect(postreq.prerequisites).to eq [prereqs]
-    end
-  end
-
-  describe '#real_professors' do
-    before { @course = FactoryGirl.build(:course) }
-
-    context 'when all professors are "Staff"' do
-      before { allow(@course).to receive(:professors) { [double(name: 'Staff')] } }
-
-      it 'returns an empty array' do
-        expect(@course.real_professors).to eq []
-      end
-    end
-
-    context 'when all professors are "TBA"' do
-      before { allow(@course).to receive(:professors) { [double(name: 'TBA')] } }
-
-      it 'returns an empty array' do
-        expect(@course.real_professors).to eq []
-      end
-    end
-
-    context 'when some professors have real names' do
-      before do
-        allow(@course).to receive(:professors) do
-          [double(name: 'Staff'),
-           double(name: 'Real Name')]
-        end
-      end
-
-      it 'returns a subset of the professors' do
-        expect(@course.real_professors.length).to eq 1
-      end
-
-      it 'returns only the professors with real names' do
-        @course.real_professors.each do |p|
-          expect(p.name).to_not eq 'Staff'
-          expect(p.name).to_not eq 'TBA'
-        end
-      end
-    end
-
-    context 'when all professors have real names' do
-      before do
-        allow(@course).to receive(:professors) do
-          [double(name: 'Real'),
-           double(name: 'Name')]
-        end
-      end
-
-      it 'returns the array of professors' do
-        expect(@course.real_professors.map(&:name)).to eq @course.professors.map(&:name)
-      end
+      prereq = @course
+      postreq = Course.new
+      allow(Prerequisite).to receive(:where).and_return([double(prerequisite_ids: [prereq.id])])
+      expect(postreq.prerequisites.to_a).to eq [[prereq]]
     end
   end
 
   describe "#schedulable?" do
-    it "should say the class is schedulable" do
-      expect(@course.schedulable?).to be true
+    before { allow(@course).to receive(:course_instances).and_return(course_instances) }
+
+    context 'when a course instance is schedulable' do
+      let(:course_instances) { [double(schedulable?: true)] }
+
+      it "should say the class is schedulable" do
+        expect(@course.schedulable?).to be true
+      end
+    end
+
+    context 'when a course instance is not schedulable' do
+      let(:course_instances) { [double(schedulable?: false)] }
+
+      it "should say the class is not schedulable" do
+        expect(@course.schedulable?).to be false
+      end
+    end
+
+    context 'when there are no course instances' do
+      let(:course_instances) { [] }
+
+      it 'says the class is not schedulable' do
+        expect(@course.schedulable?).to be false
+      end
     end
   end
 
   describe '#score' do
-    let(:course) do
-      FactoryGirl.build(:course, department: 'EECS', course_number: 132, title: 'Intro to Java')
-    end
+    let(:course) { Course.new department: 'EECS', course_number: 132, title: 'Intro to Java' }
 
     context 'with no word-level exact matches' do
       it 'returns 0' do
@@ -156,13 +135,17 @@ RSpec.describe Course, type: :model do
 
   describe "#to_s" do
     it "should return a string of the department and the course number" do
+      allow(@course).to receive(:department).and_return('EECS')
+      allow(@course).to receive(:course_number).and_return(132)
       expect(@course.to_s).to eq "EECS 132"
     end
   end
 
   describe "#long_string" do
-    it "should return a long description" do
-      expect(@course.long_string).to match /[A-Z]{4}\s[\d]{3,4}:\s/
+    it 'returns to_s followed by the title' do
+      allow(@course).to receive(:to_s).and_return('hello')
+      allow(@course).to receive(:title).and_return('world')
+      expect(@course.long_string).to eq 'hello: world'
     end
   end
 end

@@ -5,6 +5,10 @@ class Meeting < ActiveRecord::Base
   TIME_REGEX = /\d{1,2}:\d{1,2} [AP]M/
   MEETING_SCHEDULE_REGEX = /^(.*) (#{TIME_REGEX}) - (#{TIME_REGEX})/
 
+  def autocomplete_label
+    "#{course_instance.course.long_string} (#{schedule || 'TBA'})"
+  end
+
   # Return an Array of ScheduledMeetings for this Meeting.
   # Empty if the schedule is TBA
   #

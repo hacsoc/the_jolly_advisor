@@ -11,18 +11,12 @@ class CourseInstancesController < ApplicationController
       format.json do
         render json: (@course_instances.flat_map(&:meetings).map do |m|
           {
-            label: autocomplete_label(m),
-            value: autocomplete_label(m),
+            label: m.autocomplete_label,
+            value: m.autocomplete_label,
             id: m.course_instance_id
           }
         end)
       end
     end
-  end
-
-  private
-
-  def autocomplete_label(meeting)
-    "#{meeting.course_instance.course.long_string} (#{meeting.schedule || 'TBA'})"
   end
 end
