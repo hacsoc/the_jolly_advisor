@@ -1,6 +1,6 @@
 ruby:
     enabled: true
-    config_file: .ruby-style.yml
+    config_file: .rubocop.yml
 
 coffeescript:
     enabled: true
