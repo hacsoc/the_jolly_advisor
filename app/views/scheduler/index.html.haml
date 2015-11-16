@@ -10,7 +10,7 @@
 
         = form_for :semester, url: scheduler_path, method: :get, remote: true, html: {id: :semester_form} do |f|
           = f.select :semester, %w(Fall Spring Summer).map { |str| [str, str.downcase] }
-          = f.select :year, options_for_select(2008..DateTime.now.year, DateTime.now.year)
+          = f.select :year, options_for_select(2008..(DateTime.now+3.months).year, (DateTime.now + 3.months).year)
           = f.select :half, ['First Half', 'Second Half'].map { |str| [str, str.split.first.downcase] }
           = hidden_field_tag :old_feed, nil # this is the old feed we need to remove
           = f.submit 'Change Semester'
