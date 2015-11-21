@@ -9,10 +9,11 @@
           = text_field_tag :course_title, nil, placeholder: 'Add course instance', class: 'form-control'
 
         = form_for :semester, url: scheduler_path, method: :get, remote: true, html: {id: :semester_form} do |f|
-          = f.select :semester, 
-            options_for_select( %w(Fall Spring Summer).map { |str| [str, str.downcase] }, 
-                                @planning_period_semester.downcase)
-          = f.select :year, options_for_select(2008.. @planning_period_year, @planning_period_year)
+          = f.select :semester, options_for_select( |
+            %w(Fall Spring Summer).map {|str| [str, str.downcase]}, |
+            @planning_period_semester.downcase)
+          = f.select :year, options_for_select(2008.. @planning_period_year,
+                                                      @planning_period_year)
           = f.select :half, ['First Half', 'Second Half'].map { |str| [str, str.split.first.downcase] }
           = hidden_field_tag :old_feed, nil # this is the old feed we need to remove
           = f.submit 'Change Semester'
