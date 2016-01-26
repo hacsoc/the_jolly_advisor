@@ -1,12 +1,12 @@
 language: ruby
 cache: bundler
 rvm:
-    - 2.2.3
+    - 2.3.0
 
 before_script:
     - cp config/database.yml.travis config/database.yml
     - psql -c 'create database travis_ci_test' -U postgres
-    - rake db:migrate
+    - bundle exec rake db:migrate
 
 script:
     - bundle exec rake
