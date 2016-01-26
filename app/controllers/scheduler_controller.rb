@@ -14,6 +14,9 @@ class SchedulerController < ApplicationController
   # GET /scheduler
   # GET /scheduler.json
   def index
+    @planning_period_year = Semester.maximum('year')
+    @planning_period_semester =
+      Semester.order(:year, semester: :desc).last.semester
   end
 
   # POST /scheduler.json
