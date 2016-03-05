@@ -1,9 +1,9 @@
 source 'https://rubygems.org'
 
-ruby '2.2.3'
+ruby '2.2.4'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.3'
+gem 'rails', '~> 4.2'
 # Use postgresql as the database for Active Record
 gem 'pg'
 # Use Uglifier as compressor for JavaScript assets
@@ -51,6 +51,8 @@ group :development do
   gem 'guard'
   gem 'guard-rspec'
   gem 'guard-cucumber'
+  # Access an IRB console on exception pages or by using <%= console %> in views
+  gem 'web-console', '~> 2.0'
 end
 
 group :development, :test do
@@ -60,16 +62,13 @@ group :development, :test do
   # Testing with rspec
   gem 'rspec'
   gem 'rspec-rails'
-  gem 'shoulda-matchers'
+  gem 'shoulda-matchers', '~> 2.0'
   gem 'factory_girl_rails', require: false
   gem 'simplecov'
   gem 'watir-webdriver'
 
   # Used for GitHub badge
   gem 'coveralls', require: false
-
-  # Access an IRB console on exception pages or by using <%= console %> in views
-  gem 'web-console', '~> 2.0'
 
   gem 'pry-rails'
 end
