@@ -51,6 +51,8 @@ group :development do
   gem 'guard'
   gem 'guard-rspec'
   gem 'guard-cucumber'
+  # Access an IRB console on exception pages or by using <%= console %> in views
+  gem 'web-console', '~> 2.0'
 end
 
 group :development, :test do
@@ -67,9 +69,6 @@ group :development, :test do
 
   # Used for GitHub badge
   gem 'coveralls', require: false
-
-  # Access an IRB console on exception pages or by using <%= console %> in views
-  gem 'web-console', '~> 2.0'
 
   gem 'pry-rails'
 end
