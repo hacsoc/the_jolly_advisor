@@ -4,6 +4,15 @@ require 'spec_helper'
 require File.expand_path('../../config/environment', __FILE__)
 require 'rspec/rails'
 require 'shoulda/matchers'
+
+Shoulda::Matchers.configure do |config|
+  config.integrate do |with|
+    with.test_framework :rspec
+    with.library :active_model
+    with.library :active_record
+  end
+end
+
 SimpleCov.start 'rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 
