@@ -22,7 +22,7 @@ When(/^I select a course via wishlist search$/) do
 end
 
 When(/^I add it to my wishlist$/) do
-  WishlistItem.create(user: @current_user, course: @course)
+  step 'I click the link "Add to my wishlist"'
 end
 
 Then(/^I should see that course in my wishlist$/) do
