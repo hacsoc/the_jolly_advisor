@@ -1,0 +1,1 @@
+30 4 * * * /bin/bash -l -c 'cd /usr/src/app && RAILS_ENV=production bundle exec rake import:data_dump' > /proc/1/fd/1

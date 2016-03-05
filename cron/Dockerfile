@@ -1,13 +1,13 @@
-FROM ruby:2.2.3-onbuild
+FROM hacsoc/jolly-advisor
 
 MAINTAINER Matthew Bentley <matthew.t.bentley@gmail.com>
 
 RUN apt-get update && apt-get install -y \
-    postgresql-client vim \
+    cron \
     --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
-RUN RAILS_ENV=production rake assets:precompile
+COPY crontab /var/spool/cron/crontabs/root
+RUN chmod 600 /var/spool/cron/crontabs/root
 
-EXPOSE 3000
-CMD ["rails", "server", "-b", "0.0.0.0", "-p", "80"]
+CMD ["cron", "-f"]
