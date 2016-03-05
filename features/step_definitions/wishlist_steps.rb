@@ -1,6 +1,6 @@
 Given(/^I have a course in my wishlist$/) do
   @wishlist_item = WishlistItem.where(user: @current_user).first ||
-    FactoryGirl.create(:wishlist_item, user: @current_user)
+                   FactoryGirl.create(:wishlist_item, user: @current_user)
   @course = @wishlist_item.course
 end
 
