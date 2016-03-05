@@ -1,7 +1,8 @@
 Feature: Wishlist
   In order to keep track of courses they want to take
   A user
-  Should be able to add/remove classes to/from their wishlist and view their wishlist and toggle notifications
+  Should be able to add/remove classes to/from their wishlist and view their
+    wishlist and toggle notifications
 
   Background:
     Given I have authenticated as some user
