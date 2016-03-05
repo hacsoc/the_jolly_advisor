@@ -15,6 +15,12 @@ When(/^I view my wishlist$/) do
   step 'I visit "/wishlist"'
 end
 
+When(/^I select a course via wishlist search$/) do
+  @course = Course.first || FactoryGirl.create(:course)
+  step "I fill in \"course_title\" with \"#{@course.to_param}\""
+  step 'I click the hidden button "#submit"'
+end
+
 When(/^I add it to my wishlist$/) do
   WishlistItem.create(user: @current_user, course: @course)
 end
