@@ -10,4 +10,4 @@ RUN apt-get update && apt-get install -y \
 RUN RAILS_ENV=production rake assets:precompile
 
 EXPOSE 3000
-CMD ["rails", "server", "-b", "0.0.0.0"]
+CMD ["rails", "server", "-b", "0.0.0.0", "-p", "80"]
