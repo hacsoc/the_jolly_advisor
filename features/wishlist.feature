@@ -14,12 +14,10 @@ Feature: Wishlist
     Then I should see that course in my wishlist
 
   Scenario: Add course to wishlist via course show page
-    Given I do not have the course EECS 293 in my wishlist
-    When I visit "/courses/EECS293"
-    Then I should see "Add to my wishlist"
-    When I click the link "Add to my wishlist"
-    Then I should have the course EECS 293 in my wishlist
-    And  I should see "Remove from my wishlist"
+    When I am viewing a course
+    And I add it to my wishlist
+    And I view my wishlist
+    Then I should see that course in my wishlist
 
   Scenario: Add course to wishlist via wishlist page
     Given I do not have the course EECS 293 in my wishlist

@@ -15,6 +15,10 @@ When(/^I view my wishlist$/) do
   step 'I visit "/wishlist"'
 end
 
+When(/^I add it to my wishlist$/) do
+  WishlistItem.create(user: @current_user, course: @course)
+end
+
 Then(/^I should see that course in my wishlist$/) do
   expect(page).to have_content(@course)
 end
