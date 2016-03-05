@@ -5,6 +5,20 @@ Given(/^I have the course ([A-Z]+) (\d+) in my wishlist$/) do |course_dept, cour
     FactoryGirl.create(:wishlist_item, course: course, user: @current_user)
 end
 
+Given(/^I have a course in my wishlist$/) do
+  wishlist_item = WishlistItem.where(user: @current_user).first ||
+    FactoryGirl.create(:wishlist_item, user: @current_user)
+  @course = wishlist_item.course
+end
+
+When(/^I view my wishlist$/) do
+  step 'I visit "/wishlist"'
+end
+
+Then(/^I should see that course in my wishlist$/) do
+  expect(page).to have_content(@course)
+end
+
 Given(/^I do not have the course ([A-Z]+) (\d+) in my wishlist$/) do |course_dept, course_number|
   course = Course.where(department: course_dept, course_number: course_number).first
   if course
