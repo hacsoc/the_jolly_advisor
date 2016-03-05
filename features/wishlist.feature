@@ -38,24 +38,18 @@ Feature: Wishlist
     Then I should not see that course in my wishlist
 
   Scenario: Turn on notifications for a course
-    Given My wishlist is empty
-    And I have the course EECS 293 in my wishlist
-    And I do not have notifications turned on for EECS 293
-    When I visit "/wishlist"
-    Then I should see "Turn on notifications"
-    When I click the link "Turn on notifications"
-    Then I should have notifications turned on for EECS 293
-    And I should see "Turn off notifications"
+    Given I have a course in my wishlist
+    And I have notifications turned off for that course
+    When I view my wishlist
+    And I turn on notifications
+    Then I should have notifications turned on for that course
 
   Scenario: Turn off notifications for a course
-    Given My wishlist is empty
-    And I have the course EECS 293 in my wishlist
-    And I have notifications turned on for EECS 293
-    When I visit "/wishlist"
-    Then I should see "Turn off notifications"
-    When I click the link "Turn off notifications"
-    Then I should have notifications turned off for EECS 293
-    And I should see "Turn on notifications"
+    Given I have a course in my wishlist
+    And I have notifications turned on for that course
+    When I view my wishlist
+    And I turn off notifications
+    Then I should have notifications turned off for that course
 
   Scenario: Toggle notifications in a wishlist with several courses
     Given My wishlist is empty

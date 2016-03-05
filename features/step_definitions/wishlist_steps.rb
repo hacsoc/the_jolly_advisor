@@ -6,9 +6,14 @@ Given(/^I have the course ([A-Z]+) (\d+) in my wishlist$/) do |course_dept, cour
 end
 
 Given(/^I have a course in my wishlist$/) do
-  wishlist_item = WishlistItem.where(user: @current_user).first ||
+  @wishlist_item = WishlistItem.where(user: @current_user).first ||
     FactoryGirl.create(:wishlist_item, user: @current_user)
-  @course = wishlist_item.course
+  @course = @wishlist_item.course
+end
+
+Given(/^I have notifications turned (on|off) for that course$/) do |m|
+  status = m == 'on'
+  @wishlist_item.update_attributes!(notify: status)
 end
 
 When(/^I view my wishlist$/) do
@@ -29,12 +34,21 @@ When(/^I remove it from my wishlist$/) do
   step 'I click the link "Remove from my wishlist"'
 end
 
+When(/^I turn (on|off) notifications$/) do |m|
+  step "I click the link \"Turn #{m} notifications\""
+end
+
 Then(/^I should(?: (not))? see that course in my wishlist$/) do |m|
   if m == "not"
     expect(page).to_not have_content(@course)
   else
     expect(page).to have_content(@course)
   end
+end
+
+Then(/^I should have notifications turned (on|off) for that course$/) do |m|
+  status = m == 'on'
+  expect(@wishlist_item.reload.notify).to eq status
 end
 
 Given(/^I do not have the course ([A-Z]+) (\d+) in my wishlist$/) do |course_dept, course_number|
