@@ -62,7 +62,7 @@ group :development, :test do
   # Testing with rspec
   gem 'rspec'
   gem 'rspec-rails'
-  gem 'shoulda-matchers'
+  gem 'shoulda-matchers', '~> 2.0'
   gem 'factory_girl_rails', require: false
   gem 'simplecov'
   gem 'watir-webdriver'
