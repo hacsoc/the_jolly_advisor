@@ -60,6 +60,6 @@ class Course < ActiveRecord::Base
   end
 
   def long_string
-    "#{self}: #{title}"
+    "#{self}: #{title || 'Title Not Found'}"
   end
 end
