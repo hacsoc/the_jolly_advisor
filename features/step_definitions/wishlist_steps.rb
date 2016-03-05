@@ -1,10 +1,3 @@
-Given(/^I have the course ([A-Z]+) (\d+) in my wishlist$/) do |course_dept, course_number|
-  course = Course.where(department: course_dept, course_number: course_number).first ||
-           FactoryGirl.create(:course, department: course_dept, course_number: course_number)
-  WishlistItem.exists?(course: course, user: @current_user) ||
-    FactoryGirl.create(:wishlist_item, course: course, user: @current_user)
-end
-
 Given(/^I have a course in my wishlist$/) do
   @wishlist_item = WishlistItem.where(user: @current_user).first ||
     FactoryGirl.create(:wishlist_item, user: @current_user)
@@ -49,21 +42,4 @@ end
 Then(/^I should have notifications turned (on|off) for that course$/) do |m|
   status = m == 'on'
   expect(@wishlist_item.reload.notify).to eq status
-end
-
-Given(/^I have notifications turned on for ([A-Z]+) (\d+)$/) do |course_dept, course_number|
-  course = Course.where(department: course_dept, course_number: course_number).first
-  WishlistItem.where(course: course, user: @current_user).update_all(notify: true)
-  expect(WishlistItem.where(course: course, user: @current_user, notify: false).to_a).to eq []
-end
-
-Then(/^([A-Z]+) (\d+) is the first class in my wishlist$/) do |course_dept, course_number|
-  course = Course.where(department: course_dept, course_number: course_number)
-  row = page.all('tr')[1] # The table header will be the first tr
-  course_data = row.all('td').first.text
-  expected_dept = course_data[0...4]
-  expected_number = course_data[4...course_data.length]
-  expected_course = Course.where(department: expected_dept,
-                                 course_number: expected_number)
-  expect(course == expected_course).to be true
 end
