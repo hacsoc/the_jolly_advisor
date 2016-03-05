@@ -7,7 +7,7 @@ RUN apt-get update && apt-get install -y \
     --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
-COPY cron/crontab /var/spool/cron/crontabs/root
+COPY crontab /var/spool/cron/crontabs/root
 RUN chmod 600 /var/spool/cron/crontabs/root
 
 CMD ["cron", "-f"]
