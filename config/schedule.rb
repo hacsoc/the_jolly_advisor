@@ -18,6 +18,8 @@
 # end
 
 # Learn more: http://github.com/javan/whenever
+job_type :log_rake, "cd :path && :environment_variable=:environment bundle exec rake :task :output > /proc/1/fd/1"
+
 every :day, at: '4:30 am' do
-  rake 'import:data_dump'
+  log_rake 'import:data_dump'
 end
