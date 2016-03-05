@@ -25,8 +25,16 @@ When(/^I add it to my wishlist$/) do
   step 'I click the link "Add to my wishlist"'
 end
 
-Then(/^I should see that course in my wishlist$/) do
-  expect(page).to have_content(@course)
+When(/^I remove it from my wishlist$/) do
+  step 'I click the link "Remove from my wishlist"'
+end
+
+Then(/^I should(?: (not))? see that course in my wishlist$/) do |m|
+  if m == "not"
+    expect(page).to_not have_content(@course)
+  else
+    expect(page).to have_content(@course)
+  end
 end
 
 Given(/^I do not have the course ([A-Z]+) (\d+) in my wishlist$/) do |course_dept, course_number|

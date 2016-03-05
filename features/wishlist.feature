@@ -25,12 +25,11 @@ Feature: Wishlist
     Then I should see that course in my wishlist
 
   Scenario: Remove course from wishlist via course show page
-    Given I have the course EECS 293 in my wishlist
-    When I visit "/courses/EECS293"
-    Then I should see "Remove from my wishlist"
-    When I click the link "Remove from my wishlist"
-    Then I should not have the course EECS 293 in my wishlist
-    And I should see "Add to my wishlist"
+    Given I have a course in my wishlist
+    And I am viewing that course
+    When I remove it from my wishlist
+    And I view my wishlist
+    Then I should not see that course in my wishlist
 
   Scenario: Remove course from wishlist via wishlist page
     Given My wishlist is empty
