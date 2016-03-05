@@ -26,7 +26,7 @@ Feature: Explorer
     Then I see only classes with that keyword in the name
 
   Scenario: Page through classes
-    Given An unsearched list of courses
+    Given An unfiltered list of courses
     Then I can page through courses
 
   Scenario: I can navigate to Course Show page

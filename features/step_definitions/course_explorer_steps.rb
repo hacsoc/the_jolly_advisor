@@ -66,7 +66,7 @@ Then(/^I see only classes with that keyword in the name$/) do
   end
 end
 
-Given(/^An unsearched list of courses$/) do
+Given(/^An unfiltered list of courses$/) do
   find('#search').set('')
   fill_in 'professor', with: ''
   select 'All', from: 'semester'
