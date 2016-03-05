@@ -6,7 +6,6 @@ Feature: Wishlist
 
   Background:
     Given I have authenticated as some user
-    And The course EECS 293 exists
 
   Scenario: View wishlist
     Given I have a course in my wishlist
@@ -52,7 +51,7 @@ Feature: Wishlist
     Then I should have notifications turned off for that course
 
   Scenario: Toggle notifications in a wishlist with several courses
-    Given My wishlist is empty
+    Given The course EECS 293 exists
     And I have the course EECS 293 in my wishlist
     And The course EECS 233 exists
     And I have the course EECS 233 in my wishlist
