@@ -9,7 +9,7 @@ class CoursesController < ApplicationController
                .filter_by_semester(params[:semester])
                .filter_by_professor(params[:professor])
                .order_by_short_name
-               .uniq
+               .distinct
     @courses = @courses.page(params[:page])
   end
 
