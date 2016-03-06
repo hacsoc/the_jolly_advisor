@@ -57,7 +57,8 @@ Then(/^I only see classes from that department$/) do
 end
 
 When(/^I search for courses by a keyword$/) do
-  @keyword = Course.all.sample.title.split(" ").sample # O(n) but test data small so yolo.
+  courses_with_titles = Course.where.not(title: nil)
+  @keyword = courses_with_titles.sample.title.split(' ').sample
   find('#search').set(@keyword)
   click_button 'Search'
 end
