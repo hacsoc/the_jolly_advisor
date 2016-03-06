@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   root 'courses#index'
 
-  resources :users, except: [:create, :new, :destroy] do
+  resources :users, only: [] do
     collection do
       get :login
       get :logout
