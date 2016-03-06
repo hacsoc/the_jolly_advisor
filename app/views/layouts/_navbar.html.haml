@@ -20,9 +20,9 @@
             %i.glyphicon.glyphicon-user
             %i.glyphicon.glyphicon-chevron-down
           %ul.dropdown-menu{role: "menu"}
-            - unless user_signed_in?
-              %li= link_to "Login", login_users_path(was_at: request.env['PATH_INFO'])
-            - else
+            - if user_signed_in?
               %li= link_to "#{current_user.case_id}: Logout", logout_users_path
+            - else
+              %li= link_to "Login", login_users_path(was_at: request.env['PATH_INFO'])
             %li.divider
             %li= link_to 'About', about_path
