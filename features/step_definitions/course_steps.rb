@@ -7,5 +7,5 @@ When(/^I am viewing (a|that) course$/) do |selection|
       @course
     end
   expect(@course).to_not be nil
-  step "I visit \"/courses/#{@course.to_param}\""
+  visit "/courses/#{@course.to_param}"
 end

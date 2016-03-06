@@ -10,25 +10,25 @@ Given(/^I have notifications turned (on|off) for that course$/) do |m|
 end
 
 When(/^I view my wishlist$/) do
-  step 'I visit "/wishlist"'
+  visit '/wishlist'
 end
 
 When(/^I select a course via wishlist search$/) do
   @course = Course.first || FactoryGirl.create(:course)
-  step "I fill in \"course_title\" with \"#{@course.to_param}\""
-  step 'I click the hidden button "#submit"'
+  fill_in 'course_title', with: @course.to_param
+  find('#submit', visible: false).click
 end
 
 When(/^I add it to my wishlist$/) do
-  step 'I click the link "Add to my wishlist"'
+  click_link 'Add to my wishlist'
 end
 
 When(/^I remove it from my wishlist$/) do
-  step 'I click the link "Remove from my wishlist"'
+  click_link 'Remove from my wishlist'
 end
 
 When(/^I turn (on|off) notifications$/) do |m|
-  step "I click the link \"Turn #{m} notifications\""
+  click_link "Turn #{m} notifications"
 end
 
 Then(/^I should(?: (not))? see that course in my wishlist$/) do |m|
