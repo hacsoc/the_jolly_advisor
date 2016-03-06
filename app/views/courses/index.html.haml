@@ -7,7 +7,6 @@
       .panel-heading{style: "background-color:#111;color:#fff;"}
         %h1 Course Listing
       .panel-body
-        /%h1 Listing Courses
         = form_tag courses_path, method: :get do
           = label_tag(:search)
           = text_field_tag :search, params[:search], placeholder: 'Ex. EECS 395', class: 'crs_search'
