@@ -5,11 +5,12 @@ class CoursesController < ApplicationController
   # GET /courses.json
   def index
     @semesters = Semester.all
-    @courses = Course.filter_by_name(params[:search])
-               .filter_by_semester(params[:semester])
-               .filter_by_professor(params[:professor])
-               .order_by_short_name
-               .uniq
+    @courses =
+      Course.filter_by_name(params[:search])
+            .filter_by_semester(params[:semester])
+            .filter_by_professor(params[:professor])
+            .order_by_short_name
+            .distinct
     @courses = @courses.page(params[:page])
   end
 
