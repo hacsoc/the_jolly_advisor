@@ -47,10 +47,6 @@ class Course < ActiveRecord::Base
     course_instances.any?(&:schedulable?)
   end
 
-  def score(query)
-    ("#{self} #{title}".downcase.split & query.downcase.split).length
-  end
-
   def to_param
     "#{department}#{course_number}"
   end

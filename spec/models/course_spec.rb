@@ -103,30 +103,6 @@ RSpec.describe Course, type: :model do
     end
   end
 
-  describe '#score' do
-    let(:course) { Course.new department: 'EECS', course_number: 132, title: 'Intro to Java' }
-
-    context 'with no word-level exact matches' do
-      it 'returns 0' do
-        expect(course.score('no match')).to eq 0
-      end
-
-      it 'returns 0' do
-        expect(course.score('jav')).to eq 0
-      end
-    end
-
-    context 'with some word-level matches' do
-      it 'returns the number of matches' do
-        expect(course.score('EECS Java')).to eq 2
-      end
-
-      it 'returns the number of matches even for "insignificant" words' do
-        expect(course.score('132 to')).to eq 2
-      end
-    end
-  end
-
   describe "#to_param" do
     it "should return a spaceless version of to_s" do
       expect(@course.to_param).to eq @course.to_s.gsub(' ', '')
