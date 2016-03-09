@@ -1,3 +1,5 @@
+require 'course_query'
+
 class CoursesController < ApplicationController
   before_action :set_course, only: [:show]
 
@@ -21,7 +23,9 @@ class CoursesController < ApplicationController
   end
 
   def autocomplete
-    @courses = Course.search(params[:term]).sort_by { |c| -c.score(params[:term]) }
+    @courses =
+      Course.search(params[:term])
+            .sort_by { |course| -CourseQuery.new(course).score(params[:term]) }
     respond_to do |format|
       format.json do
         render json: @courses.map { |c| { id: c.id, label: c.long_string, value: c.to_param } }
