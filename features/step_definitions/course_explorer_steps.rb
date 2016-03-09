@@ -22,9 +22,11 @@ Then(/^I only see courses taught by that professor$/) do
   page.all('#results tr').each do |row|
     course_data = row.all('td').first.text
     dept = course_data[0...4]
-    num = course_data[4...course_data.length]
-    course_id = Course.find_by(department: dept, course_number: num).id
-    expect(CourseInstance.find_by(course_id: course_id).professor_id).to eq @professor.id
+    num = course_data[4...-1]
+    professor = Course.includes(course_instance: :professor)
+                      .find_by(department: dept, course_number: num)
+                      .professor
+    expect(professor.name).to start_with(@professor.name)
   end
 end
 
@@ -55,7 +57,8 @@ Then(/^I only see classes from that department$/) do
 end
 
 When(/^I search for courses by a keyword$/) do
-  @keyword = Course.all.sample.title.split(" ").sample # O(n) but test data small so yolo.
+  courses_with_titles = Course.where.not(title: nil)
+  @keyword = courses_with_titles.sample.title.split(' ').sample
   find('#search').set(@keyword)
   click_button 'Search'
 end
@@ -66,7 +69,7 @@ Then(/^I see only classes with that keyword in the name$/) do
   end
 end
 
-Given(/^An unsearched list of courses$/) do
+Given(/^An unfiltered list of courses$/) do
   find('#search').set('')
   fill_in 'professor', with: ''
   select 'All', from: 'semester'
