@@ -84,3 +84,7 @@ RSpec.configure do |config|
   # as the one that triggered the failure.
   Kernel.srand config.seed
 end
+
+def fake_cas
+  CASClient::Frameworks::Rails::Filter.fake('bob')
+end
