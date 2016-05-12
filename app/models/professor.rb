@@ -6,4 +6,5 @@ class Professor < ActiveRecord::Base
   end
 
   scope :order_by_realness, -> { order('CASE WHEN("name" = \'Staff\' OR "name" = \'TBA\') THEN 1 ELSE 0 END') }
+  scope :search, ->(q) { where("\"name\" LIKE '%#{q}%'") }
 end

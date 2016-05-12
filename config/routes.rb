@@ -20,6 +20,12 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :professors, only: [] do
+    collection do
+      get :autocomplete
+    end
+  end
+
   get 'scheduler' => 'scheduler#index'
   post 'scheduler' => 'scheduler#create'
   delete 'scheduler' => 'scheduler#destroy'
