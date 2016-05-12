@@ -1,11 +1,13 @@
 $(document).ready(function() {
   autocompleteCourseSearch();
   autocompleteWishlist();
+  autocompleteCourseExplorer();
 });
 
 $(document).on('page:load', function() {
   autocompleteCourseSearch();
   autocompleteWishlist();
+  autocompleteCourseExplorer();
 });
 
 function autocompleteCourseSearch() {
@@ -27,3 +29,19 @@ function autocompleteWishlist() {
   });
 }
 
+function autocompleteCourseExplorer() {
+    var explorerForm = '#explorer_main form ';
+    $(explorerForm + '#search').autocomplete({
+        source: '/courses/autocomplete.json',
+        select: function(event, ui) {
+            $(explorerForm + '#search').val(ui.item.val);
+        }
+    });
+
+    $(explorerForm + '#professor').autocomplete({
+        source: '/professors/autocomplete.json',
+        select: function(event, ui) {
+            $(explorerForm + '#professor').val(ui.item.label);
+        }
+    });
+}
