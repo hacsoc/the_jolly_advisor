@@ -17,4 +17,8 @@ module ApplicationHelper
       "#{page_title}|#{base_title}"
     end
   end
+
+  def active_tab?(request, *paths)
+    paths.include? request.path
+  end
 end

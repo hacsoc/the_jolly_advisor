@@ -48,4 +48,21 @@ RSpec.describe ApplicationHelper, type: :helper do
       end
     end
   end
+
+  describe '#active_tab?' do
+    it 'returns whether the request belongs to a set of paths' do
+      answer = helper.active_tab?(double(path: '/hello'), '/hello', '/goodbye')
+      expect(answer).to be true
+    end
+
+    it 'works for root paths' do
+      answer = helper.active_tab?(double(path: '/'), '/hello', '/')
+      expect(answer).to be true
+    end
+
+    it 'rejects non-matches' do
+      answer = helper.active_tab?(double(path: '/'), '/hello')
+      expect(answer).to be false
+    end
+  end
 end
