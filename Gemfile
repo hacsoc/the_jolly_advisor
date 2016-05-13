@@ -64,7 +64,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'shoulda-matchers'
   gem 'factory_girl_rails', require: false
-  gem 'simplecov'
+  gem 'simplecov', github: 'colszowka/simplecov'
   gem 'watir-webdriver'
 
   # Used for GitHub badge

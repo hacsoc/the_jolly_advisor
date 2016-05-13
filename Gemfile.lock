@@ -1,4 +1,13 @@
 GIT
+  remote: git://github.com/colszowka/simplecov.git
+  revision: a80baea9eb97772eeeec339d379887368969c91c
+  specs:
+    simplecov (0.11.2)
+      docile (~> 1.1.0)
+      json (~> 1.8)
+      simplecov-html (~> 0.10.0)
+
+GIT
   remote: git://github.com/rubycas/rubycas-client.git
   revision: 195a4b70333029be474b0ac70efdc85bd4288861
   specs:
@@ -253,10 +262,6 @@ GEM
     shellany (0.0.1)
     shoulda-matchers (3.1.1)
       activesupport (>= 4.0.0)
-    simplecov (0.11.2)
-      docile (~> 1.1.0)
-      json (~> 1.8)
-      simplecov-html (~> 0.10.0)
     simplecov-html (0.10.0)
     slop (3.6.0)
     smarter_csv (1.1.0)
@@ -332,7 +337,7 @@ DEPENDENCIES
   rubycas-client!
   sdoc (~> 0.4.0)
   shoulda-matchers
-  simplecov
+  simplecov!
   smarter_csv
   therubyracer
   turbolinks
