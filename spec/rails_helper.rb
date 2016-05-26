@@ -4,6 +4,7 @@ require 'spec_helper'
 require File.expand_path('../../config/environment', __FILE__)
 require 'rspec/rails'
 require 'shoulda/matchers'
+require 'vcr'
 
 Shoulda::Matchers.configure do |config|
   config.integrate do |with|
@@ -11,6 +12,11 @@ Shoulda::Matchers.configure do |config|
     with.library :active_model
     with.library :active_record
   end
+end
+
+VCR.configure do |config|
+  config.cassette_library_dir = 'spec/cassettes'
+  config.hook_into :webmock
 end
 
 SimpleCov.start 'rails'
