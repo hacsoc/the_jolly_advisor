@@ -79,5 +79,7 @@ group :test do
   gem 'rack_session_access'
   gem 'rake'
   gem 'forgery'
+  gem 'vcr', require: false
+  gem 'webmock', require: false # for vcr to use
 end
 
