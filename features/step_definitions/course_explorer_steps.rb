@@ -26,7 +26,7 @@ Then(/^I only see courses taught by that professor$/) do
                        .find_by(department: dept, course_number: num)
                        .professors
     names = professors.map(&:name)
-    expect(names.any? {|name| name.start_with?(@professor.name)}).to be true
+    expect(names).to include(start_with(@professor.name))
   end
 end
 
