@@ -13,7 +13,7 @@ class CoursesController < ApplicationController
             .filter_by_professor(params[:professor])
             .order_by_short_name
             .distinct
-    @courses = @courses.page(params[:page])
+    @paginator = Paginator.new(@courses).page(params[:page])
   end
 
   # GET /courses/1
