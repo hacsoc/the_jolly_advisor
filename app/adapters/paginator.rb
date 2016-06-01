@@ -32,6 +32,6 @@ class Paginator
   end
 
   def context_initialized?(view)
-    view.kind_of? pagination_library
+    view.is_a? pagination_library
   end
 end
