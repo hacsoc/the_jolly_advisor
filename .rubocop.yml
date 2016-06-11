@@ -21,7 +21,8 @@ AllCops:
   - "lib/tasks/*"
   - "bin/**/*"
   - "script/**/*"
-  RunRailsCops: false
+  Rails:
+    Enabled: true
   DisplayCopNames: false
   StyleGuideCopsOnly: false
 Style/AccessModifierIndentation:
