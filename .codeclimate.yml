@@ -25,3 +25,8 @@ ratings:
         - "**.rb"
         - "**.js"
         - Gemfile.lock
+
+exclude_paths:
+    - "db/**"
+    - "features/**"
+    - "spec/**"
