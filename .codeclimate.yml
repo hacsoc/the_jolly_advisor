@@ -29,4 +29,7 @@ ratings:
 exclude_paths:
     - "db/**"
     - "features/**"
+    - "script/**"
     - "spec/**"
+    - "**.yml"
+    - "**.yml.travis"
