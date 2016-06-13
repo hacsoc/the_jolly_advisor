@@ -33,3 +33,4 @@ exclude_paths:
     - "spec/**"
     - "**.yml"
     - "**.yml.travis"
+    - ".codeclimate.yml"
