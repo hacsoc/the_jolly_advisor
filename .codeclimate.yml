@@ -1,0 +1,36 @@
+engines:
+    brakeman:
+        # checks Rails apps for security vulnerabilities
+        enabled: true
+    bundler-audit:
+        # helps find security vulnerabilities in Ruby dependencies
+        enabled: true
+    duplication:
+        enabled: true
+        config:
+            languages:
+                - ruby
+                - javascript
+    fixme:
+        enabled: true
+        config:
+            strings:
+                - FIXME
+                - TODO
+    rubocop:
+        enabled: true
+
+ratings:
+    paths:
+        - "**.rb"
+        - "**.js"
+        - Gemfile.lock
+
+exclude_paths:
+    - "db/**"
+    - "features/**"
+    - "script/**"
+    - "spec/**"
+    - "**.yml"
+    - "**.yml.travis"
+    - ".codeclimate.yml"
