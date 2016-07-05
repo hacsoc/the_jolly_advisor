@@ -79,5 +79,6 @@ group :test do
   gem 'rack_session_access'
   gem 'rake'
   gem 'forgery'
+  gem 'rails-controller-testing'
 end
 
