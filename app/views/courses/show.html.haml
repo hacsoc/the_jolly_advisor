@@ -8,7 +8,7 @@
           %h3= professor_search_link(@course.first_professor)
         %hr/
         %h3 Previous Semesters
-        - @instances_by_semester.each do |semester, instances|
+        - @instances_by_semester.reverse_each do |semester, instances|
           %p
             %b= semester
             \:
