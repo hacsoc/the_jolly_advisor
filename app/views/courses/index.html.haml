@@ -36,5 +36,5 @@
                 %td.course_name= link_to course.title || "Title Not Found", course
         = paginate @courses
         %br
-        = page_entries_info @courses, class: 'crs_count'
+        = page_entries_info @courses
         %hr
