@@ -8,9 +8,11 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /the_jolly_advisor
+
 ADD Gemfile /the_jolly_advisor/Gemfile
 ADD Gemfile.lock /the_jolly_advisor/Gemfile.lock
 RUN bundle install --with test
+
 ADD . /the_jolly_advisor
 
 CMD RAILS_ENV=test rake db:test:prepare
