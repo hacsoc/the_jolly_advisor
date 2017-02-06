@@ -65,7 +65,7 @@ group :development, :test do
   gem 'shoulda-matchers'
   gem 'factory_girl_rails', require: false
   gem 'simplecov'
-  gem 'watir-webdriver'
+  gem 'watir'
 
   # Used for GitHub badge
   gem 'coveralls', require: false
