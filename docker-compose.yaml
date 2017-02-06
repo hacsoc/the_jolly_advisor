@@ -1,0 +1,12 @@
+version: '2'
+services:
+    db:
+        image: postgres
+    test:
+        build:
+            context: .
+            dockerfile: Dockerfile.dev
+        environment:
+            RAILS_ENV: test
+        depends_on:
+        - db
