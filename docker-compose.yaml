@@ -8,5 +8,6 @@ services:
             dockerfile: Dockerfile.dev
         environment:
             RAILS_ENV: test
+            DB_HOST: db
         depends_on:
         - db
