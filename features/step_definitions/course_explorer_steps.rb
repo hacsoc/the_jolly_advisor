@@ -65,7 +65,7 @@ end
 
 Then(/^I see only classes with that keyword in the name$/) do
   page.all('#results tr').each do |row|
-    expect(row.all('td').last.text).to include @keyword
+    expect(row.all('td').last.text.downcase).to include @keyword.downcase
   end
 end
 
