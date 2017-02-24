@@ -33,7 +33,7 @@ gem 'kaminari'
 
 gem 'therubyracer'
 gem 'less-rails'
-gem 'twitter-bootstrap-rails'
+gem 'twitter-bootstrap-rails', '~> 3.0'
 gem 'momentjs-rails'
 gem 'fullcalendar-rails'
 
