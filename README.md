@@ -1,5 +1,7 @@
 # The Jolly Advisor
 
+[![Join the chat at https://gitter.im/hacsoc/the_jolly_advisor](https://badges.gitter.im/hacsoc/the_jolly_advisor.svg)](https://gitter.im/hacsoc/the_jolly_advisor?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 [![Build Status](https://travis-ci.org/hacsoc/the_jolly_advisor.svg?branch=master)](https://travis-ci.org/hacsoc/the_jolly_advisor)
 [![Coverage Status](https://coveralls.io/repos/hacsoc/the_jolly_advisor/badge.svg?branch=master)](https://coveralls.io/r/hacsoc/the_jolly_advisor)
 

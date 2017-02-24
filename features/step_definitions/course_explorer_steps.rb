@@ -21,12 +21,12 @@ Then(/^I only see courses taught by that professor$/) do
   # Collect all classes returned
   page.all('#results tr').each do |row|
     course_data = row.all('td').first.text
-    dept = course_data[0...4]
-    num = course_data[4...-1]
-    professor = Course.includes(course_instance: :professor)
-                      .find_by(department: dept, course_number: num)
-                      .professor
-    expect(professor.name).to start_with(@professor.name)
+    dept, num = course_data.split ' '
+    professors = Course.includes(course_instances: :professor)
+                       .find_by(department: dept, course_number: num)
+                       .professors
+    names = professors.map(&:name)
+    expect(names).to include(start_with(@professor.name))
   end
 end
 
@@ -65,7 +65,7 @@ end
 
 Then(/^I see only classes with that keyword in the name$/) do
   page.all('#results tr').each do |row|
-    expect(row.all('td').last.text).to include @keyword
+    expect(row.all('td').last.text.downcase).to include @keyword.downcase
   end
 end
 

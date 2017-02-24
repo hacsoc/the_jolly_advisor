@@ -1,13 +1,8 @@
-language: ruby
-cache: bundler
-rvm:
-    - 2.3.0
+sudo: required
 
-before_script:
-    - cp config/database.yml.travis config/database.yml
-    - psql -c 'create database travis_ci_test' -U postgres
-    - bundle exec rake db:migrate
+services:
+    - docker
 
+install: true
 script:
-    - bundle exec rake
-    - bundle exec rake coveralls:push
+    - make compose-test

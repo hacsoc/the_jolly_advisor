@@ -1,9 +1,9 @@
 source 'https://rubygems.org'
 
-ruby '2.3.0'
+ruby '2.3.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', github: 'rails/rails'
+gem 'rails'
 # Use postgresql as the database for Active Record
 gem 'pg'
 # Use Uglifier as compressor for JavaScript assets
@@ -66,7 +66,7 @@ group :development, :test do
   gem 'shoulda-matchers'
   gem 'factory_girl_rails', require: false
   gem 'simplecov'
-  gem 'watir-webdriver'
+  gem 'watir'
 
   # Used for GitHub badge
   gem 'coveralls', require: false
