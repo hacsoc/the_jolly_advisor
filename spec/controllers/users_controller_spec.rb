@@ -11,7 +11,7 @@ RSpec.describe UsersController, type: :controller do
 
     it 'redirects to the specified url' do
       url = '/somewhere'
-      get :login, was_at: url
+      get :login, params: {was_at: url}
       expect(response).to redirect_to url
     end
   end
@@ -22,7 +22,7 @@ RSpec.describe UsersController, type: :controller do
 
     it 'logs the user out' do
       expect(cas).to receive(:logout).and_call_original
-      get :logout, {}, cas_session
+      get :logout, params: {}, session: cas_session
     end
   end
 end
