@@ -18,7 +18,7 @@ RSpec.describe WishlistController, type: :controller do
           url: url,
         }
 
-        post :add_course, params, cas_session
+        post :add_course, params: params, session: cas_session
         expect(response).to redirect_to(url)
       end
 
@@ -29,7 +29,7 @@ RSpec.describe WishlistController, type: :controller do
           course_id: 1,
         }
 
-        post :add_course, params, cas_session
+        post :add_course, params: params, session: cas_session
         expect(response).to redirect_to(wishlist_path)
         expect(flash[:notice]).to include 'success'
       end
@@ -47,7 +47,7 @@ RSpec.describe WishlistController, type: :controller do
           url: url,
         }
 
-        post :add_course, params, cas_session
+        post :add_course, params: params, session: cas_session
         expect(response).to redirect_to(url)
       end
 
@@ -58,7 +58,7 @@ RSpec.describe WishlistController, type: :controller do
           course_id: 1,
         }
 
-        post :add_course, params, cas_session
+        post :add_course, params: params, session: cas_session
         expect(response).to redirect_to(wishlist_path)
         expect(flash[:notice]).to include 'error'
       end
@@ -75,7 +75,7 @@ RSpec.describe WishlistController, type: :controller do
         wishlist_item: {notify: nil},
       }
 
-      put :update, params, cas_session
+      put :update, params: params, session: cas_session
       expect(response).to redirect_to(wishlist_path)
     end
 
@@ -91,7 +91,7 @@ RSpec.describe WishlistController, type: :controller do
         wishlist_item: {notify: nil},
       }
 
-      put :update, params, cas_session
+      put :update, params: params, session: cas_session
       expect(response).to redirect_to(wishlist_path)
     end
   end
@@ -109,7 +109,7 @@ RSpec.describe WishlistController, type: :controller do
           url: url,
         }
 
-        delete :remove_course, params, cas_session
+        delete :remove_course, params: params, session: cas_session
         expect(response).to redirect_to(url)
       end
 
@@ -120,7 +120,7 @@ RSpec.describe WishlistController, type: :controller do
           course_id: 1,
         }
 
-        delete :remove_course, params, cas_session
+        delete :remove_course, params: params, session: cas_session
         expect(response).to redirect_to(wishlist_path)
         expect(flash[:notice]).to include 'success'
       end
@@ -138,7 +138,7 @@ RSpec.describe WishlistController, type: :controller do
           url: url,
         }
 
-        delete :remove_course, params, cas_session
+        delete :remove_course, params: params, session: cas_session
         expect(response).to redirect_to(url)
       end
 
@@ -149,7 +149,7 @@ RSpec.describe WishlistController, type: :controller do
           course_id: 1,
         }
 
-        delete :remove_course, params, cas_session
+        delete :remove_course, params: params, session: cas_session
         expect(response).to redirect_to(wishlist_path)
         expect(flash[:notice]).to include 'error'
       end

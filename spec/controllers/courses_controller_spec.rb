@@ -13,13 +13,14 @@ RSpec.describe CoursesController, type: :controller do
   describe 'GET show' do
     it 'does a 404 when the course cannot be found' do
       allow(Course).to receive(:find_by).and_return(nil)
-      expect { get :show, {id: 'EECS395'} }.to raise_error(ActionController::RoutingError)
+      expect { get :show, params: {id: 'EECS395'} }
+        .to raise_error(ActionController::RoutingError)
     end
 
     it 'sets the course in the viaw' do
       course = spy
       allow(Course).to receive(:find_by).and_return(course)
-      get :show, {id: 'EECS395'}
+      get :show, params: {id: 'EECS395'}
       expect(assigns(:course)).to eq course
     end
   end

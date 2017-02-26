@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 ruby '2.3.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 4.2'
+gem 'rails'
 # Use postgresql as the database for Active Record
 gem 'pg'
 # Use Uglifier as compressor for JavaScript assets
@@ -12,6 +12,7 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.1.0'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
+gem 'rails-controller-testing'
 
 gem 'haml'
 
@@ -32,7 +33,7 @@ gem 'kaminari'
 
 gem 'therubyracer'
 gem 'less-rails'
-gem 'twitter-bootstrap-rails'
+gem 'twitter-bootstrap-rails', '~> 3.0'
 gem 'momentjs-rails'
 gem 'fullcalendar-rails'
 
@@ -79,5 +80,6 @@ group :test do
   gem 'rack_session_access'
   gem 'rake'
   gem 'forgery'
+  gem 'rails-controller-testing'
 end
 
