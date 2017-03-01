@@ -17,7 +17,7 @@ RSpec.describe CoursesController, type: :controller do
         .to raise_error(ActionController::RoutingError)
     end
 
-    it 'sets the course in the viaw' do
+    it 'sets the course in the view' do
       course = spy
       allow(Course).to receive(:find_by).and_return(course)
       get :show, params: {id: 'EECS395'}
