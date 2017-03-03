@@ -1,0 +1,45 @@
+
+<div class="no-gutter row">
+    <div class="col-md-10 col-md-offset-1">
+        <div id="wishlist_main" class="panel">
+            <div class="panel-heading" style="background-color:#111;color:#fff;">
+                <h1>Wishlist</h1>
+            </div>
+
+            <div class="panel-body">
+                <%= form_tag wishlist_path, role: :search, id: :wishlist_course_form do %>
+                    <%= hidden_field_tag :course_id %>
+                    <%= text_field_tag :course_title, nil, placeholder: "Add course to wishlist", class: 'form-control' %>
+                    <%= submit_tag 'Submit', hidden: true, id: :submit %>
+                <% end %>
+                <hr/>
+
+                <table>
+                    <thead>
+                        <th>Course</th>
+                        <th>Course</th>
+                        <th>Course</th>
+                    </thead>
+                    <tbody>
+                        <% @wishlist.each do |item| %>
+                            <tr>
+                                <td>
+                                    <%= link_to item.course, item.course %>
+                                </td>
+                                <td>
+                                    <%= item.course.try(:schedulable?) ? "Yes" : "No" %>
+                                </td>
+                                <td>
+                                    <%= add_remove_link @wishlist.map(&:course_id), item.course %>
+                                </td>
+                                <td>
+                                    <%= set_notify_link item %>
+                                </td>
+                            </tr>
+                        <% end %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
