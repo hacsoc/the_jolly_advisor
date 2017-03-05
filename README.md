@@ -22,3 +22,4 @@ for more information.
 
 Want to request a feature or give some feedback on things that aren't necessarily broken but could be better? Please [let us know here](http://feathub.com/hacsoc/the_jolly_advisor).
 
+Test commit, please ignore
