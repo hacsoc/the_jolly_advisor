@@ -1,36 +1,37 @@
 
-.no-gutter.row
-  .col-md-10.col-md-offset-1
-    #scheduler_main.panel
-      .panel-heading{style: "background-color:#111;color:#fff;"}
-        %h1 Scheduler
-      .panel-body
-        = form_tag scheduler_path, role: :search, id: :schedule_form, remote: true do
-          = text_field_tag :course_title, nil, placeholder: 'Add course instance', class: 'form-control'
+<div class="no-gutter row">
+    <div class="col-md-10 col-md-offset-1">
+        <div id="scheduler_main" class="panel">
+            <div class="panel-heading" style="background-color:#111; color:#fff;">
+                <h1>Scheduler</h1>
+            </div>
 
-        = form_for :semester, url: scheduler_path, method: :get, remote: true, html: {id: :semester_form} do |f|
-          = f.select :semester,
-            options_for_select(%w(Fall Spring Summer).map {|str| [str, str.downcase]},
-            @planning_period_semester.downcase)
-          = f.select :year, options_for_select(2008..@planning_period_year,
-                                                     @planning_period_year)
-          = f.select :half, ['First Half', 'Second Half'].map { |str| [str, str.split.first.downcase] }
-          = hidden_field_tag :old_feed, nil # this is the old feed we need to remove
-          = f.submit 'Change Semester'
+            <div class="panel-body">
+                <%= form_tag scheduler_path, role: :search, id: :schedule_form, remote: true do %>
+                    <%= text_field_tag :course_title, nil, placeholder: 'Add course instance', class: 'form-control' %>
+                <% end %>
 
+                <%= form_for :semester, url: scheduler_path, method: :get, remote: true, html: {id: :semester_form} do |f| %>
+                    <%= f.select :semester, options_for_select(%w(Fall Spring Summer).map { |str| [str, str.downcase] },
+                                                               @planning_period_semester.downcase)
+                    %>
+                    <%= f.select :year, options_for_select(2008..@planning_period_year, @planning_period_year) %>
+                    <%= f.select :half, ['First Half', 'Second Half'].map { |str| [str, str.split.first.downcase] } %>
+                    <%= hidden_field_tag :old_feed, nil # this is the old feed we need to remove %>
+                    <%= f.submit 'Change Semester' %>
+                <% end %>
 
-        %hr
-        %br
+                <hr>
+                <br>
+                <div id="calendar"></div>
+            </div>
+        </div>
+    </div>
+</div>
 
-        #calendar
-
-
-
-
-
-:javascript
+<%= javascript_tag do %>
   // pass any query parameters along to the JSON action
-  var event_feed = '#{scheduler_feed}';
+  var event_feed = '<%= scheduler_feed %>';
   var calDiv = $("#calendar");
 
   $('#old_feed').val(event_feed);
@@ -68,7 +69,7 @@
   // change semesters without hitting the server (twice)
   $('#semester_form').on('ajax:beforeSend', function() {
     var form_data = $(this).serialize();
-    var new_feed = '#{scheduler_path}' + '?' + form_data;
+    var new_feed = '<%= scheduler_path %>' + '?' + form_data;
 
     $('#calendar').fullCalendar('removeEventSource', $('#old_feed').val());
     $('#calendar').fullCalendar('addEventSource', new_feed);
@@ -76,21 +77,21 @@
     $('#old_feed').val(new_feed);
 
     // update the autocomplete to look in the new date range
-    $('#course_title').autocomplete('option', 'source', '#{autocomplete_course_instances_path}' + '?' + form_data);
+    $('#course_title').autocomplete('option', 'source', '<%= autocomplete_course_instances_path %>' + '?' + form_data);
 
     return false; // don't hit the server
   });
 
   // autocomplete
   $('#course_title').autocomplete({
-    source: '#{course_instance_autocomplete(@search_date || Date.today)}',
+    source: '<%= course_instance_autocomplete(@search_date || Date.today) %>',
     select: function(event, ui) {
       event.preventDefault();
 
       // create the enrollment
       $.ajax({
         type: 'post',
-        url: '#{scheduler_path}',
+        url: '<%= scheduler_path %>',
         data: JSON.stringify({course_instance_id: ui.item.id}),
         contentType: 'application/json',
         dataType: 'json',
@@ -116,3 +117,4 @@
     // refresh the calendar to show the new event
     $('#calendar').fullCalendar('refetchEvents');
   });
+<% end %>
