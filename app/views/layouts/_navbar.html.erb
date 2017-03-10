@@ -1,0 +1,42 @@
+<nav class="navbar navbar-static">
+    <div class="container">
+        <div class="navbar-header">
+            <%= link_to "Get Jolly", root_path, class: 'navbar-brand' %>
+            <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse" type="button">
+                <span class="glyphicon glyphicon-chevron-down"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><%= link_to "Explorer", courses_path %></li>
+                <li><%= link_to "Scheduler", scheduler_path %></li>
+                <li><%= link_to "Wish List", wishlist_path %></li>
+                <li><%= link_to "FAQ", faq_path %></li>
+            </ul>
+            <ul class="nav navbar-right navbar-nav">
+                <li>
+                    <form action="/courses" class="navbar-form" method="<%= :get %>" role="search">
+                        <div class="form-group">
+                            <input class="form-control" id="course-autocomplete" name="search" placeholder="Course Select" type="text"></input>
+                        </div>
+                    </form>
+                </li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="glyphicon glyphicon-user"></i>
+                        <i class="glyphicon glyphicon-chevron-down"></i>
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <% if user_signed_in? %>
+                            <li><%= link_to "#{current_user.case_id}: Logout", logout_users_path %></li>
+                        <% else %>
+                            <li><%= link_to "Login", login_users_path(was_at: request.env['PATH_INFO']) %></li>
+                        <% end %>
+                        <li class="divider"></li>
+                        <li><%= link_to 'About', about_path %></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
