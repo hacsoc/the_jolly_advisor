@@ -1,0 +1,64 @@
+<div class="no-gutter row">
+    <!-- mid column -->
+    <div class="col-md-3">
+        <div id="midCol" class="panel">
+            <div class="panel-heading" style="background-color: #555; color: #eee;"></div>
+            <div class="panel-body">
+                <div class="well">
+                    <h3><%= professor_search_link(@course.first_professor) %></h3>
+                </div>
+                <hr/>
+                <h3>Previous Semesters</h3>
+                <% @instances_by_semester.reverse_each do |semester, instances| %>
+                    <p>
+                    <b><%= semester%></b>:
+                    </p>
+                    <% instances.sort_by(&:section).each do |instance| %>
+                        Section <%= instance.section %> taught by <%= professor_search_link(instance.professor) %>
+                        <br>
+                        <%= instance.schedule %>
+                        <br>
+                    <% end %>
+                <% end %>
+                <% if user_signed_in? %>
+                    <hr/>
+                    <%= add_remove_link current_user.wishlist.map(&:course_id), @course %>
+                <% end %>
+            </div>
+        </div>
+    </div>
+    <div id="content" class="col-md-7">
+        <div class="panel">
+            <div class="panel-heading" style="background-color: #111; color: #000;"></div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2><%= @course.long_string %></h2>
+                        <h4>Description:</h4>
+                        <p><%= course_linkify(@course.description || '') %></p>
+                        <h4>Prerequisites:</h4>
+                        <ul>
+                            <% prereq_sets(@course).each do |prereq_set| %>
+                                <li><%= prereq_set %></li>
+                            <% end %>
+                        </ul>
+                        <h4>Required for:</h4>
+                        <ul>
+                            <% postreqs(@course).each do |postreq| %>
+                                <li><%= postreq %></li>
+                            <% end %>
+                        </ul>
+                    </div>
+                    <hr>
+                    <!--
+                        <div id="posts">
+                            <h2>Tips and Reviews</h2>
+                            <p>TODO: Populate this via the Posts model</p>
+                        </div>
+                        <hr>
+                    -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
