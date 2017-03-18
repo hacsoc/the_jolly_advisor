@@ -86,5 +86,6 @@ group :test do
   gem 'forgery'
   gem 'rails-controller-testing'
   gem 'vcr', require: false
+  gem 'webmock', require: false
 end
 
