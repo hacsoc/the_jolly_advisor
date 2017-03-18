@@ -85,5 +85,6 @@ group :test do
   gem 'rake'
   gem 'forgery'
   gem 'rails-controller-testing'
+  gem 'vcr', require: false
 end
 
