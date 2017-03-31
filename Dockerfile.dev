@@ -1,4 +1,4 @@
-FROM ruby:2.4.0
+FROM ruby:2.4.1
 
 MAINTAINER Andrew Mason <andrew@fixedpoint.xyz>
 
