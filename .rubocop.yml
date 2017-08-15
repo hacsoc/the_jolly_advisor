@@ -21,8 +21,6 @@ AllCops:
   - "lib/tasks/*"
   - "bin/**/*"
   - "script/**/*"
-  Rails:
-    Enabled: true
   DisplayCopNames: false
   StyleGuideCopsOnly: false
 Layout/AccessModifierIndentation:
@@ -333,7 +331,6 @@ Style/RegexpLiteral:
     '/' character.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#percent-r
   Enabled: true
-  MaxSlashes: 1
 Style/Semicolon:
   Description: Don't use semicolons to terminate expressions.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#no-semicolon
@@ -384,9 +381,6 @@ Layout/SpaceAroundBlockParameters:
   Description: Checks the spacing inside and after block parameters pipes.
   Enabled: true
   EnforcedStyleInsidePipes: no_space
-  SupportedStyles:
-  - space
-  - no_space
 Layout/SpaceAroundEqualsInParameterDefault:
   Description: Checks that the equals signs in parameter default assignments have
     or don't have surrounding space depending on configuration.
@@ -441,17 +435,11 @@ Style/TrailingCommaInArguments:
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#no-trailing-array-commas
   Enabled: true
   EnforcedStyleForMultiline: no_comma
-  SupportedStyles:
-  - comma
-  - no_comma
 Style/TrailingCommaInLiteral:
   Description: Checks for trailing comma in literals.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#no-trailing-array-commas
   Enabled: true
   EnforcedStyleForMultiline: no_comma
-  SupportedStyles:
-  - comma
-  - no_comma
 Style/TrivialAccessors:
   Description: Prefer attr_* methods to trivial readers/writers.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#attr_family
@@ -551,16 +539,10 @@ Lint/EndAlignment:
   Description: Align ends correctly.
   Enabled: true
   EnforcedStyleAlignWith: keyword
-  SupportedStyles:
-  - keyword
-  - variable
 Lint/DefEndAlignment:
   Description: Align ends corresponding to defs correctly.
   Enabled: true
   EnforcedStyleAlignWith: start_of_line
-  SupportedStyles:
-  - start_of_line
-  - def
 Rails/ActionFilter:
   Description: Enforces consistent use of action filter methods.
   Enabled: false
