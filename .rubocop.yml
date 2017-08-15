@@ -650,11 +650,6 @@ Style/BlockComments:
 Layout/BlockEndNewline:
   Description: Put end statement of multiline block on its own line.
   Enabled: true
-Style/Blocks:
-  Description: Avoid using {...} for multi-line blocks (multiline chaining is always
-    ugly). Prefer {...} over do...end for single-line blocks.
-  StyleGuide: https://github.com/bbatsov/ruby-style-guide#single-line-blocks
-  Enabled: true
 Style/CaseEquality:
   Description: Avoid explicit use of the case equality operator(===).
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#no-case-equality
@@ -924,10 +919,6 @@ Style/UnneededCapitalW:
 Style/UnneededPercentQ:
   Description: Checks for %q/%Q when single quotes or double quotes would do.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#percent-q
-  Enabled: true
-Style/UnneededPercentX:
-  Description: Checks for %x when `` would do.
-  StyleGuide: https://github.com/bbatsov/ruby-style-guide#percent-x
   Enabled: true
 Style/VariableInterpolation:
   Description: Don't interpolate global, instance and class variables directly in
