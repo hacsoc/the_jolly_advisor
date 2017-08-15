@@ -6,3 +6,4 @@ services:
 install: true
 script:
     - make compose-test
+    - docker-compose run test rubocop
