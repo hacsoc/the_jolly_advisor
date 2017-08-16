@@ -1,20 +1,10 @@
 AllCops:
   Include:
-  - "**/*.gemspec"
-  - "**/*.podspec"
   - "**/*.jbuilder"
   - "**/*.rake"
-  - "**/*.opal"
   - "**/Gemfile"
   - "**/Rakefile"
-  - "**/Capfile"
   - "**/Guardfile"
-  - "**/Podfile"
-  - "**/Thorfile"
-  - "**/Vagrantfile"
-  - "**/Berksfile"
-  - "**/Cheffile"
-  - "**/Vagabondfile"
   Exclude:
   - "vendor/**/*"
   - "db/schema.rb"
@@ -22,7 +12,6 @@ AllCops:
   - "bin/**/*"
   - "script/**/*"
   DisplayCopNames: true
-  StyleGuideCopsOnly: false
 Layout/AccessModifierIndentation:
   Description: Check indentation of private/protected visibility modifiers.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#indent-public-private-protected
