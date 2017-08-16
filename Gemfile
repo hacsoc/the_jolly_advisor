@@ -73,6 +73,9 @@ group :development, :test do
   # Used for GitHub badge
   gem 'coveralls', require: false
 
+  # Static analysis
+  gem 'reek'
+
   gem 'pry-rails'
 end
 
