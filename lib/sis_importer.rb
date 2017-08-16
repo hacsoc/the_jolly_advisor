@@ -118,7 +118,7 @@ module SISImporter
         dates:               fetch_start_end_dates(class_xml.xpath('Dates').text.strip),
         section:             class_xml.xpath('Section').text.strip,
         component_code:      class_xml.xpath('ComponentCode').text.strip,
-        enrollment_req_info: class_xml.xpath('EnrollmentRequirements').text.strip
+        enrollment_req_info: class_xml.xpath('EnrollmentRequirements').text.strip,
       }.merge(fetch_title_and_subtitle(class_xml.xpath('CourseTitleLong').text.strip))
     end
 
@@ -127,12 +127,12 @@ module SISImporter
       if full_title.start_with? 'Special Topics'
         {
           title:    'Special Topics',
-          subtitle: full_title[/Special Topics: (.*)/, 1]
+          subtitle: full_title[/Special Topics: (.*)/, 1],
         }
       else
         {
           title:    full_title,
-          subtitle: nil
+          subtitle: nil,
         }
       end
     end
@@ -160,7 +160,7 @@ module SISImporter
     def parse_reqs(str)
       {
         co_req: str.start_with?('Coreq'),
-        reqs:   parse_reqs_helper(str[(str.index(':') + 1)..-1])
+        reqs:   parse_reqs_helper(str[(str.index(':') + 1)..-1]),
       }
     end
 
@@ -196,7 +196,7 @@ module SISImporter
         schedule: meeting_xml.xpath('DaysTimes').text.strip,
         room: meeting_xml.xpath('Room').text.strip,
         prof: process_professor(meeting_xml.xpath('Instructor').text.strip),
-        dates: fetch_start_end_dates(meeting_xml.xpath('MeetingDates').text.strip)
+        dates: fetch_start_end_dates(meeting_xml.xpath('MeetingDates').text.strip),
       }
     end
 

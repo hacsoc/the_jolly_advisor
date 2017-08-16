@@ -20,7 +20,7 @@ class ScheduledMeeting
     'Th' => :thursday,
     'F' => :friday,
     'Sa' => :saturday,
-    'Su' => :sunday
+    'Su' => :sunday,
   }
 
   # The time format that SIS used for class schedules

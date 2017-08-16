@@ -428,7 +428,7 @@ Style/TrailingCommaInLiteral:
   Description: Checks for trailing comma in literals.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#no-trailing-array-commas
   Enabled: true
-  EnforcedStyleForMultiline: no_comma
+  EnforcedStyleForMultiline: comma
 Style/TrivialAccessors:
   Description: Prefer attr_* methods to trivial readers/writers.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#attr_family

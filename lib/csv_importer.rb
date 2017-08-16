@@ -110,7 +110,7 @@ module CSVImporter
         :"days_&_times"              => :days_and_times,
         :"room_(capacity)"           => :room_and_capacity,
         :"enrl_cap_(cmbnd_enrl_cap)" => :enrollment_cap,
-        :"enrl_tot_(cmbnd_enrl_tot)" => :onrollment_total
+        :"enrl_tot_(cmbnd_enrl_tot)" => :onrollment_total,
       }
     end
   end

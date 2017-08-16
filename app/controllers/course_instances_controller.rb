@@ -13,7 +13,7 @@ class CourseInstancesController < ApplicationController
           {
             label: m.autocomplete_label,
             value: m.autocomplete_label,
-            id: m.course_instance_id
+            id: m.course_instance_id,
           }
         end)
       end

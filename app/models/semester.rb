@@ -12,15 +12,15 @@ class Semester < ActiveRecord::Base
   SAFE_SEARCH_DATES = {
     fall: {
       first: 'September 30',
-      second: 'November 30'
+      second: 'November 30',
     },
     spring: {
       first: 'February 01',
-      second: 'April 01'
+      second: 'April 01',
     },
     summer: {
       # TODO: uhhhhh
-    }
+    },
   }.with_indifferent_access
 
   # Append to this with whatever format is approprite
