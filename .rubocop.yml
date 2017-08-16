@@ -21,7 +21,7 @@ AllCops:
   - "lib/tasks/*"
   - "bin/**/*"
   - "script/**/*"
-  DisplayCopNames: false
+  DisplayCopNames: true
   StyleGuideCopsOnly: false
 Layout/AccessModifierIndentation:
   Description: Check indentation of private/protected visibility modifiers.
