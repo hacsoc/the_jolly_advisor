@@ -238,6 +238,8 @@ GEM
       ffi (>= 0.5.0, < 2)
     rdoc (4.3.0)
     ref (2.0.0)
+    rollbar (2.15.0)
+      multi_json
     rspec (3.6.0)
       rspec-core (~> 3.6.0)
       rspec-expectations (~> 3.6.0)
@@ -346,6 +348,7 @@ DEPENDENCIES
   rails
   rails-controller-testing
   rake
+  rollbar
   rspec
   rspec-rails
   rubycas-client!
