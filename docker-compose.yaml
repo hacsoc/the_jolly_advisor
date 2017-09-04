@@ -9,5 +9,6 @@ services:
         environment:
             RAILS_ENV: test
             DB_HOST: db
+            IN_DOCKER: 1
         depends_on:
         - db
