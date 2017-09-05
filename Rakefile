@@ -16,8 +16,8 @@ if ENV['IN_DOCKER']
   def connect_to_db
     begin
       ActiveRecord::Base.connection
-    rescue ActiveRecord::NoDatabaseError, PG::ConnectionBad => e
-      puts e
+    rescue PG::ConnectionBad => e
+      puts "#{e.class}: #{e}"
       nil
     end
   end

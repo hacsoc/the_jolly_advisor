@@ -14,5 +14,3 @@ ADD Gemfile.lock /the_jolly_advisor/Gemfile.lock
 RUN bundle install --with test
 
 ADD . /the_jolly_advisor
-
-CMD RAILS_ENV=test rake db:test:prepare
