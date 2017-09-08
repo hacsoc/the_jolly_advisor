@@ -7,10 +7,11 @@ Rails.application.load_tasks
 
 if ENV['IN_DOCKER']
   def wait_for_db_container
-    loop do
+    3.times do
       return if connect_to_db
       sleep 1
     end
+    raise RuntimeError.new 'Could not establish connection to postgres in 3 attempts'
   end
 
   def connect_to_db
