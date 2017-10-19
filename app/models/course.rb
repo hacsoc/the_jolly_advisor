@@ -3,9 +3,13 @@ class Course < ActiveRecord::Base
   has_many :professors, through: :course_instances
 
   scope :search, ->(q) {
-    where(%{concat(lower(courses.department), courses.course_number) like ?
-           OR lower(courses.title) like ?},
-          "%#{q.to_s.downcase.gsub(/\s+/, '')}%", "%#{q.to_s.downcase}%")
+    where(
+      %{concat(lower(courses.department), courses.course_number) like ?
+           OR lower(courses.title) like ?
+      },
+      "%#{q.to_s.downcase.gsub(/\s+/, '')}%",
+      "%#{q.to_s.downcase}%",
+    )
   }
 
   scope :order_by_short_name, -> { order(:department, :course_number) }

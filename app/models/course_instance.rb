@@ -10,17 +10,23 @@ class CourseInstance < ActiveRecord::Base
     where('? BETWEEN course_instances.start_date AND course_instances.end_date', date)
   }
   scope :unenrolled, ->(user) {
-    where(%{NOT EXISTS (SELECT enrollments.id FROM enrollments WHERE
-          enrollments.course_instance_id = course_instances.id AND enrollments.user_id = ?)},
-          user.id)
+    where(
+      %{NOT EXISTS (SELECT enrollments.id FROM enrollments WHERE
+        enrollments.course_instance_id = course_instances.id AND enrollments.user_id = ?)},
+      user.id,
+    )
   }
   scope :search, ->(term, user, date) {
     includes(:course, :meetings)
       .ongoing(date)
       .joins(:course)
-      .where(%{concat(lower(courses.department), courses.course_number) like ?
-              OR lower(courses.title) like ?},
-             "%#{term.to_s.downcase.gsub(/\s+/, '')}%", "%#{term.to_s.downcase}%")
+      .where(
+        %{concat(lower(courses.department), courses.course_number) like ?
+              OR lower(courses.title) like ?
+        },
+        "%#{term.to_s.downcase.gsub(/\s+/, '')}%",
+        "%#{term.to_s.downcase}%",
+      )
       .unenrolled(user)
   }
 
