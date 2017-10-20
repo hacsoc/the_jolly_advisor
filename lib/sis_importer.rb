@@ -43,6 +43,8 @@ module SISImporter
       end
     end
 
+    # TODO: refactor and remove disabling
+    # rubocop:disable Metrics/MethodLength
     def process_course(class_xml, semester, course_attributes)
       # Cache the course for database perf
       course = Course.where(
