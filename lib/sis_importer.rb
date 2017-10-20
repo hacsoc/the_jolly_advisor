@@ -82,7 +82,6 @@ module SISImporter
 
       fetch_meetings(class_xml).each do |meeting_xml|
         process_meeting(
-          meeting_xml,
           course_instance,
           fetch_meeting_attributes(meeting_xml),
         )
@@ -97,7 +96,7 @@ module SISImporter
       Professor.where(name: prof_name).first_or_create
     end
 
-    def process_meeting(class_xml, course_instance, meeting_attributes)
+    def process_meeting(course_instance, meeting_attributes)
       Meeting.where(
         schedule: meeting_attributes[:schedule],
         room: meeting_attributes[:room],
