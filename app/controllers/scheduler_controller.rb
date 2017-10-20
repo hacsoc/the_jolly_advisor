@@ -7,8 +7,10 @@ class SchedulerController < ApplicationController
   # source for the autocomplete can be set to the right date.
   before_action :set_search_date,
                 only: [:index, :create],
-                :if => [:semester_request?, :xhr_request?]
-  before_action :set_scheduled_meetings, only: [:index], :if => :xhr_request?
+                :if => [:semester_request?, :xhr_request?] # rubocop:disable Style/HashSyntax
+  before_action :set_scheduled_meetings,
+                only: [:index],
+                :if => :xhr_request? # rubocop:disable Style/HashSyntax
   before_action :set_enrollment, only: [:create, :destroy]
 
   # GET /scheduler
