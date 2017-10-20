@@ -190,16 +190,14 @@ module SISImporter
         str_between_end = reqs.index(req_matches[index + 1][0])
         str_between = reqs[str_between_start..str_between_end]
 
+        req_info.last << match
         # Assumption: if the string between two matches contains 'or',
         # then it is an OR relationship between the current set of
         # courses and the current match. If the string does not, then
         # assume it is an AND relationship between the current set of
         # courses and the next set.
-        if str_between.include? ' or '
-          req_info.last << match
-        else
+        unless str_between.include? ' or '
           # AND case. start a new subarray
-          req_info.last << match
           req_info << []
         end
       end
