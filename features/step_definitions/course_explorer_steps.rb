@@ -98,7 +98,7 @@ When(/^I select a class on the Course Explorer Page$/) do
 end
 
 Then(/^I am taken to the show page of that class$/) do
-  expect(current_path).to eq "/courses/#{@course_num.gsub(' ', '')}"
+  expect(current_path).to eq "/courses/#{@course_num.delete(' ')}"
   # Expect h2 to eq course department coursenum
   expect(page.find('h2').text).to eq "#{@course_num}: #{@course_title}"
 end
