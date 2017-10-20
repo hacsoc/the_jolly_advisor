@@ -21,10 +21,10 @@ class ScheduledMeeting
     'F' => :friday,
     'Sa' => :saturday,
     'Su' => :sunday,
-  }
+  }.freeze
 
   # The time format that SIS used for class schedules
-  TIME_FORMAT = '%l:%M %p'
+  TIME_FORMAT = '%l:%M %p'.freeze
 
   def initialize(day_abbreviation, start_string, end_string, meeting)
     # Hold on to the meeting so that we can reference things about it
