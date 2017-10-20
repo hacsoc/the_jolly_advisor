@@ -28,7 +28,7 @@ class CoursesController < ApplicationController
             .sort_by { |course| -CourseQuery.new(course).score(params[:term]) }
     respond_to do |format|
       format.json do
-        render json: @courses.map { |c| { id: c.id, label: c.long_string, value: c.to_param } }
+        render json: @courses.map { |c| {id: c.id, label: c.long_string, value: c.to_param} }
       end
     end
   end
@@ -38,6 +38,8 @@ class CoursesController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_course
     department, course_number = params[:id].match(/([a-zA-Z]+)(\d+)/).captures.map(&:upcase)
-    @course = Course.find_by(department: department, course_number: course_number) or not_found
+    @course = Course.find_by(department: department, course_number: course_number)
+
+    @course ? @course : not_found
   end
 end
