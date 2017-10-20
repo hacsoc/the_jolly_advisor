@@ -183,15 +183,19 @@ module SISImporter
       index = enrollment_req_info.index 'Coreq:'
       # if the string contains 'Coreq:', then parse from 'Coreq:' on as coreqs
       # and then parse from the beginning up to 'Coreq:' (or end of string) as prereqs
-      temp = index ?
-        [parse_reqs(enrollment_req_info[index..-1])] :
-        []
+      temp = if index
+               [parse_reqs(enrollment_req_info[index..-1])]
+             else
+               []
+             end
 
       ->(str) {
         # Make sure the string has at least one thing to match
-        str.include?(':') && str.match(/.*\b[A-Z]+ \d+.*/) ?
-          temp << parse_reqs(str) :
+        if str.include?(':') && str.match(/.*\b[A-Z]+ \d+.*/)
+          temp << parse_reqs(str)
+        else
           temp
+        end
       }.(enrollment_req_info[0..(index || -1)])
     end
 
