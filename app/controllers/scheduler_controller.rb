@@ -58,10 +58,10 @@ class SchedulerController < ApplicationController
   # This is for the JSON feed that fullcalendar requires
   def set_scheduled_meetings
     @scheduled_meetings = current_user.enrolled_courses
-                          .ongoing(@search_date || Date.today)
-                          .includes(:meetings, :course)
-                          .flat_map(&:meetings)
-                          .flat_map(&:scheduled_meetings)
+                                      .ongoing(@search_date || Date.today)
+                                      .includes(:meetings, :course)
+                                      .flat_map(&:meetings)
+                                      .flat_map(&:scheduled_meetings)
   end
 
   def semester_request?
