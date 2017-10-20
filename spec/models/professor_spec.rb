@@ -9,7 +9,7 @@ RSpec.describe Professor, type: :model do
 
     it 'does not create a new record when it has already been called' do
       Professor.TBA
-      expect { Professor.TBA }.to_not change { Professor.count }
+      expect { Professor.TBA }.to_not(change { Professor.count })
     end
   end
 end

@@ -109,7 +109,7 @@ RSpec.describe Course, type: :model do
 
   describe "#to_param" do
     it "should return a spaceless version of to_s" do
-      expect(@course.to_param).to eq @course.to_s.gsub(' ', '')
+      expect(@course.to_param).to eq @course.to_s.delete(' ')
     end
   end
 

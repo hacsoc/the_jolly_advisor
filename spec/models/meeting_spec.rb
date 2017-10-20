@@ -26,7 +26,10 @@ RSpec.describe Meeting, type: :model do
         start_times = dates.map { |d| d.advance(hours: 10) }
         end_times = dates.map { |d| d.advance(hours: 10, minutes: 50) }
 
-        meeting.scheduled_meetings.zip(start_times, end_times).each do |scheduled_meeting, start_time, end_time|
+        meeting.scheduled_meetings.zip(
+          start_times,
+          end_times,
+        ).each do |scheduled_meeting, start_time, end_time|
           expect(scheduled_meeting.start_time).to eq start_time
           expect(scheduled_meeting.end_time).to eq end_time
         end
