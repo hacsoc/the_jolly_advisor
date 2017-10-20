@@ -43,18 +43,24 @@ module SISImporter
       process_prerequisites(course, course_attributes[:enrollment_req_info]) if course_attributes[:enrollment_req_info] != '' # not every course has this attribute
       # TODO: course.course_offering = do something
       # TODO: We need some stuff for professor of class (Hard because there can be multiple)
-      process_course_instance(class_xml,
-                              CourseInstance.where(semester: semester,
-                                                   course: course,
-                                                   section: course_attributes[:section],
-                                                   subtitle: course_attributes[:subtitle]).first_or_initialize,
-                              course_attributes)
+      process_course_instance(
+        class_xml,
+        CourseInstance.where(
+          semester: semester,
+          course: course,
+          section: course_attributes[:section],
+          subtitle: course_attributes[:subtitle],
+        ).first_or_initialize,
+       course_attributes,
+      )
     end
 
     def process_course_instance(class_xml, course_instance, course_attributes)
-      course_instance.update_attributes(start_date: course_attributes[:dates][0],
-                                        end_date: course_attributes[:dates][1],
-                                        component_code: course_attributes[:component_code])
+      course_instance.update_attributes(
+        start_date: course_attributes[:dates][0],
+        end_date: course_attributes[:dates][1],
+        component_code: course_attributes[:component_code],
+      )
 
       fetch_meetings(class_xml).each { |meeting_xml| process_meeting(meeting_xml, course_instance, fetch_meeting_attributes(meeting_xml)) }
 
@@ -66,9 +72,14 @@ module SISImporter
     end
 
     def process_meeting(class_xml, course_instance, meeting_attributes)
-      Meeting.where(schedule: meeting_attributes[:schedule], room: meeting_attributes[:room],
-                    professor: meeting_attributes[:prof], course_instance: course_instance,
-                    start_date: meeting_attributes[:dates][0], end_date: meeting_attributes[:dates][1]).first_or_create
+      Meeting.where(
+        schedule: meeting_attributes[:schedule],
+        room: meeting_attributes[:room],
+        professor: meeting_attributes[:prof],
+        course_instance: course_instance,
+        start_date: meeting_attributes[:dates][0],
+        end_date: meeting_attributes[:dates][1],
+      ).first_or_create
     end
 
     def process_prerequisites(course, enrollment_req_info)
@@ -77,18 +88,20 @@ module SISImporter
         course_id_sets = req[:reqs].map do |clause|
           clause.map do |long_title|
             department, course_number = long_title.split
-            Course.where(department: department, course_number: course_number)
-                  .first_or_create
-                  .id
+            Course.where(
+              department: department,
+              course_number: course_number,
+            ).first_or_create.id
           end
         end
 
         # for each set of prereq ids, create a row
         course_id_sets.each do |course_id_set|
-          Prerequisite.where(postrequisite: course,
-                             prerequisite_ids: course_id_set.to_pg_sql,
-                             co_req: req[:co_req])
-                      .first_or_create
+          Prerequisite.where(
+            postrequisite: course,
+            prerequisite_ids: course_id_set.to_pg_sql,
+            co_req: req[:co_req],
+          ).first_or_create
         end
       end
     end
