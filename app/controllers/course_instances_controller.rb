@@ -1,5 +1,7 @@
 class CourseInstancesController < ApplicationController
-  before_action :set_search_date, only: [:autocomplete], :if => -> { params[:semester] }
+  before_action :set_search_date,
+                only: [:autocomplete],
+                :if => -> { params[:semester] } # rubocop:disable Style/HashSyntax
 
   # GET /course_instances/autocomplete.json
   def autocomplete
