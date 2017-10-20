@@ -253,6 +253,14 @@ Style/MethodName:
   SupportedStyles:
   - snake_case
   - camelCase
+Layout/MultilineMethodCallBraceLayout:
+  Description: Checks brace layout of method calls that span more than one line.
+  Enabled: true
+  EnforcedStyle: new_line
+  SupportedStyles:
+  - symmetrical
+  - new_line
+  - same_line
 Layout/MultilineOperationIndentation:
   Description: Checks indentation of binary operations that span more than one line.
   Enabled: true
