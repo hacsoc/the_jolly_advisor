@@ -22,7 +22,7 @@ class Course < ActiveRecord::Base
   def self.filter_by_semester(semester)
     return all unless semester.present?
     joins(:course_instances)
-      .where(course_instances: { semester_id: semester.to_i })
+      .where(course_instances: {semester_id: semester.to_i})
   end
 
   def self.filter_by_professor(professor)
