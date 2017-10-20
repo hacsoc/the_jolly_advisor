@@ -26,7 +26,7 @@ class Semester < ActiveRecord::Base
   # Append to this with whatever format is approprite
   # for how you are specifying the year. Then call
   # DateTime.strptime on that.
-  SAFE_SEARCH_DATE_STRPTIME_STRING = '%B %d'
+  SAFE_SEARCH_DATE_STRPTIME_STRING = '%B %d'.freeze
 
   def to_s
     "#{semester} #{year}"
