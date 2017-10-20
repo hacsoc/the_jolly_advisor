@@ -492,6 +492,12 @@ Metrics/AbcSize:
     conditions.
   Enabled: false
   Max: 15
+Metrics/BlockLength:
+  Description: ''
+  Enabled: true
+  Max: 25
+  Exclude:
+  - spec/**/*.rb
 Metrics/BlockNesting:
   Description: Avoid excessive block nesting
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#three-is-the-number-thou-shalt-count
