@@ -2,7 +2,10 @@ class Meeting < ActiveRecord::Base
   belongs_to :course_instance
   belongs_to :professor
 
+  # The time format that SIS used for class schedules
   TIME_REGEX = /\d{1,2}:\d{1,2} [AP]M/
+  TIME_FORMAT = '%l:%M %p'.freeze
+
   MEETING_SCHEDULE_REGEX = /^(.*) (#{TIME_REGEX}) - (#{TIME_REGEX})/
 
   def autocomplete_label
@@ -18,9 +21,11 @@ class Meeting < ActiveRecord::Base
     return [] if schedule.start_with?('TBA') # sometimes there's trailing whitespace
 
     abbreviations, start_time, end_time = schedule.match(MEETING_SCHEDULE_REGEX).captures
+    times = [start_time, end_time].map { |time_str| Time.strptime(time_str, TIME_FORMAT) }
+    time_range = (times[0]..times[1])
     # For each abbreviation, create a ScheduledMeeting for that day
     abbreviations
       .scan(/[A-Z][a-z]?/) # MTuWThFSaSu
-      .map { |day_abbreviation| ScheduledMeeting.new day_abbreviation, start_time, end_time, self }
+      .map { |day_abbreviation| ScheduledMeeting.new day_abbreviation, time_range, self }
   end
 end

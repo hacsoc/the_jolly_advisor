@@ -23,10 +23,7 @@ class ScheduledMeeting
     'Su' => :sunday,
   }.freeze
 
-  # The time format that SIS used for class schedules
-  TIME_FORMAT = '%l:%M %p'.freeze
-
-  def initialize(day_abbreviation, start_string, end_string, meeting)
+  def initialize(day_abbreviation, time_range, meeting)
     # Hold on to the meeting so that we can reference things about it
     # (course, professor, etc) in the calendar (see app/views/scheduler/index.json.jbuilder)
     @meeting = meeting
@@ -41,11 +38,8 @@ class ScheduledMeeting
     date = DateTime.now.at_beginning_of_week +
            DateTime::DAYS_INTO_WEEK[day_sym].days
 
-    start_time = Time.strptime(start_string, TIME_FORMAT)
-    end_time = Time.strptime(end_string, TIME_FORMAT)
-
-    @start_time = advance(date, start_time)
-    @end_time = advance(date, end_time)
+    @start_time = advance(date, time_range.begin)
+    @end_time = advance(date, time_range.end)
   end
 
   private
