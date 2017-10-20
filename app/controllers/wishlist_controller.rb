@@ -10,13 +10,12 @@ class WishlistController < ApplicationController
   # POST /wishlist
   def add_course
     respond_to do |format|
-      if @wishlist_item.save
-        flash[:notice] = 'Course successfully saved to your wishlist'
-        format.html { redirect_to params[:url] || wishlist_path }
-      else
-        flash[:notice] = 'An error occurred adding the course to your wishlist'
-        format.html { redirect_to params[:url] || wishlist_path }
-      end
+      flash[:notice] = if @wishlist_item.save
+                         'Course successfully saved to your wishlist'
+                       else
+                         'An error occurred adding the course to your wishlist'
+                       end
+      format.html { redirect_to params[:url] || wishlist_path }
     end
   end
 
@@ -33,12 +32,11 @@ class WishlistController < ApplicationController
     respond_to do |format|
       if @wishlist_item.destroy
         flash[:notice] = 'Course successfully removed from your wishlist'
-        format.html { redirect_to params[:url] || wishlist_path }
       else
         flash[:notice] =
           'An error occurred while attempting to remove the course from your wishlist'
-        format.html { redirect_to params[:url] || wishlist_path }
       end
+      format.html { redirect_to params[:url] || wishlist_path }
     end
   end
 
