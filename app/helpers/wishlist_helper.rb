@@ -7,7 +7,7 @@ module WishlistHelper
 
   def set_notify_link(item)
     link_to "Turn #{item.notify ? 'off' : 'on'} notifications",
-            wishlist_path(course_id: item.course_id, wishlist_item: { notify: !item.notify }),
+            wishlist_path(course_id: item.course_id, wishlist_item: {notify: !item.notify}),
             method: :put
   end
 end
