@@ -53,7 +53,7 @@ module SISImporter
           section: course_attributes[:section],
           subtitle: course_attributes[:subtitle],
         ).first_or_initialize,
-       course_attributes,
+        course_attributes,
       )
     end
 
