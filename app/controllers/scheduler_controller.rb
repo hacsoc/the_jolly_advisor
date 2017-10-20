@@ -39,14 +39,17 @@ class SchedulerController < ApplicationController
       if params[:course_instance_id].present?
         params[:course_instance_id]
       else
-        CourseInstance.search(params[:course_title],
-                              current_user,
-                              @search_date || Date.today).first.try(:id)
+        CourseInstance.search(
+          params[:course_title],
+          current_user,
+          @search_date || Date.today,
+        ).first.try(:id)
       end
     return false if course_instance_id.nil?
 
-    @enrollment = Enrollment.where(user: current_user,
-                                   course_instance_id: course_instance_id).first_or_create
+    @enrollment = Enrollment.where(
+      user: current_user, course_instance_id: course_instance_id,
+    ).first_or_create
   end
 
   # Set the course instances to be rendered in the schedule

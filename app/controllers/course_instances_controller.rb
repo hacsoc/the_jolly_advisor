@@ -3,10 +3,12 @@ class CourseInstancesController < ApplicationController
 
   # GET /course_instances/autocomplete.json
   def autocomplete
-    @course_instances =
-      CourseInstance.search(params[:term],
-                            current_user,
-                            params[:current_date] || @search_date).includes(:meetings)
+    @course_instances = CourseInstance.search(
+      params[:term],
+      current_user,
+      params[:current_date] || @search_date,
+    ).includes(:meetings)
+
     respond_to do |format|
       format.json do
         render json: (@course_instances.flat_map(&:meetings).map do |m|

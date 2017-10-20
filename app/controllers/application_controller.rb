@@ -38,7 +38,9 @@ class ApplicationController < ActionController::Base
     search_date_string =
       Semester::SAFE_SEARCH_DATES[params[:semester][:semester]][params[:semester][:half]] +
       " #{params[:semester][:year]}"
-    @search_date = DateTime.strptime(search_date_string,
-                                     Semester::SAFE_SEARCH_DATE_STRPTIME_STRING + ' %Y')
+    @search_date = DateTime.strptime(
+      search_date_string,
+      Semester::SAFE_SEARCH_DATE_STRPTIME_STRING + ' %Y',
+    )
   end
 end
