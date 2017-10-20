@@ -28,21 +28,37 @@ module SISImporter
     # term_info is an array of two values, the first being the semester and
     # the second being the year.
     def process_term(term_xml, term_info)
-      process_semester(term_xml, Semester.where(semester: term_info[0], year: term_info[1]).first_or_create)
+      process_semester(
+        term_xml,
+        Semester.where(
+          semester: term_info[0],
+          year: term_info[1],
+        ).first_or_create,
+      )
     end
 
     def process_semester(term_xml, semester)
-      fetch_classes(term_xml).each { |class_xml| process_course(class_xml, semester, fetch_course_attributes(class_xml)) }
+      fetch_classes(term_xml).each do |class_xml|
+        process_course(class_xml, semester, fetch_course_attributes(class_xml))
+      end
     end
 
     def process_course(class_xml, semester, course_attributes)
       # Cache the course for database perf
-      course = Course.where(department: course_attributes[:subject], course_number: course_attributes[:number]).first_or_initialize
+      course = Course.where(
+        department: course_attributes[:subject],
+        course_number: course_attributes[:number],
+      ).first_or_initialize
       # Rails is smart and inserts a new row when you call #update_attributes
       # if the record doesn't exist yet, so calling #save is redundant
-      course.update_attributes(description: course_attributes[:description], title: course_attributes[:title])
-
-      process_prerequisites(course, course_attributes[:enrollment_req_info]) if course_attributes[:enrollment_req_info] != '' # not every course has this attribute
+      course.update_attributes(
+        description: course_attributes[:description],
+        title: course_attributes[:title],
+      )
+      if course_attributes[:enrollment_req_info] != ''
+        # not every course has this attribute
+        process_prerequisites(course, course_attributes[:enrollment_req_info])
+      end
       # TODO: course.course_offering = do something
       # TODO: We need some stuff for professor of class (Hard because there can be multiple)
       process_course_instance(
@@ -64,9 +80,17 @@ module SISImporter
         component_code: course_attributes[:component_code],
       )
 
-      fetch_meetings(class_xml).each { |meeting_xml| process_meeting(meeting_xml, course_instance, fetch_meeting_attributes(meeting_xml)) }
+      fetch_meetings(class_xml).each do |meeting_xml|
+        process_meeting(
+          meeting_xml,
+          course_instance,
+          fetch_meeting_attributes(meeting_xml),
+        )
+      end
 
-      course_instance.update_attributes(professor: course_instance.meetings.first.try(:professor) || Professor.TBA)
+      tba = Professor.TBA
+      professor = course_instance.meetings.first.try(:professor) || tba
+      course_instance.update_attributes(professor)
     end
 
     def process_professor(prof_name)
@@ -129,7 +153,8 @@ module SISImporter
         subject:             class_xml.xpath('Subject').text.strip,
         number:              class_xml.xpath('CatalogNbr').text.strip,
         description:         class_xml.xpath('Description').text.strip,
-        units:               class_xml.xpath('UnitsMin').text.strip, #TODO: Should this be min, max, or something else?
+        # TODO: Should this be min, max, or something else?
+        units:               class_xml.xpath('UnitsMin').text.strip,
         dates:               fetch_start_end_dates(class_xml.xpath('Dates').text.strip),
         section:             class_xml.xpath('Section').text.strip,
         component_code:      class_xml.xpath('ComponentCode').text.strip,
