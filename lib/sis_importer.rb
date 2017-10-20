@@ -13,12 +13,14 @@ require 'open-uri'
 # fetch_* methods to the database and involve a lot of calls
 # to ActiveRecord.
 
+# TODO: refactor and remove this disable
+# rubocop:disable Metrics/ModuleLength
 module SISImporter
   using PGArrayPatch
 
   class << self
     def import_sis
-      fetch_terms.each { |term_xml| process_term(term_xml, fetch_term_info(term_xml)) } 
+      fetch_terms.each { |term_xml| process_term(term_xml, fetch_term_info(term_xml)) }
     end
 
     private
@@ -28,7 +30,7 @@ module SISImporter
     def process_term(term_xml, term_info)
       process_semester(term_xml, Semester.where(semester: term_info[0], year: term_info[1]).first_or_create)
     end
-    
+
     def process_semester(term_xml, semester)
       fetch_classes(term_xml).each { |class_xml| process_course(class_xml, semester, fetch_course_attributes(class_xml)) }
     end
@@ -109,9 +111,9 @@ module SISImporter
     def fetch_terms
       Nokogiri::XML(open("http://case.edu/projects/erpextract/soc.xml")).xpath('//Terms/Term')
     end
-    
+
     def fetch_classes(term_xml)
-      term_xml.xpath('Classes/Class') 
+      term_xml.xpath('Classes/Class')
     end
 
     def fetch_meetings(class_xml)
