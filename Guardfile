@@ -51,7 +51,7 @@ guard :rspec, cmd: "bundle exec rspec", all_on_start: true do
   dsl.watch_spec_files_for(rails.app_files)
 
   # Rails config changes
-  watch(rails.spec_helper)     { rspec.spec_dir }
+  watch(rails.spec_helper) { rspec.spec_dir }
 
   # Watch factories
   watch(%r{^spec/factories/(.*)s\.rb$}) { |m| "spec/models/#{m[1]}_spec.rb" }
@@ -59,7 +59,7 @@ end
 
 guard "cucumber" do
   watch(%r{^features/.+\.feature$})
-  watch(%r{^features/support/.+$})          { "features" }
+  watch(%r{^features/support/.+$}) { "features" }
 
   watch(%r{^features/step_definitions/(.+)_steps\.rb$}) do |m|
     Dir[File.join("**/#{m[1]}.feature")][0] || "features"
