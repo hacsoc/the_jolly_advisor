@@ -2,17 +2,17 @@ require 'sis_scraper.rb'
 
 class SISScraper
   ALPHA = ('A'..'Z').to_a
-  SIS = 'https://sisguest.case.edu'
+  SIS = 'https://sisguest.case.edu'.freeze
   SEM_LIST_POS = 1 # position of the select list that determines the semester
   LEN_DEPT_NAME = 4	# Standard length of a department abbreviation
 
   # All the seemingly somewhat randomly generated strings for SIS's HTML ids for grabbing elements
-  DEPT_BUTTONS_CLASS = 'PSEDITBOX_DISPONLY'
-  DAYS_WEEK_SELECT_LIST_ID = 'SSR_CLSRCH_WRK_INCLUDE_CLASS_DAYS$6'
-  SEARCH_CLASSES_ID = 'CLASS_SRCH_WRK2_SSR_PB_CLASS_SRCH'
-  SIS_PROCESSING_ID = 'processing'
-  NO_RESULTS_ID = 'DERIVED_CLSMSG_ERROR_TEXT'
-  
+  DEPT_BUTTONS_CLASS = 'PSEDITBOX_DISPONLY'.freeze
+  DAYS_WEEK_SELECT_LIST_ID = 'SSR_CLSRCH_WRK_INCLUDE_CLASS_DAYS$6'.freeze
+  SEARCH_CLASSES_ID = 'CLASS_SRCH_WRK2_SSR_PB_CLASS_SRCH'.freeze
+  SIS_PROCESSING_ID = 'processing'.freeze
+  NO_RESULTS_ID = 'DERIVED_CLSMSG_ERROR_TEXT'.freeze
+
   def initialize(download_dir)
     @download_dir = download_dir
     @browser = Watir::Browser.new :firefox
