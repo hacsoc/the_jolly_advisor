@@ -128,7 +128,7 @@ class SISScraper
     # Rename the file to [DEPT]_[SEMESTER]
     new_file_name = "#{@download_dir}#{dept}_#{semester}.xls".strip
     default_file_name = "#{@download_dir}ps.xls"
-    File.rename(default_file_name, new_file_name) if File.exists?(default_file_name)
+    File.rename(default_file_name, new_file_name) if File.exist?(default_file_name)
   end
 
   def start_a_new_search
