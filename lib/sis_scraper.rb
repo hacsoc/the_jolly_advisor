@@ -54,7 +54,7 @@ class SISScraper
     ALPHA.each do |letter|
       @browser.span(text: letter).a.when_present.click
       sleep(4) # arbitrary to satisfy SIS finickiness.
-      depts += @browser.spans(class: DEPT_BUTTONS_CLASS).collect { |dept| dept.text if dept.text.length == LEN_DEPT_NAME }.keep_if { |dept| !dept.nil? }
+      depts += @browser.spans(class: DEPT_BUTTONS_CLASS).map { |dept| dept.text if dept.text.length == LEN_DEPT_NAME }.keep_if { |dept| !dept.nil? }
     end
     @browser.a(text: 'Close').click
     wait_while_sis_processing
