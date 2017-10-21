@@ -105,11 +105,11 @@ class SISScraper
 
   def ok_more_than_20_results
     wait_while_sis_processing
-    if @browser.span(id: 'DERIVED_SSE_DSP_SSR_MSG_TEXT').present?
-      @browser.button(text: "OK").when_present.click
-      @browser.button(text: "OK").wait_while_present
-      wait_while_sis_processing
-    end
+    return unless @browser.span(id: 'DERIVED_SSE_DSP_SSR_MSG_TEXT').present?
+
+    @browser.button(text: "OK").when_present.click
+    @browser.button(text: "OK").wait_while_present
+    wait_while_sis_processing
   end
 
   def validate_on_course_list_page
