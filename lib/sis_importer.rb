@@ -179,24 +179,19 @@ module SISImporter
     end
 
     def fetch_reqs(enrollment_req_info)
-      # Not sure if there's a class that has only co-reqs, so this is probably safe.
-      index = enrollment_req_info.index 'Coreq:'
-      # if the string contains 'Coreq:', then parse from 'Coreq:' on as coreqs
-      # and then parse from the beginning up to 'Coreq:' (or end of string) as prereqs
-      temp = if index
-               [parse_reqs(enrollment_req_info[index..-1])]
-             else
-               []
-             end
+      # If the string contains 'Coreq:', then parse from 'Coreq:' on as coreqs
+      # and then parse from the beginning up to 'Coreq:' (or end of string) as
+      # prereqs. Not sure if there's a class that has only co-reqs, so this is
+      # probably safe.
+      req_info, co_req_info = enrollment_req_info.split('Coreq:')
+      reqs = []
+      reqs << parse_reqs(co_req_info) if co_req_info.present?
 
-      ->(str) {
-        # Make sure the string has at least one thing to match
-        if str.include?(':') && str.match(/.*\b[A-Z]+ \d+.*/)
-          temp << parse_reqs(str)
-        else
-          temp
-        end
-      }.(enrollment_req_info[0..(index || -1)])
+      # Make sure the string has at least one thing to match
+      has_reqs = req_info.include?(':') && req_info.match(/.*\b[A-Z]+ \d+.*/)
+      reqs << parse_reqs(req_info) if has_reqs
+
+      reqs
     end
 
     # Return hash for the reqs in string. Two keys,
