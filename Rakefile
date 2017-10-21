@@ -11,19 +11,17 @@ if ENV['IN_DOCKER']
       return if connect_to_db
       sleep 1
     end
-    raise RuntimeError.new 'Could not establish connection to postgres in 3 attempts'
+    raise 'Could not establish connection to postgres in 3 attempts'
   end
 
   def connect_to_db
-    begin
-      ActiveRecord::Base.connection
-    rescue PG::ConnectionBad => e
-      puts "#{e.class}: #{e}"
-      nil
-    end
+    ActiveRecord::Base.connection
+  rescue PG::ConnectionBad => e
+    puts "#{e.class}: #{e}"
+    nil
   end
 
-  task :wait_for_db => [:environment] do
+  task wait_for_db: [:environment] do
     wait_for_db_container
   end
 
