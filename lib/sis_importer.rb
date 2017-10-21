@@ -209,7 +209,10 @@ module SISImporter
       req_matches = reqs.scan(/([A-Z]+ \d+)/)
       req_matches.each_with_index do |match_arr, index|
         match = match_arr[0]
-        req_info.last << match and break if index == (req_matches.count - 1)
+        if index == (req_matches.count - 1)
+          req_info.last << match
+          break
+        end
 
         str_between_start = reqs.index(match) + match.length
         str_between_end = reqs.index(req_matches[index + 1][0])
