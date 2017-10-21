@@ -88,7 +88,9 @@ class SISScraper
   end
 
   def include_all_days_of_week
-    @browser.select_list(id: DAYS_WEEK_SELECT_LIST_ID).when_present.select("include any of these days")
+    @browser.select_list(
+      id: DAYS_WEEK_SELECT_LIST_ID,
+    ).when_present.select("include any of these days")
     @browser.inputs(type: "checkbox")[1..7].each { |box| box.click unless box.checked? }
   end
 
