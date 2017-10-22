@@ -33,5 +33,5 @@ if ENV['IN_DOCKER']
 end
 
 if ENV['CI']
-  task :default => [:spec, :features, 'coveralls:push']
+  task :default => [:spec, :cucumber, 'coveralls:push']
 end
