@@ -31,3 +31,7 @@ if ENV['IN_DOCKER']
     Rake::Task["#{t}:prepare"].clear.enhance(%w(wait_for_db))
   end
 end
+
+if ENV['CI']
+  task :default => [:spec, :features, 'coveralls:push']
+end
