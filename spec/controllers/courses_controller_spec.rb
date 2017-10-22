@@ -11,10 +11,13 @@ RSpec.describe CoursesController, type: :controller do
   end
 
   describe 'GET show' do
-    it 'does a 404 when the course cannot be found' do
-      allow(Course).to receive(:find_by).and_return(nil)
-      expect { get :show, params: {id: 'EECS395'} }
-        .to raise_error(ActionController::RoutingError)
+    context 'when the course cannot be found' do
+      before { allow(Course).to receive(:find_by).and_return nil }
+
+      it 'does a 404' do
+        expect { get :show, params: {id: 'EECS395'} }
+          .to raise_error(ActionController::RoutingError)
+      end
     end
 
     it 'sets the course in the view' do
