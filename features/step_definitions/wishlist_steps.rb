@@ -1,6 +1,6 @@
 Given(/^I have a course in my wishlist$/) do
   @wishlist_item = WishlistItem.where(user: @current_user).first ||
-                   FactoryGirl.create(:wishlist_item, user: @current_user)
+                   FactoryBot.create(:wishlist_item, user: @current_user)
   @course = @wishlist_item.course
 end
 
@@ -14,7 +14,7 @@ When(/^I view my wishlist$/) do
 end
 
 When(/^I select a course via wishlist search$/) do
-  @course = Course.first || FactoryGirl.create(:course)
+  @course = Course.first || FactoryBot.create(:course)
   fill_in 'course_title', with: @course.to_param
   find('#submit', visible: false).click
 end

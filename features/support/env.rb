@@ -5,7 +5,7 @@
 # files.
 require 'coveralls'
 Coveralls.wear_merged!('rails')
-require 'factory_girl_rails'
+require 'factory_bot_rails'
 require 'cucumber/rails'
 
 # Capybara defaults to CSS3 selectors rather than XPath.

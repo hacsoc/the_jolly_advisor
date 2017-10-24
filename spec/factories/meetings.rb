@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :meeting do
     trait :tba do
       schedule "TBA"
