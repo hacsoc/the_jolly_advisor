@@ -2,9 +2,9 @@ Given(/^I have authenticated as (.*)$/) do |case_id|
   @current_user =
     if case_id == 'some user'
       # We don't care about the case id, here
-      User.first || FactoryGirl.create(:user)
+      User.first || FactoryBot.create(:user)
     else
-      User.where(case_id: case_id).first || FactoryGirl.create(:user, case_id: case_id)
+      User.where(case_id: case_id).first || FactoryBot.create(:user, case_id: case_id)
     end
   page.set_rack_session('cas_user' => @current_user.case_id)
   visit '/'

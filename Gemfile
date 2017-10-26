@@ -67,7 +67,7 @@ group :development, :test do
   gem 'rspec'
   gem 'rspec-rails'
   gem 'shoulda-matchers'
-  gem 'factory_girl_rails', require: false
+  gem 'factory_bot_rails', require: false
   gem 'simplecov'
   gem 'watir'
 

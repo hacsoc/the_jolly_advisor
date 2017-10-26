@@ -2,7 +2,7 @@ When(/^I am viewing (a|that) course$/) do |selection|
   @course =
     case selection
     when 'a'
-      Course.first || FactoryGirl.create(:course)
+      Course.first || FactoryBot.create(:course)
     when 'that'
       @course
     end
