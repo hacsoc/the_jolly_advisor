@@ -2,7 +2,7 @@ log/
 tmp/
 
 .{docker,git}ignore
-.{coveralls,codeclimate,hound,rubocop,travis}.yml
+.{codeclimate,hound,rubocop}.yml
 docker-compose.yaml
 
 {Docker,Guard,Make,Rake}file*
