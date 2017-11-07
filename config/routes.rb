@@ -29,4 +29,15 @@ Rails.application.routes.draw do
   delete 'wishlist' => 'wishlist#remove_course'
   get 'faq' => 'site#faq'
   get 'about' => 'site#about'
+
+  direct(:university_bulletin) { 'http://bulletin.case.edu/' }
+  direct(:university_regulations) { 'http://case.edu/ugstudies/academic-policies/academic-regulations/' }
+  direct(:ugs_forms) { 'http://case.edu/ugstudies/forms/' }
+  direct(:ugs_office_hours) { 'http://case.edu/ugstudies/walkin/' }
+  direct(:ugs_deans) { 'http://case.edu/ugstudies/about-us/who-we-are/' }
+
+  direct(:new_github_issue) { 'https://github.com/hacsoc/the_jolly_advisor/issues/new' }
+  direct(:github_contributing_wiki) { 'https://github.com/hacsoc/the_jolly_advisor/wiki/Contributing' }
+
+  direct(:feathub) { 'https://feathub.com/hacsoc/the_jolly_advisor' }
 end
