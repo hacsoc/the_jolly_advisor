@@ -17,7 +17,8 @@
                     %>
                     <%= f.select :year, options_for_select(2008..@planning_period_year, @planning_period_year) %>
                     <%= f.select :half, ['First Half', 'Second Half'].map { |str| [str, str.split.first.downcase] } %>
-                    <%= hidden_field_tag :old_feed, nil # this is the old feed we need to remove %>
+                    <% # this is the old feed we need to remove %>
+                    <%= hidden_field_tag :old_feed, nil %>
                     <%= f.submit 'Change Semester' %>
                 <% end %>
 
