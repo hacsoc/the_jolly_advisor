@@ -38,6 +38,8 @@ class CoursesController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_course
     department, course_number = params[:id].match(/([a-zA-Z]+)(\d+)/).captures.map(&:upcase)
-    @course = Course.find_by(department: department, course_number: course_number) or not_found
+    @course = Course.find_by!(department: department, course_number: course_number)
+  rescue
+    not_found
   end
 end
