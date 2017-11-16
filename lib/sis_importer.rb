@@ -21,8 +21,6 @@ module SISImporter
       fetch_terms.each { |term_xml| process_term(term_xml, fetch_term_info(term_xml)) } 
     end
 
-    private
-
     # term_info is an array of two values, the first being the semester and
     # the second being the year.
     def process_term(term_xml, term_info)
