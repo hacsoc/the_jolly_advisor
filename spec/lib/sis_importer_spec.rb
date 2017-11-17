@@ -16,13 +16,6 @@ def meeting_double(schedule, room, professor, dates)
   meeting
 end
 
-def delete_professors(professors)
-  professor_ids = Professor.where('name IN (?)', professors).pluck(:id)
-  CourseInstance.where('professor_id IN (?)', professor_ids).destroy_all
-  Meeting.where('professor_id IN (?)', professor_ids).destroy_all
-  Professor.destroy(professor_ids)
-end
-
 RSpec.describe SISImporter do
   describe '::process_course_instance' do
     let(:course_instance) { CourseInstance.new }
@@ -41,7 +34,7 @@ RSpec.describe SISImporter do
       end
 
       context 'professor does not exist' do
-        before { delete_professors([professor.text]) }
+        before { safe_delete_professors([professor.text]) }
 
         it 'creates a professor' do
           expect {
@@ -75,7 +68,7 @@ RSpec.describe SISImporter do
       before do
         @meeting1 = meeting_double(schedule, room, professor, dates)
         @meeting2 = meeting_double(schedule, room, professor2, dates)
-        delete_professors([professor, professor2].map(&:text))
+        safe_delete_professors([professor, professor2].map(&:text))
       end
 
       context 'different professors' do
@@ -140,7 +133,7 @@ RSpec.describe SISImporter do
       end
 
       context 'TBA prof does not exist' do
-        before { delete_professors([Professor.TBA.name]) }
+        before { safe_delete_professors([Professor.TBA.name]) }
 
         it 'creates the TBA professor' do
           expect {

@@ -37,3 +37,11 @@ ActiveRecord::Migration.maintain_test_schema!
 
 RSpec.configure do |config|
 end
+
+def safe_delete_professors(names)
+  ids = Professor.where('name IN (?)', names).pluck(:id)
+  [CourseInstance, Meeting].each do |association|
+    association.where('professor_id IN (?)', ids).destroy_all
+  end
+  Professor.destroy(ids)
+end
