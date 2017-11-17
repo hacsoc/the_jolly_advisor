@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Professor, type: :model do
   describe '::TBA', slow: true do
     it 'creates a TBA record when called the first time' do
-      Professor.where(name: 'TBA').destroy_all
+      safe_delete_professors('TBA')
       expect { Professor.TBA }.to change { Professor.count }.by(1)
     end
 
